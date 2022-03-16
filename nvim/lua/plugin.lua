@@ -3,41 +3,59 @@ local M = {}
 local packer_bootstrap = false
 
 local function packer_init()
-	local fn = vim.fn
-	local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
-	if fn.empty(fn.glob(install_path)) > 0 then
-		packer_bootstrap = fn.system {
-			"git",
-			"clone",
-			"--depth",
-			"1",
-			"https://github.com/wbthomason/packer.nvim",
-			install_path,
-		}
-		vim.cmd [[packadd packer.nvim]]
-	end
-	vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
+  local fn = vim.fn
+  local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+  if fn.empty(fn.glob(install_path)) > 0 then
+    packer_bootstrap = fn.system {
+      "git",
+      "clone",
+      "--depth",
+      "1",
+      "https://github.com/wbthomason/packer.nvim",
+      install_path,
+    }
+    vim.cmd [[packadd packer.nvim]]
+  end
+  vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
 end
 
 packer_init()
 
 function M.setup()
-	local conf = {
-		compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-		display = {
-			open_fn = function()
-				return require("packer.util").float { border = "rounded" }
-			end,
-		},
-	}
+  local conf = {
+    compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
+    display = {
+      open_fn = function()
+        return require("packer.util").float { border = "rounded" }
+      end,
+    },
+  }
 
-	local function plugins(use)
-		use "lewis6991/impatient.nvim"
+  local function plugins(use)
+    use "lewis6991/impatient.nvim"
 
-		use 'wbthomason/packer.nvim'
+    use 'wbthomason/packer.nvim'
 
-		--LSP
-		use 'williamboman/nvim-lsp-installer'
+    -- Development
+    use { "tpope/vim-fugitive", event = "BufRead" }
+    use { "tpope/vim-surround", event = "BufRead" }
+    use { "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" } }
+
+    use {
+      "numToStr/Comment.nvim",
+      keys = { "gc", "gcc", "gbc" },
+      config = function()
+        require("config.comment").setup()
+      end,
+    }
+
+    -- Go development
+    use {'fatih/vim-go', run = ':GoUpdateBinaries' }
+    -- Lua development
+    use { "folke/lua-dev.nvim", event = "VimEnter" }
+
+    --LSP
+    use 'williamboman/nvim-lsp-installer'
     use "jose-elias-alvarez/null-ls.nvim"
     use {
       "neovim/nvim-lspconfig",
@@ -49,14 +67,7 @@ function M.setup()
       end,
     }
 
-    use {
-      "folke/which-key.nvim",
-      config = function()
-        require("config.whichkey").setup()
-      end,
-    }
-
- -- Snippets
+    -- Snippets
     use {
       "SirVer/ultisnips",
       requires = { { "honza/vim-snippets", rtp = "." }},
@@ -93,11 +104,6 @@ function M.setup()
       end,
     }
 
- -- Go development
-    use {'fatih/vim-go', run = ':GoUpdateBinaries' }
- -- Lua development
-    use { "folke/lua-dev.nvim", event = "VimEnter" }
-
     -- Better syntax
     use {
       "nvim-treesitter/nvim-treesitter",
@@ -109,10 +115,10 @@ function M.setup()
         require("config.treesitter").setup()
       end,
       requires = {
-        {
+      {
           "nvim-treesitter/nvim-treesitter-textobjects",
         },
-        {
+      {
           "windwp/nvim-autopairs",
           run = "make",
           config = function()
@@ -123,7 +129,7 @@ function M.setup()
     }
 
     -- Telescope
-    use {   
+    use {
       "nvim-telescope/telescope.nvim",
       module = "telescope",
       as = "telescope",
@@ -133,7 +139,7 @@ function M.setup()
         "nvim-telescope/telescope-symbols.nvim",
         "fhill2/telescope-ultisnips.nvim",
         "nvim-lua/popup.nvim",
-        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
+      { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },
       config = function()
         require("config.telescope").setup()
@@ -141,23 +147,76 @@ function M.setup()
     }
 
     -- Testing
-    use { "rcarriga/vim-ultest", requires = {"vim-test/vim-test"}, run = ":UpdateRemotePlugins" }
+    use {
+      "rcarriga/vim-ultest",
+      config = "require('config.test').setup()",
+      run = ":UpdateRemotePlugins",
+      requires = { "vim-test/vim-test" },
+    }
+
+    -- Stuff
+    use {
+      "folke/which-key.nvim",
+      config = function()
+        require("config.whichkey").setup()
+      end,
+    }
+
+    use {
+      'goolord/alpha-nvim',
+      requires = { 'kyazdani42/nvim-web-devicons' },
+      config = function ()
+        require'alpha'.setup(require'alpha.themes.startify'.config)
+      end
+    }
+    use {
+      "nvim-lualine/lualine.nvim",
+      requires = { 'kyazdani42/nvim-web-devicons' },
+      after = "nvim-treesitter",
+      config = function()
+        require("config.lualine").setup()
+      end,
+    }
+
+    use {
+      "akinsho/nvim-bufferline.lua",
+      config = function()
+        require("config.bufferline").setup()
+      end,
+      event = "BufReadPre",
+    }
+
+    use {
+      "SmiteshP/nvim-gps",
+      module = "nvim-gps",
+      config = function()
+        require("nvim-gps").setup()
+      end,
+    }
 
     -- Theme
+    use {
+      "kyazdani42/nvim-web-devicons",
+      config = function()
+        require("nvim-web-devicons").setup { default = true }
+      end,
+    }
     use {
       'luisiacc/gruvbox-baby',
       config = function()
         vim.cmd "colorscheme gruvbox-baby"
       end,
     }
-    if packer_bootstrap then       
-      print "Setting up Neovim. Restart required after installation!"       
-      require("packer").sync()     
-    end   
-end    
-pcall(require, "impatient")   
-pcall(require, "packer_compiled")   
-require("packer").init(conf)   
-require("packer").startup(plugins) 
- end 
- return M
+
+    if packer_bootstrap then
+      print "Setting up Neovim. Restart required after installation!"
+      require("packer").sync()
+    end
+  end
+
+  pcall(require, "impatient")
+  pcall(require, "packer_compiled")
+  require("packer").init(conf)
+  require("packer").startup(plugins)
+end
+return M
