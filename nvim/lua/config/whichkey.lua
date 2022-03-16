@@ -51,6 +51,7 @@ local mappings = {
     p = { "<Cmd>messages clear<Cr>", "Clear messages" },
     f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
     i = { "<Cmd>PackerUpdate<Cr>", "Packer update" },
+    y = { "<Cmd>PackerSync<Cr>", "Packer update" },
   },
 
   -- Buffer

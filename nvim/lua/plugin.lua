@@ -48,6 +48,19 @@ function M.setup()
         require("config.comment").setup()
       end,
     }
+    -- Git
+    use { 'sindrets/diffview.nvim',
+      requires = {
+          'kyazdani42/nvim-web-devicons' ,
+          'nvim-lua/plenary.nvim'
+        },
+      cmd = {
+        "DiffviewOpen",
+        "DiffviewClose",
+        "DiffviewToggleFiles",
+        "DiffviewFocusFiles",
+      },
+    }
 
     -- Go development
     use {'fatih/vim-go', run = ':GoUpdateBinaries' }
@@ -177,6 +190,13 @@ function M.setup()
         require("config.lualine").setup()
       end,
     }
+    use {
+      'kyazdani42/nvim-tree.lua',
+      requires = {
+        'kyazdani42/nvim-web-devicons', -- optional, for file icon
+      },
+      config = function() require'nvim-tree'.setup {} end
+    }
 
     use {
       "akinsho/nvim-bufferline.lua",
@@ -201,11 +221,15 @@ function M.setup()
         require("nvim-web-devicons").setup { default = true }
       end,
     }
+
+  use {
+      'folke/tokyonight.nvim',
+      config = function()
+        vim.cmd "colorscheme tokyonight"
+      end,
+    }
     use {
       'luisiacc/gruvbox-baby',
-      config = function()
-        vim.cmd "colorscheme gruvbox-baby"
-      end,
     }
 
     if packer_bootstrap then
