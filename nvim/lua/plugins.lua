@@ -19,6 +19,14 @@ local function packer_init()
 	vim.cmd("autocmd BufWritePost plugins.lua source <afile> | PackerCompile")
 end
 
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd([[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]])
+
 packer_init()
 
 function M.setup()
@@ -43,6 +51,7 @@ function M.setup()
 
 		use({
 			"numToStr/Comment.nvim",
+			event = "VimEnter",
 			keys = { "gc", "gcc", "gbc" },
 			config = function()
 				require("config.comment").setup()
@@ -57,6 +66,14 @@ function M.setup()
 			end,
 		})
 		-- Git
+		use({
+			"lewis6991/gitsigns.nvim",
+			event = "BufReadPre",
+			requires = { "nvim-lua/plenary.nvim" },
+			config = function()
+				require("gitsigns").setup()
+			end,
+		})
 		use({
 			"sindrets/diffview.nvim",
 			requires = {
@@ -132,7 +149,7 @@ function M.setup()
 		-- Autocomplete
 		use({
 			"hrsh7th/nvim-cmp",
-			event = "InsertEnter",
+			event = { "BufRead", "InsertEnter" },
 			opt = true,
 			requires = {
 				"hrsh7th/cmp-buffer",
@@ -277,7 +294,10 @@ function M.setup()
 	end
 
 	pcall(require, "impatient")
-	pcall(require, "packer_compiled")
+	local status_ok, _ = pcall(require, "packer_compiled")
+	if not status_ok then
+		return
+	end
 	require("packer").init(conf)
 	require("packer").startup(plugins)
 end
