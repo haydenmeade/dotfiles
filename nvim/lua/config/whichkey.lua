@@ -92,7 +92,6 @@ local mappings = {
     s = { "<Cmd>Telescope symbols<Cr>", "Symbols" },
     a = { "<Cmd>xa<Cr>", "Save all & quit" },
     e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
-    --z = { "<Cmd>lefta 20vsp ~/workspace/dev/alpha2phi<CR>", "Netrw" },
     t = { "<Cmd>Telescope<CR>", "Telescope" },
     l = { "<Cmd>e!<CR>", "Reload file" },
     j = { "<Cmd>Telescope zoxide list<CR>", "Jump to folder" },
@@ -212,7 +211,7 @@ local mappings = {
   n = {
     name = "Notes",
     n = {
-      "<Cmd>FloatermNew nvim ~/workspace/dev/notes/<Cr>",
+      "<Cmd>FloatermNew nvim ~/notes/<Cr>",
       "New note",
     },
     o = { "<Cmd>GkeepOpen<Cr>", "GKeep Open" },

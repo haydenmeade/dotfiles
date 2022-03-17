@@ -20,49 +20,26 @@ function M.setup()
   end
 
   cmp.setup {
+    formatting = {
+      format = require("lspkind").cmp_format {
+        with_text = true,
+        menu = {
+          nvim_lsp = "[LSP]",
+          buffer = "[Buffer]",
+          nvim_lua = "[Lua]",
+          ultisnips = "[UltiSnips]",
+          treesitter = "[treesitter]",
+          look = "[Look]",
+          path = "[Path]",
+          emoji = "[Emoji]",
+        },
+      },
+    },
     mapping = {
-      ["<C-j>"] = cmp.mapping {
-        c = function()
-          if cmp.visible() then
-            cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-          else
-            vim.api.nvim_feedkeys(t "<Down>", "n", true)
-          end
-        end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item { behavior = cmp.SelectBehavior.Insert }
-          else
-            fallback()
-            -- vim.api.nvim_feedkeys(t "<Down>", "n", true)
-          end
-        end,
-      },
-      ["<C-k>"] = cmp.mapping {
-        c = function()
-          if cmp.visible() then
-            cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-          else
-            vim.api.nvim_feedkeys(t "<Up>", "n", true)
-          end
-        end,
-        i = function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item { behavior = cmp.SelectBehavior.Insert }
-          else
-            -- vim.api.nvim_feedkeys(t "<Up>", "n", true)
-            fallback()
-          end
-        end,
-      },
       ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
       ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
       ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-      -- ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      -- ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      -- ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
-      -- ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping.close(),
       ["<C-y>"] = cmp.mapping.confirm {
         behavior = cmp.ConfirmBehavior.Replace,
@@ -72,27 +49,7 @@ function M.setup()
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       },
-      ["<C-Space>"] = cmp.mapping {
-        i = function(fallback)
-          if cmp.visible() then
-            if vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
-              return press "<C-R>=UltiSnips#ExpandSnippet()<CR>"
-            end
-            cmp.confirm { behavior = cmp.ConfirmBehavior.Replace }
-          elseif has_any_words_before() then
-            press "<Space>"
-          else
-            fallback()
-          end
-        end,
-        c = function()
-          if cmp.visible() then
-            cmp.confirm { behavior = cmp.ConfirmBehavior.Replace }
-          else
-            vim.api.nvim_feedkeys(t "<Down>", "n", true)
-          end
-        end,
-      },
+      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(),{"i",'c'}),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.get_selected_entry() == nil and vim.fn["UltiSnips#CanExpandSnippet"]() == 1 then
           press "<C-R>=UltiSnips#ExpandSnippet()<CR>"
@@ -100,8 +57,6 @@ function M.setup()
           press "<ESC>:call UltiSnips#JumpForwards()<CR>"
         elseif cmp.visible() then
           cmp.select_next_item()
-          -- elseif vim.fn["vsnip#available"](1) == 1 then
-          --   feedkey("<Plug>(vsnip-expand-or-jump)", "")
         elseif has_any_words_before() then
           press "<Tab>"
         else
@@ -118,8 +73,6 @@ function M.setup()
           press "<ESC>:call UltiSnips#JumpBackwards()<CR>"
         elseif cmp.visible() then
           cmp.select_prev_item()
-          -- elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-          --   feedkey("<Plug>(vsnip-jump-prev)", "")
         else
           press "<S-Tab>"
           fallback()
@@ -133,25 +86,17 @@ function M.setup()
     snippet = {
       expand = function(args)
         vim.fn["UltiSnips#Anon"](args.body)
-        -- vim.fn["vsnip#anonymous"](args.body)
       end,
     },
     sources = {
       { name = "nvim_lsp", max_item_count = 10 },
       { name = "nvim_lua", max_item_count = 5 },
       { name = "ultisnips", max_item_count = 5 },
-      -- { name = "vsnip", max_item_count = 5 },
       { name = "buffer", keyword_length = 5, max_item_count = 5 },
       { name = "path" },
       { name = "treesitter", max_item_count = 10 },
-      { name = "crates" },
-      -- { name = "spell" },
     },
     completion = { completeopt = "menu,menuone,noinsert", keyword_length = 1 },
-    experimental = { native_menu = false, ghost_text = false },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
   }
 
   -- If you want insert `(` after select function or method item
