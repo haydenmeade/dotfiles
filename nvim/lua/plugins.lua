@@ -65,6 +65,11 @@ function M.setup()
 				require("trouble").setup({ auto_open = false })
 			end,
 		})
+		-- Go development
+		use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
+		-- Lua development
+		use({ "folke/lua-dev.nvim", event = "VimEnter" })
+
 		-- Git
 		use({
 			"lewis6991/gitsigns.nvim",
@@ -87,11 +92,6 @@ function M.setup()
 				"DiffviewFocusFiles",
 			},
 		})
-
-		-- Go development
-		use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
-		-- Lua development
-		use({ "folke/lua-dev.nvim", event = "VimEnter" })
 
 		-- Sessions
 		use({
