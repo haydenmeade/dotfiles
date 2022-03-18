@@ -127,7 +127,6 @@ function M.setup()
 			"neovim/nvim-lspconfig",
 			as = "nvim-lspconfig",
 			after = "nvim-treesitter",
-			opt = true,
 			config = function()
 				require("config.lsp").setup()
 				require("config.dap").setup()
@@ -187,17 +186,14 @@ function M.setup()
 		-- Better syntax
 		use({
 			"nvim-treesitter/nvim-treesitter",
+			event = { "VimEnter" },
 			as = "nvim-treesitter",
-			event = "BufRead",
-			opt = true,
 			run = ":TSUpdate",
 			config = function()
 				require("config.treesitter").setup()
 			end,
 			requires = {
-				{
-					"nvim-treesitter/nvim-treesitter-textobjects",
-				},
+				"nvim-treesitter/nvim-treesitter-textobjects",
 				{
 					"windwp/nvim-autopairs",
 					run = "make",
@@ -309,10 +305,7 @@ function M.setup()
 	end
 
 	pcall(require, "impatient")
-	local status_ok, _ = pcall(require, "packer_compiled")
-	if not status_ok then
-		return
-	end
+	pcall(require, "packer_compiled")
 	require("packer").init(conf)
 	require("packer").startup(plugins)
 end
