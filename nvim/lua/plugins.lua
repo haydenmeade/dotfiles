@@ -48,6 +48,7 @@ function M.setup()
 		use({ "tpope/vim-fugitive", event = "BufRead" })
 		use({ "tpope/vim-surround", event = "BufRead" })
 		use({ "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" } })
+		use({ "tpope/vim-sleuth" })
 
 		use({
 			"numToStr/Comment.nvim",
@@ -92,6 +93,14 @@ function M.setup()
 				"DiffviewFocusFiles",
 			},
 		})
+		use({
+			"TimUntersberger/neogit",
+			cmd = "Neogit",
+			config = function()
+				require("config.neogit").setup()
+			end,
+		})
+		use({ "rhysd/git-messenger.vim" })
 
 		-- Sessions
 		use({
