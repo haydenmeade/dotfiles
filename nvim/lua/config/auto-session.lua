@@ -1,6 +1,8 @@
 local M = {}
 
-local opts = {}
+local opts = {
+	log_level = "error",
+}
 
 function M.setup()
 	require("auto-session").setup(opts)
