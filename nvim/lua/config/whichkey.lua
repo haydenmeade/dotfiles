@@ -265,6 +265,32 @@ local lsp_mappings = {
 	-- {'v', '<leader>lcr', '<cmd>lua vim.lsp.buf.range_code_action()<CR>'},
 }
 
+local dap_nvim_dap_mappings = {
+	d = {
+		name = "DAP",
+		b = { "<Cmd>lua require('dap').toggle_breakpoint()<CR>", "Toggle breakpoint" },
+		c = { "<Cmd>lua require('dap').continue()<CR>", "Continue" },
+		s = { "<Cmd>lua require('dap').step_over()<CR>", "Step over" },
+		i = { "<Cmd>lua require('dap').step_into()<CR>", "Step into" },
+		o = { "<Cmd>lua require('dap').step_out()<CR>", "Step out" },
+		u = { "<Cmd>lua require('dapui').toggle()<CR>", "Toggle UI" },
+		p = { "<Cmd>lua require('dap').repl.open()<CR>", "REPL" },
+		e = { '<Cmd>lua require"telescope".extensions.dap.commands{}<CR>', "Commands" },
+		f = { '<Cmd>lua require"telescope".extensions.dap.configurations{}<CR>', "Configurations" },
+		r = { '<Cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>', "List breakpoints" },
+		v = { '<Cmd>lua require"telescope".extensions.dap.variables{}<CR>', "Variables" },
+		m = { '<Cmd>lua require"telescope".extensions.dap.frames{}<CR>', "Frames" },
+
+		-- Refactoring print
+		P = { ':lua require("refactoring").debug.printf({below = false})<CR>', "Print" },
+		C = { ':lua require("refactoring").debug.cleanup({})<CR>', "Clear print" },
+	},
+}
+
+function M.register_dap()
+	require("which-key").register(dap_nvim_dap_mappings, opts)
+end
+
 local lsp_mappings_opts = {
 	{
 		"document_formatting",
