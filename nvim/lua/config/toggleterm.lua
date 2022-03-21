@@ -10,7 +10,7 @@ function M.setup()
 		shading_factor = 0.3,
 		start_in_insert = true,
 		persist_size = true,
-		direction = "float",
+		direction = "horizontal", --'vertical' | 'horizontal' | 'window' | 'float'
 	})
 end
 

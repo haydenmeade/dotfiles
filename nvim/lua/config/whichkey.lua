@@ -240,7 +240,7 @@ local lsp_mappings = {
 
 	l = {
 		name = "LSP",
-		r = { "<Cmd>Lspsaga rename<CR>", "Rename" },
+		r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
 		u = { "<Cmd>Telescope lsp_references<CR>", "References" },
 		o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },
 		d = { "<Cmd>Telescope lsp_definitions<CR>", "Definition" },
