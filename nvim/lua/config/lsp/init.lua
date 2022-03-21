@@ -4,6 +4,7 @@ local lsp_providers = {
 	pyright = true,
 	gopls = true,
 	sumneko_lua = true,
+	tsserver = true,
 	clangd = true,
 }
 

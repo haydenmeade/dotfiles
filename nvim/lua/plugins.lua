@@ -188,6 +188,7 @@ function M.setup()
 				require("config.treesitter").setup()
 			end,
 			requires = {
+				"jose-elias-alvarez/nvim-lsp-ts-utils",
 				"nvim-treesitter/nvim-treesitter-textobjects",
 				{
 					"windwp/nvim-autopairs",
