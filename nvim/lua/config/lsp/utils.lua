@@ -73,10 +73,10 @@ function M.lsp_config(client, bufnr)
 	local whichkey = require("config.whichkey")
 	whichkey.register_lsp(client)
 
-	if client.name == "tsserver" or client.name == "jsonls" then
-		client.resolved_capabilities.document_formatting = false
-		client.resolved_capabilities.document_range_formatting = false
-	end
+	-- if client.name == "tsserver" or client.name == "jsonls" then
+	-- 	client.resolved_capabilities.document_formatting = false
+	-- 	client.resolved_capabilities.document_range_formatting = false
+	-- end
 
 	if client.resolved_capabilities.document_formatting then
 		vim.cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")

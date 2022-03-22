@@ -3,6 +3,7 @@ local M = {}
 local lsputils = require("config.lsp.utils")
 
 function M.config(installed_server)
+	-- https://github.com/golang/tools/blob/master/gopls/doc/settings.md
 	return {
 		lspconfig = {
 			capabilities = lsputils.get_capabilities(),

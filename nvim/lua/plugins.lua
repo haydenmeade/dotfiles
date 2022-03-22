@@ -67,7 +67,7 @@ function M.setup()
 			end,
 		})
 		-- Go development
-		use({ "fatih/vim-go", run = ":GoUpdateBinaries" })
+		use({ "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" })
 		-- Lua development
 		use({ "folke/lua-dev.nvim", event = "VimEnter" })
 

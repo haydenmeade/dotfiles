@@ -24,6 +24,8 @@ local function setup_servers()
 			local opts = {
 				on_attach = lsputils.lsp_attach,
 				capabilities = lsputils.get_capabilities(),
+				on_init = lsputils.lsp_init,
+				on_exit = lsputils.lsp_exit,
 			}
 			server:setup(opts)
 		end
