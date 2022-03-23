@@ -5,6 +5,7 @@ local keymap = require("utils.keymap")
 local keymappings = {
 	insert_mode = {},
 	normal_mode = {
+		["<Esc><Esc>"] = "<Cmd>noh<CR>",
 		["<C-w><C-o>"] = "<Cmd>MaximizerToggle!<CR>",
 		["<M-left>"] = "<C-w>>",
 		["<M-right>"] = "<C-w><",
