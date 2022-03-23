@@ -102,6 +102,15 @@ function M.setup()
 		})
 		use({ "rhysd/git-messenger.vim" })
 
+		-- Legendary
+		use({
+			"mrjones2014/legendary.nvim",
+			keys = { [[<C-p>]] },
+			config = function()
+				require("config.legendary").setup()
+			end,
+			requires = { "stevearc/dressing.nvim" },
+		})
 		-- Sessions
 		use({
 			"rmagatti/session-lens",
@@ -123,6 +132,13 @@ function M.setup()
 		})
 
 		--LSP
+		use({
+			"j-hui/fidget.nvim", -- loading progress
+			event = "BufReadPre",
+			config = function()
+				require("fidget").setup({})
+			end,
+		})
 		use("williamboman/nvim-lsp-installer")
 		use("jose-elias-alvarez/null-ls.nvim")
 		use("ray-x/lsp_signature.nvim")
