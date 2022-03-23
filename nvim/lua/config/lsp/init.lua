@@ -5,6 +5,7 @@ local lsp_providers = {
 	gopls = true,
 	sumneko_lua = true,
 	tsserver = true,
+	solargraph = true,
 	clangd = true,
 }
 
