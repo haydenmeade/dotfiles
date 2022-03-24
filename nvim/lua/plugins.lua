@@ -227,7 +227,7 @@ function M.setup()
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope-project.nvim",
 				"nvim-telescope/telescope-symbols.nvim",
-				"cljoly/telescope-repo.nvim",
+				{ "cljoly/telescope-repo.nvim", commit = "05c77a0f06e090ad2427c7af5b9c4400132a8f68" },
 				"benfowler/telescope-luasnip.nvim",
 				"nvim-lua/popup.nvim",
 				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },

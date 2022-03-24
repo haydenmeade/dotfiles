@@ -145,7 +145,7 @@ local mappings = {
 			"List projects",
 		},
 		r = {
-			"<Cmd>Telescope projects<Cr>",
+			"<Cmd>Telescope project<Cr>",
 			"Recent projects",
 		},
 	},
