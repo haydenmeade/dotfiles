@@ -4,12 +4,15 @@ function M.setup()
 	local ls = require("luasnip")
 	local types = require("luasnip.util.types")
 
-	ls.snippets = {
-		all = require("config.luasnip.ft.all"),
-		go = require("config.luasnip.ft.go"),
-		lua = require("config.luasnip.ft.lua"),
-	}
+	-- ls.snippets = {
+	-- 	all = require("config.luasnip.ft.all"),
+	-- 	-- go = require("config.luasnip.ft.go"),
+	-- 	lua = require("config.luasnip.ft.lua"),
+	-- }
+
+	require("luasnip.loaders.from_lua").lazy_load()
 	require("luasnip.loaders.from_vscode").lazy_load()
+	-- ls.add_snippets("all", require("config.luasnip.luasnippets.all"))
 
 	ls.config.set_config({
 		-- This tells LuaSnip to remember to keep around the last snippet.
@@ -17,7 +20,8 @@ function M.setup()
 		history = true,
 
 		updateevents = "TextChanged,TextChangedI",
-
+		region_check_events = "CursorMoved,CursorHold",
+		delete_check_events = "InsertLeave",
 		enable_autosnippets = true,
 
 		ext_opts = {

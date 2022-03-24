@@ -151,22 +151,17 @@ function M.setup()
 
 		use({
 			"rafamadriz/friendly-snippets",
-			event = { "InsertEnter" },
-			-- event = { "BufRead", "BufNewFile", "InsertEnter" },
 		})
+
 		use({
 			"L3MON4D3/LuaSnip",
 			requires = "rafamadriz/friendly-snippets",
 			config = function()
 				require("config.luasnip").setup()
 			end,
-			after = { "nvim-treesitter" },
+			after = { "nvim-cmp" },
 		})
 
-		use({
-			"saadparwaiz1/cmp_luasnip",
-			after = { "LuaSnip" },
-		})
 		-- Autocomplete
 		use({
 			"hrsh7th/nvim-cmp",
@@ -185,8 +180,6 @@ function M.setup()
 				"f3fora/cmp-spell",
 				"ray-x/cmp-treesitter",
 				"saadparwaiz1/cmp_luasnip",
-				"L3MON4D3/LuaSnip",
-				"friendly-snippets",
 			},
 			after = { "friendly-snippets", "nvim-treesitter" },
 			config = function()
