@@ -294,24 +294,17 @@ function M.setup()
 			end,
 		})
 
-		-- Theme
 		use({
 			"kyazdani42/nvim-web-devicons",
 			config = function()
 				require("nvim-web-devicons").setup({ default = true })
 			end,
 		})
+		-- colorscheme
 
-		use({
-			"folke/tokyonight.nvim",
-			config = function()
-				vim.cmd("colorscheme tokyonight")
-			end,
-		})
-		use({
-			"luisiacc/gruvbox-baby",
-		})
-
+		use("rebelot/kanagawa.nvim")
+		use("luisiacc/gruvbox-baby")
+		use("folke/tokyonight.nvim")
 		if packer_bootstrap then
 			print("Setting up Neovim. Restart required after installation!")
 			require("packer").sync()

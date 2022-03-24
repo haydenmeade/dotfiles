@@ -38,6 +38,8 @@ function M.setup()
 		"menuone",
 		"noselect",
 	} -- better completion
+
+	cmd("colorscheme kanagawa")
 end
 
 M.setup()
