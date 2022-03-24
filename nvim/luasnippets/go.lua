@@ -91,9 +91,23 @@ return {
         }),
         finally = ls.i(0),
     })
-  ), 
+  ),
 
-  -- If error {{{
+  -- Append
+  ls.s(
+    { trig = "ap", dscr = "append to an array" },
+    fmt(
+      [[
+        {arr1} = append({arr}, {var}) 
+      ]], {
+      arr1= rep(1),
+      arr= ls.i(1, "arr"),
+      var=ls.i(0, "var"),
+    }),
+    in_func
+  ),
+
+  -- If error
   ls.s(
     { trig = "ife", name = "If error", dscr = "If error, return wrapped" },
     fmt("if {} != nil {{\n\treturn {}\n}}\n{}", {
@@ -102,9 +116,9 @@ return {
       ls.i(0),
     }),
     in_func
-  ), --}}}
+  ),
 
-  -- gRPC Error{{{
+  -- gRPC Error
   ls.s(
     { trig = "gerr", dscr = "Return an instrumented gRPC error" },
     fmt('internal.GrpcError({},\n\tcodes.{}, "{}", "{}", {})', {
@@ -115,7 +129,7 @@ return {
       ls.i(5, "fields"),
     }),
     in_func
-  ), --}}}
+  ),
 
   -- Mockery {{{
   ls.s(

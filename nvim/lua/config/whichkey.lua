@@ -46,7 +46,7 @@ local mappings = {
 			"<Cmd>lua require('config.telescope').search_dotfiles()<CR>",
 			"Configuration",
 		},
-		r = { "<Cmd>lua require('util').Reload() | PackerSync<CR>", "Reload config" },
+		r = { "<Cmd>lua require('util').Reload()<CR>", "Reload config" },
 		m = { "<Cmd>messages<Cr>", "Messages" },
 		p = { "<Cmd>messages clear<Cr>", "Clear messages" },
 		f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
@@ -89,13 +89,11 @@ local mappings = {
 		o = { "<Cmd>Telescope oldfiles<Cr>", "Old files" },
 		m = { "<Cmd>Telescope marks<Cr>", "Mark" },
 		n = { "<Cmd>ene <BAR> startinsert <Cr>", "New file" },
-		r = { "<Cmd>Telescope frecency<Cr>", "Recent file" },
 		s = { "<Cmd>Telescope symbols<Cr>", "Symbols" },
 		a = { "<Cmd>xa<Cr>", "Save all & quit" },
 		e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
 		t = { "<Cmd>Telescope<CR>", "Telescope" },
 		l = { "<Cmd>e!<CR>", "Reload file" },
-		j = { "<Cmd>Telescope zoxide list<CR>", "Jump to folder" },
 	},
 
 	-- Git

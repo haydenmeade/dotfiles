@@ -105,11 +105,14 @@ function M.setup()
 			{ name = "nvim_lsp", max_item_count = 10 },
 			{ name = "nvim_lua", max_item_count = 5 },
 			{ name = "luasnip", priority = 10 },
+			{ name = "treesitter", max_item_count = 10 },
 			{ name = "buffer", keyword_length = 5, max_item_count = 5 },
 			{ name = "path" },
-			{ name = "treesitter", max_item_count = 10 },
 		},
 		completion = { completeopt = "menu,menuone,noinsert", keyword_length = 1 },
+		experimental = {
+			ghost_text = true,
+		},
 	})
 
 	-- If you want insert `(` after select function or method item
