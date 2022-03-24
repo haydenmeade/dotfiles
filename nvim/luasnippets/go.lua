@@ -6,7 +6,7 @@ local util = require("config.luasnip.util")
 local ai = require("luasnip.nodes.absolute_indexer")
 local partial = require("luasnip.extras").partial
 
--- Conditions {{{
+-- Conditions
 local function not_in_function()
 	return not util.is_in_function()
 end
@@ -30,18 +30,17 @@ local not_in_func = {
 	show_condition = not_in_function,
 	condition = not_in_function,
 }
---}}}
+
 
 -- stylua: ignore start
 return {
-  -- Main {{{
+  -- Main
   ls.s(
     { trig = "main", name = "Main", dscr = "Create a main function" },
     fmta("func main() {\n\t<>\n}", ls.i(0)),
     not_in_func
-  ), --}}}
+  ),
 
-  -- If call error {{{
   ls.s(
     { trig = "ifcall", name = "IF CALL", dscr = "Call a function and check the error" },
     fmt(
@@ -57,15 +56,14 @@ return {
         func    = ls.i(3, { "Func" }),
         args    = ls.i(4),
         err2    = rep(2),
-        err3    = ls.d(5, util.make_return_nodes, { 2 }),
+        err3    = ls.d(5, util.go_err_snippet, { 2, 3 }),
         finally = ls.i(0),
     }),
     in_func
-  ), --}}}
+  ),
 
-  -- Function {{{
   ls.s(
-    { trig = "fn", name = "Function", dscr = "Create a function or a method" },
+    { trig = "f", name = "Function", dscr = "Create a function or a method" },
     fmt(
       [[
         // {name1} {desc}
@@ -92,9 +90,8 @@ return {
           })),
         }),
         finally = ls.i(0),
-    }),
-    not_in_func
-  ), --}}}
+    })
+  ), 
 
   -- If error {{{
   ls.s(
@@ -151,7 +148,7 @@ return {
 
   -- Allocate Slices and Maps {{{
   ls.s(
-    { trig = "make", name = "Make", dscr = "Allocate map or slice" },
+    { trig = "m", name = "Make", dscr = "Allocate map or slice" },
     fmt("{} {}= make({})\n{}", {
       ls.i(1, "name"),
       ls.i(2),
@@ -225,7 +222,7 @@ return {
     in_test_func
   ), --}}}
 
-  -- Subtests {{{
+  -- Subtests
   ls.s(
     { trig = "Test", name = "Test/Subtest", dscr = "Create subtests and their function stubs" },
     fmta("func <>(t *testing.T) {\n<>\n}\n\n <>", {
@@ -234,89 +231,17 @@ return {
       ls.d(3, util.mirror_t_run_funcs, ai({ 2 })),
     }),
     in_test_file
-  ), --}}}
+  ),
 
-  -- Stringer {{{
+  -- Stringer
   ls.s(
-    { trig = "strigner", name = "Stringer", dscr = "Create a stringer go:generate" },
+    { trig = "stringer", name = "Stringer", dscr = "Create a stringer go:generate" },
     fmt("//go:generate stringer -type={} -output={}_string.go", {
       ls.i(1, "Type"),
       partial(vim.fn.expand, "%:t:r"),
     })
-  ), --}}}
-
-  -- Query Database {{{
-  ls.s(
-    { trig = "queryrows", name = "Query Rows", dscr = "Query rows from database" },
-    fmta(
-      [[
-      const <query1> = `<query2>`
-      <ret1> := make([]<type1>, 0, <cap>)
-
-      <err1> := <retrier>.Do(func() error {
-      	<rows1>, <err2> := <db>.Query(<ctx>, <query3>, <args>)
-      	if errors.Is(<err3>, pgx.ErrNoRows) {
-      		return &retry.StopError{Err: <err4>}
-      	}
-      	if <err5> != nil {
-      		return <err6>
-      	}
-      	defer <rows2>.Close()
-
-      	<ret2> = <ret3>[:0]
-      	for <rows3>.Next() {
-      		var <doc1> <type2>
-      		<err7> := <rows4>.Scan(&<vals>)
-      		if <err8> != nil {
-      			return <err9>
-      		}
-
-      		<last>
-      		<ret4> = append(<ret5>, <doc2>)
-      	}
-
-      	return <err11>
-      })
-      return <ret6>, <err12>
-      ]], {
-        query1  = ls.i(1, "query"),
-        query2  = ls.i(2, "SELECT 1"),
-        ret1    = ls.i(3, "ret"),
-        type1   = ls.i(4, "Type"),
-        cap     = ls.i(5, "cap"),
-        err1    = ls.i(6, "err"),
-        retrier = ls.i(7, "retrier"),
-        rows1   = ls.i(8, "rows"),
-        err2    = ls.i(9, "err"),
-        db      = ls.i(10, "db"),
-        ctx     = ls.i(11, "ctx"),
-        query3  = rep(1),
-        args    = ls.i(12, "args"),
-        err3    = rep(9),
-        err4    = rep(9),
-        err5    = rep(9),
-        err6    = ls.d(13, util.go_err_snippet, { 9 }, { msg = "making query" }),
-        rows2   = rep(8),
-        ret2    = rep(3),
-        ret3    = rep(3),
-        rows3   = rep(8),
-        doc1    = ls.i(14, "doc"),
-        type2   = rep(4),
-        err7    = ls.i(15, "err"),
-        rows4   = rep(8),
-        vals    = ls.d(16, function(args) return ls.sn(nil, ls.i(1, args[1][1])) end, { 14 }),
-        err8    = rep(15),
-        err9    = ls.d(17, util.go_err_snippet, { 15 }, { msg = "scanning row" }),
-        last    = ls.i(0),
-        ret4    = rep(3),
-        ret5    = rep(3),
-        doc2    = rep(14),
-        err11   = ls.d(18, util.go_err_snippet, { 8 }, { msg = "iterating rows", postfix = ".Err()" }),
-        ret6    = rep(3),
-        err12   = ls.d(19, util.go_err_snippet, { 6 }),
-    })
   ),
-  -- }}}
+
 }
 -- stylua: ignore end
 
