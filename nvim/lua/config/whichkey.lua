@@ -46,7 +46,7 @@ local mappings = {
 			"<Cmd>lua require('config.telescope').search_dotfiles()<CR>",
 			"Configuration",
 		},
-		r = { "<Cmd>luafile %<Cr>", "Reload lua file" },
+		r = { "<Cmd>lua require('util').Reload() | PackerSync<CR>", "Reload config" },
 		m = { "<Cmd>messages<Cr>", "Messages" },
 		p = { "<Cmd>messages clear<Cr>", "Clear messages" },
 		f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
@@ -171,10 +171,9 @@ local mappings = {
 		},
 		c = { "q:", "Command history" },
 		g = { "q/", "Grep history" },
-		l = { "<Cmd>lua require('utils.cheatsheet').cheatsheet()<CR>", "Search code" },
 		o = { "<Cmd>SymbolsOutline<CR>", "Symbols Outline" },
 		b = { "<Cmd>Telescope current_buffer_fuzzy_find<CR>", "Fuzzy find buffer" },
-		u = { "<Cmd>Telescope ultisnips<CR>", "Search snippets" },
+		l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
 	},
 
 	-- Testing

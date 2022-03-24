@@ -19,14 +19,6 @@ local function packer_init()
 	vim.cmd("autocmd BufWritePost plugins.lua source <afile> | PackerCompile")
 end
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
 packer_init()
 
 function M.setup()
@@ -157,23 +149,28 @@ function M.setup()
 			end,
 		})
 
-		-- Snippets
 		use({
-			"SirVer/ultisnips",
-			requires = { { "honza/vim-snippets", rtp = "." } },
+			"rafamadriz/friendly-snippets",
+			event = { "InsertEnter" },
+			-- event = { "BufRead", "BufNewFile", "InsertEnter" },
+		})
+		use({
+			"L3MON4D3/LuaSnip",
+			requires = "rafamadriz/friendly-snippets",
 			config = function()
-				vim.g.UltiSnipsExpandTrigger = "<Plug>(ultisnips_expand)"
-				vim.g.UltiSnipsJumpForwardTrigger = "<Plug>(ultisnips_jump_forward)"
-				vim.g.UltiSnipsJumpBackwardTrigger = "<Plug>(ultisnips_jump_backward)"
-				vim.g.UltiSnipsListSnippets = "<c-x><c-s>"
-				vim.g.UltiSnipsRemoveSelectModeMappings = 0
+				require("config.luasnip").setup()
 			end,
+			after = { "nvim-treesitter" },
 		})
 
+		use({
+			"saadparwaiz1/cmp_luasnip",
+			after = { "LuaSnip" },
+		})
 		-- Autocomplete
 		use({
 			"hrsh7th/nvim-cmp",
-			event = { "BufRead", "InsertEnter" },
+			event = { "BufRead", "BufNewFile", "InsertEnter" },
 			opt = true,
 			requires = {
 				"hrsh7th/cmp-buffer",
@@ -184,11 +181,14 @@ function M.setup()
 				"hrsh7th/cmp-emoji",
 				"hrsh7th/cmp-cmdline",
 				"hrsh7th/cmp-nvim-lsp-document-symbol",
-				"quangnguyen30192/cmp-nvim-ultisnips",
 				"octaltree/cmp-look",
 				"f3fora/cmp-spell",
 				"ray-x/cmp-treesitter",
+				"saadparwaiz1/cmp_luasnip",
+				"L3MON4D3/LuaSnip",
+				"friendly-snippets",
 			},
+			after = { "friendly-snippets", "nvim-treesitter" },
 			config = function()
 				require("config.cmp").setup()
 			end,
@@ -225,7 +225,7 @@ function M.setup()
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope-project.nvim",
 				"nvim-telescope/telescope-symbols.nvim",
-				"fhill2/telescope-ultisnips.nvim",
+				"benfowler/telescope-luasnip.nvim",
 				"nvim-lua/popup.nvim",
 				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 			},
