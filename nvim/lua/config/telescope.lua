@@ -4,6 +4,7 @@ function M.setup()
 	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("project")
 	require("telescope").load_extension("luasnip")
+	require("telescope").load_extension("repo")
 
 	local actions = require("telescope.actions")
 

@@ -209,6 +209,15 @@ function M.setup()
 			},
 		})
 
+		-- Project settings
+		use({
+			"ahmedkhalf/project.nvim",
+			event = "VimEnter",
+			config = function()
+				require("config.project").setup()
+			end,
+		})
+
 		-- Telescope
 		use({
 			"nvim-telescope/telescope.nvim",
@@ -218,6 +227,7 @@ function M.setup()
 				"nvim-lua/plenary.nvim",
 				"nvim-telescope/telescope-project.nvim",
 				"nvim-telescope/telescope-symbols.nvim",
+				"cljoly/telescope-repo.nvim",
 				"benfowler/telescope-luasnip.nvim",
 				"nvim-lua/popup.nvim",
 				{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
