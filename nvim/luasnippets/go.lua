@@ -56,7 +56,7 @@ return {
         func    = ls.i(3, { "Func" }),
         args    = ls.i(4),
         err2    = rep(2),
-        err3    = ls.d(5, util.go_err_snippet, { 2, 3 }),
+        err3    = ls.d(5, util.make_return_nodes, { 2 }),
         finally = ls.i(0),
     }),
     in_func
