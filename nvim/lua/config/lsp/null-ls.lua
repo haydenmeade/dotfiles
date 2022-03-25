@@ -2,8 +2,6 @@ local M = {}
 
 local lsputils = require("config.lsp.utils")
 
-CONFIG = {}
-
 function M.setup()
 	local nls = require("null-ls")
 	local sources = {
