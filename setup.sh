@@ -19,7 +19,7 @@ BASEDIR="$(dirname -- "$(dirname -- "$BASEDIR")")"
 readonly BASEDIR
 
 declare ARGS_INSTALL_DEPENDENCIES=0
-declare ARGS_CLEAR_CACHE=0
+declare ARGS_INSTALL_LSP=0
 
 declare -a __npm_deps=(
   "neovim"
@@ -27,6 +27,8 @@ declare -a __npm_deps=(
   "@fsouza/prettierd"
   "jsonls"
 )
+
+declare __lsp_deps="gopls pyright bashls clangd jsonls solargraph sumneko_lua tsserver"
 
 declare -a __pip_deps=(
   "pynvim"
@@ -44,7 +46,7 @@ function usage() {
   echo "Options:"
   echo "    -h, --help                               Print this help message"
   echo "    --[no]-install-dependencies              Whether to automatically install external dependencies (will prompt by default)"
-  echo "    --clear-cache                            Clear cache only"
+  echo "    --install-lsp                            Whether to automatically install lsp servers"
 }
 
 function parse_arguments() {
@@ -55,6 +57,9 @@ function parse_arguments() {
         ;;
       --no-install-dependencies)
         ARGS_INSTALL_DEPENDENCIES=0
+        ;;
+      --install-lsp)
+        ARGS_INSTALL_LSP=1
         ;;
       --clear-cache)
         ARGS_CLEAR_CACHE=1
@@ -128,6 +133,11 @@ function setup_nvim() {
   "nvim" --headless \
     -c 'autocmd User PackerComplete quitall' \
     -c 'PackerSync'
+
+  if [[ "$ARGS_INSTALL_LSP" -eq 1 ]]; then
+    "nvim" --headless \
+      -c "LspInstall --sync ${__lsp_deps}"  -c q
+  fi
 
   echo "Packer setup complete"
 }
@@ -244,17 +254,17 @@ function check_neovim_min_version() {
 
   # exit with an error if min_version not found
   if ! nvim --headless -u NONE -c "$verify_version_cmd"; then
-    echo "[ERROR]: requires at least Neovim v0.6.1 or higher"
+    echo "[ERROR]: requires at least Neovim v0.7 or higher"
     exit 1
   fi
 }
 
 function check_system_deps() {
-  if ! command -v git &>/dev/null; then
+  if which git >/dev/null; then
     print_missing_dep_msg "git"
     exit 1
   fi
-  if ! command -v nvim &>/dev/null; then
+  if which nvim >/dev/null; then
     print_missing_dep_msg "neovim"
     exit 1
   fi
