@@ -1,3 +1,6 @@
+#!/usr/bin/env bash
+set -eo pipefail
+
 declare -r INSTALL_PREFIX="${INSTALL_PREFIX:-"$HOME/.local"}"
 
 declare -r XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
