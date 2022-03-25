@@ -11,7 +11,6 @@ function M.setup()
 		nls.builtins.formatting.eslint_d,
 		nls.builtins.formatting.stylua,
 		nls.builtins.diagnostics.flake8,
-		nls.builtins.code_actions.gitsigns,
 	}
 	nls.setup({
 		sources = sources,

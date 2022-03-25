@@ -1,7 +1,10 @@
 local M = {}
 
 function M.setup()
-	local cmp = require("cmp")
+	local ok, cmp = pcall(require, "cmp")
+	if not ok then
+		return
+	end
 	local ls = require("luasnip")
 	local compare = require("cmp.config.compare")
 

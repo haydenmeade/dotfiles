@@ -1,16 +1,21 @@
 local M = {}
 
-local _, builtin = pcall(require, "telescope.builtin")
-
 function M.setup()
-	require("telescope").load_extension("fzf")
-	require("telescope").load_extension("project")
-	require("telescope").load_extension("luasnip")
-	require("telescope").load_extension("repo")
+	local ok, telescope = pcall(require, "telescope")
+	if not ok then
+		return
+	end
+	local _, builtin = pcall(require, "telescope.builtin")
+
+	telescope.load_extension("fzf")
+	telescope.load_extension("project")
+	telescope.load_extension("luasnip")
+	telescope.load_extension("repo")
+	local trouble = require("trouble.providers.telescope")
 
 	local actions = require("telescope.actions")
 
-	require("telescope").setup({
+	telescope.setup({
 		find_command = {
 			"rg",
 			"--no-heading",
@@ -34,6 +39,10 @@ function M.setup()
 					["<C-k>"] = actions.move_selection_previous,
 					["<C-n>"] = actions.cycle_history_next,
 					["<C-p>"] = actions.cycle_history_prev,
+					["<C-t>"] = trouble.open_with_trouble,
+				},
+				n = {
+					["<C-t>"] = trouble.open_with_trouble,
 				},
 			},
 		},
@@ -64,7 +73,7 @@ function M.setup()
 	end
 
 	M.git_branches = function()
-		require("telescope.builtin").git_branches({
+		builtin.git_branches({
 			attach_mappings = function(prompt_bufnr, map)
 				map("i", "<c-d>", actions.git_delete_branch)
 				map("n", "<c-d>", actions.git_delete_branch)
