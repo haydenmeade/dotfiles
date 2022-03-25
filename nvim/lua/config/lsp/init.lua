@@ -8,6 +8,7 @@ local lsp_providers = {
 	solargraph = true,
 	clangd = true,
 	jsonls = true,
+	bashls = true,
 }
 
 local function setup_servers()

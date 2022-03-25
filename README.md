@@ -1,9 +1,18 @@
 # dotfiles
 
 Setup:
-bash ./setup.sh
+install nvim:
+bash ./installnvimfromrelease.sh
+or
+#linux:
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt-get update
+sudo apt install neovim -y
+
+bash ./setup.sh --[no]-install-dependencies
 
 #Dependencies:
+
 neovim
 python3
 fzf
@@ -15,31 +24,23 @@ aria2
 
 lsp:
 python
-	pyright 
-  https://github.com/pyenv/pyenv
+pyright
+https://github.com/pyenv/pyenv
 go --https://github.com/canha/golang-tools-install-script
-	gopls 
+gopls
 lua
-	sumneko_lua 
-  stylua
+sumneko_lua
+stylua
 typescript
-	tsserver 
-  eslint_d
+tsserver
+eslint_d
 ruby
-	solargraph 
-  *https://gorails.com/setup/windows/10
-  https://github.com/rbenv/rbenv
-  https://github.com/rbenv/ruby-build
+solargraph \*https://gorails.com/setup/windows/10
+https://github.com/rbenv/rbenv
+https://github.com/rbenv/ruby-build
 C/C++
-	clangd 
+clangd
 
 #Windows(WSL):
 Font: https://github.com/wclr/my-nerd-fonts/blob/master/Consolas%20NF/Consolas%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
 Systemd: https://github.com/DamionGans/ubuntu-wsl2-systemd-script
-
-#linux:
-sudo add-apt-repository ppa:neovim-ppa/unstable
-sudo apt-get update
-sudo apt install neovim -y
-
-
