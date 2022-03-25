@@ -33,6 +33,8 @@ function M.setup()
 	opt.splitbelow = true
 	opt.splitright = true
 	opt.clipboard = "unnamed,unnamedplus"
+
+	opt.shortmess:append("sI") -- disable nvim intro
 	opt.completeopt = {
 		"menu",
 		"menuone",
