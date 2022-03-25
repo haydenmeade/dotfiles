@@ -1,16 +1,13 @@
-local M = {}
+-- Highlight on yank
+-- cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
+vim.cmd("au TextYankPost * silent! lua vim.highlight.on_yank()")
 
-function M.auto_cmds()
-  -- Highlight on yank
-  -- cmd 'au TextYankPost * lua vim.highlight.on_yank {on_visual = false}'
-  vim.cmd "au TextYankPost * silent! lua vim.highlight.on_yank()"
-
-  vim.cmd [[
+vim.cmd([[
     autocmd InsertLeave,WinEnter * set cursorline
     autocmd InsertEnter,WinLeave * set nocursorline
-  ]]
+  ]])
 
-  vim.cmd [[
+vim.cmd([[
         set wildmode=longest,list,full
         set wildoptions=pum
         set wildmenu
@@ -21,13 +18,15 @@ function M.auto_cmds()
         set wildignore+=**/android/*
         set wildignore+=**/ios/*
         set wildignore+=**/.git/*
-    ]]
+    ]])
 
-  -- don't auto commenting new lines
-  vim.cmd [[au BufEnter * set fo-=c fo-=r fo-=o]]
+vim.cmd([[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]])
 
-  vim.api.nvim_exec(
-    [[
+-- don't auto commenting new lines
+vim.cmd([[au BufEnter * set fo-=c fo-=r fo-=o]])
+
+vim.api.nvim_exec(
+	[[
         cnoreabbrev W! w!
         cnoreabbrev Q! q!
         cnoreabbrev Qall! qall!
@@ -39,24 +38,17 @@ function M.auto_cmds()
         cnoreabbrev Q q
         cnoreabbrev Qall qall
     ]],
-    false
-  )
+	false
+)
 
-  -- Terminal
-  vim.api.nvim_exec(
-    [[
+-- Terminal
+vim.api.nvim_exec(
+	[[
         augroup auto_term
             autocmd!
             autocmd TermOpen * setlocal nonumber norelativenumber
             autocmd TermOpen * startinsert
         augroup END
     ]],
-    false
-  )
-end
-
-function M.setup()
-  M.auto_cmds()
-end
-
-M.setup()
+	false
+)

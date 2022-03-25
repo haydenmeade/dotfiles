@@ -36,6 +36,8 @@ function M.setup()
 
 		use("wbthomason/packer.nvim")
 
+		use({ "antoinemadec/FixCursorHold.nvim" }) -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+
 		-- Development
 		use({ "tpope/vim-fugitive", event = "BufRead" })
 		use({ "tpope/vim-surround", event = "BufRead" })

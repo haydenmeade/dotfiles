@@ -28,18 +28,23 @@ local xopts = {
 }
 
 local mappings = {
-	["w"] = { "<Cmd>w!<Cr>", "Save" },
-	["q"] = { "<Cmd>q!<Cr>", "Quit" },
+	w = { "<Cmd>w!<Cr>", "Save" },
+	q = { "<Cmd>q!<Cr>", "Quit" },
+	x = { "<Cmd>x!<Cr>", "Save+Quiet" },
+	c = { "<cmd>BufferKill<CR>", "Close Buffer" },
+	f = { require("config.telescope").find_project_files, "Find File" },
+	e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
+	h = { "<cmd>nohlsearch<CR>", "No Highlight" },
 
 	-- System
-	["z"] = {
+	z = {
 		name = "System",
 		b = {
 			"<Cmd>hi Normal ctermbg=none guibg=none<CR>",
 			"Transparent background",
 		},
-		s = { ":<C-u>SaveSession<Cr>", "Save session" },
-		l = { ":<C-u>SearchSession<Cr>", "Load session" },
+		s = { "<cmd>SaveSession<Cr>", "Save session" },
+		l = { "<cmd>SearchSession<Cr>", "Load session" },
 		h = { "<Cmd>ToggleTerm<CR>", "New horizontal terminal" },
 		t = { "<Cmd>terminal<CR>", "New terminal" },
 		z = {
@@ -59,78 +64,102 @@ local mappings = {
 		name = "Buffer",
 		a = { "<Cmd>BWipeout other<Cr>", "Delete all buffers" },
 		d = { "<Cmd>bd<Cr>", "Delete current buffer" },
-		l = { "<Cmd>ls<Cr>", "List buffers" },
 		n = { "<Cmd>bn<Cr>", "Next buffer" },
 		p = { "<Cmd>bp<Cr>", "Previous buffer" },
-		f = { "<Cmd>bd!<Cr>", "Force delete current buffer" },
+		x = { "<Cmd>xa!<Cr>", "Save all & quit" },
+		r = { "<Cmd>e!<CR>", "Reload file" },
+		c = { "<Cmd>ene <BAR> startinsert <Cr>", "Create file" },
+		j = { "<cmd>BufferLinePick<cr>", "Jump" },
+		f = { "<cmd>Telescope buffers<cr>", "Find" },
+		b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+		-- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
+		e = {
+			"<cmd>BufferLinePickClose<cr>",
+			"Pick which buffer to close",
+		},
+		h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
+		l = {
+			"<cmd>BufferLineCloseRight<cr>",
+			"Close all to the right",
+		},
+		D = {
+			"<cmd>BufferLineSortByDirectory<cr>",
+			"Sort by directory",
+		},
+		L = {
+			"<cmd>BufferLineSortByExtension<cr>",
+			"Sort by language",
+		},
 	},
 
 	-- Quick fix
-	c = {
-		name = "Quickfix",
-		o = { "<Cmd>copen<Cr>", "Open quickfix" },
-		c = { "<Cmd>cclose<Cr>", "Close quickfix" },
-		n = { "<Cmd>cnext<Cr>", "Next quickfix" },
-		p = { "<Cmd>cprev<Cr>", "Previous quickfix" },
-		x = { "<Cmd>cex []<Cr>", "Clear quickfix" },
-		t = { "<Cmd>BqfAutoToggle<Cr>", "Toggle preview" },
-	},
+	-- c = {
+	-- 	name = "Quickfix",
+	-- 	o = { "<Cmd>copen<Cr>", "Open quickfix" },
+	-- 	c = { "<Cmd>cclose<Cr>", "Close quickfix" },
+	-- 	n = { "<Cmd>cnext<Cr>", "Next quickfix" },
+	-- 	p = { "<Cmd>cprev<Cr>", "Previous quickfix" },
+	-- 	x = { "<Cmd>cex []<Cr>", "Clear quickfix" },
+	-- 	t = { "<Cmd>BqfAutoToggle<Cr>", "Toggle preview" },
+	-- },
 
-	-- File
-	f = {
-		name = "File",
+	-- Search
+	s = {
+		name = "Search",
+		c = { "<Cmd>Telescope current_buffer_fuzzy_find<CR>", "Fuzzy find buffer" },
 		b = { "<Cmd>Telescope buffers<Cr>", "Search buffers" },
-		c = { "<Cmd>Telescope current_buffer_fuzzy_find<Cr>", "Search current buffer" },
-		f = { "<Cmd>Telescope git_files<Cr>", "Git files" },
-		y = { "<Cmd>Telescope find_files<Cr>", "Find files" },
-		g = { "<Cmd>Telescope live_grep<Cr>", "Live grep" },
+		l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
+		t = { "<Cmd>Telescope live_grep<Cr>", "Live grep" },
 		h = { "<Cmd>Telescope help_tags<Cr>", "Help" },
-		p = { "<Cmd>Telescope file_browser<Cr>", "Pop-up file browser" },
-		o = { "<Cmd>Telescope oldfiles<Cr>", "Old files" },
 		m = { "<Cmd>Telescope marks<Cr>", "Mark" },
-		n = { "<Cmd>ene <BAR> startinsert <Cr>", "New file" },
-		s = { "<Cmd>Telescope symbols<Cr>", "Symbols" },
-		a = { "<Cmd>xa<Cr>", "Save all & quit" },
-		e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
-		t = { "<Cmd>Telescope<CR>", "Telescope" },
-		l = { "<Cmd>e!<CR>", "Reload file" },
+		y = { "<Cmd>Telescope symbols<Cr>", "Symbols" },
+		s = { "<Cmd>Telescope<CR>", "Telescope" },
+		f = { "<cmd>Telescope find_files<cr>", "Find File" },
+		M = { "<cmd>Telescope man_pages<cr>", "Man Pages" },
+		r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
+		R = { "<cmd>Telescope registers<cr>", "Registers" },
+		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
+		C = { "<cmd>Telescope commands<cr>", "Commands" },
+		p = {
+			"<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+			"Colorscheme with Preview",
+		},
+		T = {
+			name = "Treesitter",
+			i = { "<cmd>TSConfigInfo<cr>", "Info" },
+		},
 	},
 
 	-- Git
 	g = {
 		name = "Source code",
 		a = { "<Cmd>Telescope repo list<Cr>", "All repositories" },
-		s = { "<Cmd>Git<Cr>", "Git status" },
-		p = { "<Cmd>Git push<Cr>", "Git push" },
-		b = { "<Cmd>Git branch<Cr>", "Git branch" },
+		g = { "<Cmd>Git<Cr>", "Git status" },
 		d = { "<Cmd>Gvdiffsplit<Cr>", "Git diff" },
 		f = { "<Cmd>Git fetch --all<Cr>", "Git fetch" },
 		m = { "<Cmd>GitMessenger<Cr>", "Git messenger" },
 		n = { "<Cmd>Neogit<Cr>", "NeoGit" },
 		v = { "<Cmd>DiffviewOpen<Cr>", "Diffview open" },
-		c = { "<Cmd>DiffviewClose<Cr>", "Diffview close" },
+		q = { "<Cmd>DiffviewClose<Cr>", "Diffview close" },
 		h = { "<Cmd>DiffviewFileHistory<Cr>", "File history" },
-		["r"] = {
-			name = "Rebase",
-			u = {
-				"<Cmd>Git rebase upstream/master<Cr>",
-				"Git rebase upstream/master",
-			},
-			o = {
-				"<Cmd>Git rebase origin/master<Cr>",
-				"Git rebase origin/master",
-			},
+		j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
+		k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
+		l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
+		p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
+		r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
+		R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
+		s = { "<cmd>lua require 'gitsigns'.stage_hunk()<cr>", "Stage Hunk" },
+		u = {
+			"<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
+			"Undo Stage Hunk",
 		},
-		x = {
-			name = "Diff",
-			["2"] = { "<Cmd>diffget //2", "Diffget 2" },
-			["3"] = { "<Cmd>diffget //3", "Diffget 3" },
+		o = { "<cmd>Telescope git_status<cr>", "Open changed file" },
+		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
+		c = { "<cmd>Telescope git_commits<cr>", "Checkout commit" },
+		C = {
+			"<cmd>Telescope git_bcommits<cr>",
+			"Checkout commit(for current file)",
 		},
-		g = {
-			"<Cmd>DogeGenerate<Cr>",
-			"Generate doc",
-		},
-		y = { name = "Git URL" },
 	},
 
 	-- Project
@@ -150,43 +179,19 @@ local mappings = {
 		},
 	},
 
-	-- Search
-	["s"] = {
-		name = "Search",
-		w = {
-			"<Cmd>lua require('telescope').extensions.arecibo.websearch()<CR>",
-			"Web search",
-		},
-		s = { "<Cmd>lua require('spectre').open()<CR>", "Search file" },
-		z = { "<Plug>SearchNormal", "Browser search" },
-		v = {
-			"<Cmd>lua require('spectre').open_visual({select_word=true})<CR>",
-			"Visual search",
-		},
-		f = {
-			"viw:lua require('spectre').open_file_search()<Cr>",
-			"Open file search",
-		},
-		c = { "q:", "Command history" },
-		g = { "q/", "Grep history" },
-		o = { "<Cmd>SymbolsOutline<CR>", "Symbols Outline" },
-		b = { "<Cmd>Telescope current_buffer_fuzzy_find<CR>", "Fuzzy find buffer" },
-		l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
-	},
-
 	-- Testing
 	t = {
 		name = "Test",
-		n = { "<Cmd>w<CR>:UltestNearest<CR>", "Test nearest" },
-		f = { "<Cmd>w<CR>:Ultest<CR>", "Test file" },
-		o = { "<Cmd>w<CR>:UltestOutput<CR>", "Test output" },
-		l = { "<Cmd>w<CR>:UltestLast<CR>", "Test last" },
-		v = { "<Cmd>w<CR>:TestVisit<CR>", "Test visit" },
-		d = { "<Cmd>w<CR>:UltestDebug<CR>", "Test debug" },
-		g = { "<Cmd>w<CR>:UltestDebugNearest<CR>", "Test debug nearest" },
-		t = { "<Cmd>w<CR>:UltestSummary<CR>", "Test summary" },
-		c = { "<Cmd>w<CR>:UltestClear<CR>", "Test clear" },
-		s = { "<Cmd>w<CR>:UltestStop<CR>", "Test stop" },
+		n = { "<Cmd>w<CR><cmd>UltestNearest<CR>", "Test nearest" },
+		f = { "<Cmd>w<CR><cmd>Ultest<CR>", "Test file" },
+		o = { "<Cmd>w<CR><cmd>UltestOutput<CR>", "Test output" },
+		l = { "<Cmd>w<CR><cmd>UltestLast<CR>", "Test last" },
+		v = { "<Cmd>w<CR><cmd>TestVisit<CR>", "Test visit" },
+		d = { "<Cmd>w<CR><cmd>UltestDebug<CR>", "Test debug" },
+		g = { "<Cmd>w<CR><cmd>UltestDebugNearest<CR>", "Test debug nearest" },
+		t = { "<Cmd>w<CR><cmd>UltestSummary<CR>", "Test summary" },
+		c = { "<Cmd>w<CR><cmd>UltestClear<CR>", "Test clear" },
+		s = { "<Cmd>w<CR><cmd>UltestStop<CR>", "Test stop" },
 	},
 
 	-- Run
@@ -195,19 +200,6 @@ local mappings = {
 		x = "Swap next parameter",
 		X = "Swap previous parameter",
 		s = { "<Cmd>SnipRun<CR>", "Run snippets" },
-	},
-
-	-- Git signs
-	h = {
-		name = "Git signs",
-		b = "Blame line",
-		p = "Preview hunk",
-		R = "Reset buffer",
-		r = "Reset buffer",
-		s = "Stage hunk",
-		S = "Stage buffer",
-		u = "Undo stage hunk",
-		U = "Reset buffer index",
 	},
 
 	-- Notes
@@ -225,12 +217,6 @@ local mappings = {
 		z = { "<Cmd>ZenMode<Cr>", "Zen Mode" },
 		g = { "<Cmd>GrammarousCheck<Cr>", "Grammar check" },
 	},
-
-	-- Viewer
-	v = {
-		name = "View",
-		v = { "<Cmd>vsplit term://vd <cfile><CR>", "VisiData" },
-	},
 }
 
 local lsp_mappings = {
@@ -244,22 +230,25 @@ local lsp_mappings = {
 		a = { "<Cmd>Telescope lsp_code_actions<CR>", "Code actions" },
 		e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
 		x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
-		n = { "<Cmd>update<CR>:Neoformat<CR>", "Neoformat" },
+		n = { "<Cmd>update<CR><cmd>Neoformat<CR>", "Neoformat" },
 		t = { "<Cmd>TroubleToggle<CR>", "Trouble" },
+		l = { "<Cmd>lua vim.lsp.codelens.refresh()<CR>", "Codelens refresh" },
+		s = { "<Cmd>lua vim.lsp.codelens.run()<CR>", "Codelens run" },
+		f = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
+		w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
+		j = {
+			"<cmd>lua vim.diagnostic.goto_next()<cr>",
+			"Next Diagnostic",
+		},
+		k = {
+			"<cmd>lua vim.diagnostic.goto_prev()<cr>",
+			"Prev Diagnostic",
+		},
+		S = {
+			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
+			"Workspace Symbols",
+		},
 	},
-
-	-- WIP - refactoring
-	-- nnoremap <silent><leader>chd :Lspsaga hover_doc<CR>
-	-- nnoremap <silent><C-f> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(1)<CR>
-	-- nnoremap <silent><C-b> <cmd>lua require('lspsaga.action').smart_scroll_with_saga(-1)<CR>
-	-- nnoremap <silent><leader>cpd:Lspsaga preview_definition<CR>
-	-- nnoremap <silent> <leader>cld :Lspsaga show_line_diagnostics<CR>
-	-- {'n', '<leader>lds', '<cmd>lua vim.diagnostic.show_line_diagnostics()<CR>' },
-	-- {'n', '<leader>lde', '<cmd>lua vim.diagnostic.enable()<CR>'},
-	-- {'n', '<leader>ldd', '<cmd>lua vim.diagnostic.disable()<CR>'},
-	-- {'n', '<leader>ll', '<cmd>lua vim.diagnostic.set_loclist()<CR>'},
-	-- {'n', '<leader>lca', '<cmd>lua vim.lsp.buf.code_action()<CR>'},
-	-- {'v', '<leader>lcr', '<cmd>lua vim.lsp.buf.range_code_action()<CR>'},
 }
 
 local dap_nvim_dap_mappings = {
@@ -279,8 +268,8 @@ local dap_nvim_dap_mappings = {
 		m = { '<Cmd>lua require"telescope".extensions.dap.frames{}<CR>', "Frames" },
 
 		-- Refactoring print
-		P = { ':lua require("refactoring").debug.printf({below = false})<CR>', "Print" },
-		C = { ':lua require("refactoring").debug.cleanup({})<CR>', "Clear print" },
+		P = { '<cmd>lua require("refactoring").debug.printf({below = false})<CR>', "Print" },
+		C = { '<cmd>lua require("refactoring").debug.cleanup({})<CR>', "Clear print" },
 	},
 }
 
@@ -288,41 +277,35 @@ function M.register_dap()
 	require("which-key").register(dap_nvim_dap_mappings, opts)
 end
 
-local lsp_mappings_opts = {
-	{
-		"document_formatting",
-		{ ["lf"] = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Format" } },
-	},
-	{
-		"code_lens",
-		{
-			["ll"] = {
-				"<Cmd>lua vim.lsp.codelens.refresh()<CR>",
-				"Codelens refresh",
-			},
-		},
-	},
-	{
-		"code_lens",
-		{ ["ls"] = { "<Cmd>lua vim.lsp.codelens.run()<CR>", "Codelens run" } },
-	},
-}
-
 function M.register_lsp(client)
 	local wk = require("which-key")
 	wk.register(lsp_mappings, opts)
-
-	for _, m in pairs(lsp_mappings_opts) do
-		local capability, key = unpack(m)
-		if client.resolved_capabilities[capability] then
-			wk.register(key, opts)
-		end
-	end
 end
 
 function M.setup()
 	local wk = require("which-key")
-	wk.setup({})
+	wk.setup({
+		setup = {
+			plugins = {
+				marks = true, -- shows a list of your marks on ' and `
+				registers = true, -- shows your registers on " in NORMAL or <C-r> in INSERT mode
+				-- the presets plugin, adds help for a bunch of default keybindings in Neovim
+				-- No actual key bindings are created
+				presets = {
+					operators = false, -- adds help for operators like d, y, ...
+					motions = false, -- adds help for motions
+					text_objects = false, -- help for text objects triggered after entering an operator
+					windows = true, -- default bindings on <c-w>
+					nav = true, -- misc bindings to work with windows
+					z = true, -- bindings for folds, spelling and others prefixed with z
+					g = true, -- bindings for prefixed with g
+				},
+				spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
+			},
+			hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^<cmd>", "^ " }, -- hide mapping boilerplate
+			show_help = true, -- show help message on the command line when the popup is visible
+		},
+	})
 	wk.register(mappings, opts)
 end
 

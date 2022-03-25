@@ -1,5 +1,7 @@
 local M = {}
 
+local _, builtin = pcall(require, "telescope.builtin")
+
 function M.setup()
 	require("telescope").load_extension("fzf")
 	require("telescope").load_extension("project")
@@ -38,14 +40,24 @@ function M.setup()
 	})
 
 	M.search_dotfiles = function()
-		require("telescope.builtin").find_files({
+		builtin.find_files({
 			prompt_title = "< VimRC >",
 			cwd = "$HOME/dotfiles/",
 		})
 	end
 
+	-- Smartly opens either git_files or find_files, depending on whether the working directory is
+	-- contained in a Git repo.
+	function M.find_project_files()
+		local ok = pcall(builtin.git_files)
+
+		if not ok then
+			builtin.find_files()
+		end
+	end
+
 	M.switch_projects = function()
-		require("telescope.builtin").find_files({
+		builtin.find_files({
 			prompt_title = "< Switch Project >",
 			cwd = "$HOME/",
 		})
