@@ -106,6 +106,9 @@ function M.setup()
       requires = { "stevearc/dressing.nvim" },
     }
 
+    -- Logging
+    use { "Tastyep/structlog.nvim" }
+
     -- Sessions
     use {
       "rmagatti/session-lens",

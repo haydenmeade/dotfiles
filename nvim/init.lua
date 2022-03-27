@@ -1,3 +1,4 @@
+vim.g.loglevel = "debug" -- "trace" | "debug" | "info" | "warn" | "error"
 local present, impatient = pcall(require, "impatient")
 
 if present then
@@ -6,6 +7,7 @@ end
 
 local core_modules = {
   "core.options",
+  "core.log",
   "core.autocmds",
 }
 
