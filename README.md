@@ -26,18 +26,29 @@ lsp:
 python
 pyright
 https://github.com/pyenv/pyenv
+
 go --https://github.com/canha/golang-tools-install-script
+goenv?
 gopls
+
 lua
 sumneko_lua
 stylua
+
 typescript
 tsserver
 eslint_d
+node version manager
+https://github.com/nvm-sh/nvm
+
 ruby
+*brew install rbenv ruby-build
+*sudo apt install rbenv ruby-build
 solargraph \*https://gorails.com/setup/windows/10
 https://github.com/rbenv/rbenv
 https://github.com/rbenv/ruby-build
+\*curl -fsSL https://github.com/rbenv/rbenv-installer/raw/main/bin/rbenv-doctor | bash
+
 C/C++
 clangd
 
