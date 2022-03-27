@@ -127,25 +127,16 @@ function M.get_capabilities()
   return capabilities
 end
 
-function M.setup_server(server, config)
+function M.setup_default_server(server)
   local options = {
     on_attach = M.lsp_attach,
     on_exit = M.lsp_exit,
     on_init = M.lsp_init,
+    cmd_env = server._default_options.cmd_env,
     capabilities = M.get_capabilities(),
     flags = { debounce_text_changes = 150 },
   }
-  for k, v in pairs(config) do
-    options[k] = v
-  end
-
-  local lspconfig = require "lspconfig"
-  lspconfig[server].setup(vim.tbl_deep_extend("force", options, {}))
-
-  local cfg = lspconfig[server]
-  if not (cfg and cfg.cmd and vim.fn.executable(cfg.cmd[1]) == 1) then
-    print(server .. ": cmd not found: " .. vim.inspect(cfg.cmd))
-  end
+  server:setup(options)
 end
 
 return M
