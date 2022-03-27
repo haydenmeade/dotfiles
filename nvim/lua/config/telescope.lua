@@ -10,6 +10,7 @@ function M.setup()
   local utils = require "telescope.utils"
   local actions = require "telescope.actions"
 
+  telescope.load_extension "session-lens"
   telescope.load_extension "fzf"
   telescope.load_extension "luasnip"
   telescope.load_extension "repo"
@@ -49,7 +50,7 @@ function M.setup()
 
   M.search_dotfiles = function()
     builtin.find_files {
-      prompt_title = "< VimRC >",
+      prompt_title = "< Nvim Config >",
       cwd = "$HOME/dotfiles/",
     }
   end

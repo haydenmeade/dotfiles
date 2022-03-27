@@ -33,6 +33,7 @@ local mappings = {
   x = { "<Cmd>x!<Cr>", "Save+Quiet" },
   c = { "<cmd>BufferKill<CR>", "Kill Buffer" },
   f = { "<cmd>lua require('config.telescope').find_project_files()<CR>", "Find File" },
+  p = { "<cmd>lua require('session-lens').search_session()<CR>", "Switch Session" },
   e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
 

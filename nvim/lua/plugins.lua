@@ -105,13 +105,17 @@ function M.setup()
       end,
       requires = { "stevearc/dressing.nvim" },
     }
+
     -- Sessions
     use {
       "rmagatti/session-lens",
       requires = { "rmagatti/auto-session" },
       config = function()
         require("config.auto-session").setup()
-        require("session-lens").setup {}
+        require("session-lens").setup {
+          path_display = { "shorten" },
+          previewer = true,
+        }
       end,
     }
 
