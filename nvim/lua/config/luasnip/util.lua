@@ -4,6 +4,7 @@ local ts_utils = require "nvim-treesitter.ts_utils"
 local ts_locals = require "nvim-treesitter.locals"
 local rep = require("luasnip.extras").rep
 local ai = require "luasnip.nodes.absolute_indexer"
+local Log = require "core.log"
 
 local M = {}
 
@@ -129,9 +130,12 @@ vim.treesitter.set_query( --{{{
 ) --}}}
 
 local function return_value_nodes(info) --{{{
+  Log:debug("fn return_value_nodes" .. Log:dump(info))
   local cursor_node = ts_utils.get_node_at_cursor()
   local scope_tree = ts_locals.get_scope_tree(cursor_node, 0)
 
+  Log:debug("cursor_node" .. Log:dump(cursor_node))
+  Log:debug("scope_tree" .. Log:dump(scope_tree))
   local function_node
   for _, scope in ipairs(scope_tree) do
     if
@@ -145,6 +149,7 @@ local function return_value_nodes(info) --{{{
   end
 
   if not function_node then
+    Log:debug "No function node found"
     return
   end
 
@@ -159,7 +164,12 @@ end --}}}
 ---Transforms the given arguments into nodes wrapped in a snippet node.
 M.make_return_nodes = function(args) --{{{
   local info = { index = 0, err_name = args[1][1] }
-  return ls.sn(nil, return_value_nodes(info))
+  local return_nodes = return_value_nodes(info)
+  if return_nodes == nil then
+    Log:debug "Could not find node, returning err"
+    return_nodes = "err"
+  end
+  return ls.sn(nil, return_nodes)
 end --}}}
 
 ---Runs the command in shell.
