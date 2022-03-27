@@ -11,7 +11,6 @@ function M.setup()
   local actions = require "telescope.actions"
 
   telescope.load_extension "fzf"
-  telescope.load_extension "project"
   telescope.load_extension "luasnip"
   telescope.load_extension "repo"
 
@@ -64,13 +63,6 @@ function M.setup()
     else
       builtin.find_files()
     end
-  end
-
-  M.switch_projects = function()
-    builtin.find_files {
-      prompt_title = "< Switch Project >",
-      cwd = "$HOME/",
-    }
   end
 
   M.git_branches = function()

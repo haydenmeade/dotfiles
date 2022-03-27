@@ -162,23 +162,6 @@ local mappings = {
     },
   },
 
-  -- Project
-  p = {
-    name = "Project",
-    s = {
-      "<Cmd>lua require('config.telescope').switch_projects()<CR>",
-      "Search files",
-    },
-    p = {
-      "<Cmd>lua require('telescope').extensions.project.project({})<Cr>",
-      "List projects",
-    },
-    r = {
-      "<Cmd>Telescope project<Cr>",
-      "Recent projects",
-    },
-  },
-
   -- Testing
   t = {
     name = "Test",

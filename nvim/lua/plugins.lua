@@ -227,7 +227,6 @@ function M.setup()
       as = "telescope",
       requires = {
         "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope-project.nvim",
         "nvim-telescope/telescope-symbols.nvim",
         { "cljoly/telescope-repo.nvim" },
         "benfowler/telescope-luasnip.nvim",
