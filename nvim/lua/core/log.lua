@@ -188,6 +188,24 @@ function Log:error(msg, event)
   self:add_entry(self.levels.ERROR, msg, event)
 end
 
+function Log:dump(o)
+  if o == nil then
+    return "nil"
+  end
+  if type(o) == "table" then
+    local s = "{ "
+    for k, v in pairs(o) do
+      if type(k) ~= "number" then
+        k = '"' .. k .. '"'
+      end
+      s = s .. "[" .. k .. "] = " .. Log:dump(v) .. ","
+    end
+    return s .. "} "
+  else
+    return tostring(o)
+  end
+end
+
 setmetatable({}, Log)
 
 return Log
