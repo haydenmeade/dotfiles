@@ -314,6 +314,22 @@ function M.setup()
       end,
     }
 
+    -- Smooth Scrolling
+    use {
+      "karb94/neoscroll.nvim",
+      keys = { "<C-u>", "<C-d>", "gg", "G" },
+      config = function()
+        require "config.scroll"
+      end,
+    }
+    use {
+      "edluffy/specs.nvim",
+      after = "neoscroll.nvim",
+      config = function()
+        require "config.specs"
+      end,
+    }
+
     -- colorscheme
     use "rebelot/kanagawa.nvim"
     use "luisiacc/gruvbox-baby"
