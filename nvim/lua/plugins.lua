@@ -40,6 +40,7 @@ function M.setup()
 
     -- Development
     use { "tpope/vim-fugitive", event = "BufRead" }
+    use "tpope/vim-repeat"
     use { "tpope/vim-surround", event = "BufRead" }
     use { "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" } }
     use { "tpope/vim-sleuth" }
@@ -64,6 +65,9 @@ function M.setup()
     use { "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" }
     -- Lua development
     use { "folke/lua-dev.nvim", event = "VimEnter" }
+
+    -- Jumps
+    use "ggandor/lightspeed.nvim"
 
     -- Git
     use {
@@ -94,6 +98,7 @@ function M.setup()
         require("config.neogit").setup()
       end,
     }
+
     use { "rhysd/git-messenger.vim" }
 
     -- Legendary

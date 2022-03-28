@@ -213,7 +213,7 @@ local lsp_mappings = {
     a = { "<Cmd>Telescope lsp_code_actions<CR>", "Code actions" },
     e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
     x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
-    n = { "<Cmd>update<CR><cmd>Neoformat<CR>", "Neoformat" },
+  n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
     t = { "<Cmd>TroubleToggle<CR>", "Trouble" },
     l = { "<Cmd>lua vim.lsp.codelens.refresh()<CR>", "Codelens refresh" },
     s = { "<Cmd>lua vim.lsp.codelens.run()<CR>", "Codelens run" },
@@ -234,7 +234,7 @@ local lsp_mappings = {
   },
 }
 
-M.lsp_keymappings = {
+M.lsp_buffer_keymappings = {
   K = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover Definition" },
   g = {
     D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
@@ -276,7 +276,7 @@ end
 function M.register_lsp(client)
   local wk = require "which-key"
   wk.register(lsp_mappings, opts)
-  wk.register(M.lsp_keymappings, {
+  wk.register(M.lsp_buffer_keymappings, {
     mode = "n",
     buffer = client,
     silent = true,
