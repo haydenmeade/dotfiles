@@ -94,7 +94,8 @@ function main() {
     install_rust_deps
   fi
 
-  setup_nvim
+  link_repo
+  # setup_nvim
   echo "Do not forget to use a font with glyphs (icons) support [https://github.com/ryanoasis/nerd-fonts]"
 }
 
