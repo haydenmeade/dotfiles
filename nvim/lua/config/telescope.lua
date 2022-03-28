@@ -9,11 +9,28 @@ function M.setup()
   local trouble = require "trouble.providers.telescope"
   local utils = require "telescope.utils"
   local actions = require "telescope.actions"
+  local previewers = require "telescope.previewers"
 
   telescope.load_extension "session-lens"
   telescope.load_extension "fzf"
   telescope.load_extension "luasnip"
   telescope.load_extension "repo"
+
+  local largeFilesIgnoringPreviewer = function(filepath, bufnr, opts)
+    opts = opts or {}
+
+    filepath = vim.fn.expand(filepath)
+    vim.loop.fs_stat(filepath, function(_, stat)
+      if not stat then
+        return
+      end
+      if stat.size > 100000 then
+        return
+      else
+        previewers.buffer_previewer_maker(filepath, bufnr, opts)
+      end
+    end)
+  end
 
   telescope.setup {
     find_command = {
@@ -33,6 +50,7 @@ function M.setup()
       },
     },
     defaults = {
+      buffer_previewer_maker = largeFilesIgnoringPreviewer,
       mappings = {
         i = {
           ["<C-j>"] = actions.move_selection_next,
