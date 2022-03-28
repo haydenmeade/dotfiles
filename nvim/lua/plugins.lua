@@ -16,19 +16,24 @@ local function packer_init()
     }
     vim.cmd [[packadd packer.nvim]]
   end
-  vim.cmd "autocmd BufWritePost plugins.lua source <afile> | PackerCompile"
 end
+
+-- Compile after this file changes
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerInstall | PackerCompile
+  augroup end
+]]
 
 packer_init()
 
 function M.setup()
+  -- Packer Config
   local conf = {
-    compile_path = vim.fn.stdpath "config" .. "/lua/packer_compiled.lua",
-    display = {
-      open_fn = function()
-        return require("packer.util").float { border = "rounded" }
-      end,
-    },
+    snapshot = "packer_snapshot.json", -- Snapshot name
+    snapshot_path = join_paths("nvim", "lua"), -- Default save directory for snapshots
+    compile_path = join_paths(vim.fn.stdpath "config", "lua", "packer_compiled.lua"),
   }
 
   local function plugins(use)
