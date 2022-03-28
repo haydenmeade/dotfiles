@@ -84,6 +84,25 @@ function M.setup()
     end
   end
 
+  local live_grep_in_glob = function(glob_pattern)
+    require("telescope.builtin").live_grep {
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+        "--glob=" .. (glob_pattern or ""),
+      },
+    }
+  end
+
+  M.live_grep_in_glob = function()
+    vim.ui.input({ prompt = "Glob: ", completion = "file", default = "**/*." }, live_grep_in_glob)
+  end
+
   M.git_branches = function()
     builtin.git_branches {
       attach_mappings = function(prompt_bufnr, map)
