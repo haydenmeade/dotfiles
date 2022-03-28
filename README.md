@@ -1,5 +1,9 @@
 # dotfiles
 
+to check out:
+andythigpen / nvim-coverage
+b0o / SchemaStore.nvim
+
 Setup:
 install nvim:
 bash ./installnvimfromrelease.sh
