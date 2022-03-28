@@ -2,6 +2,7 @@ local M = {}
 local Log = require "core.log"
 local config = require "config.lsp.config"
 
+-- TODO autoinstall?
 local lsp_providers = {
   "pyright",
   "gopls",
