@@ -12,13 +12,13 @@ function M.setup()
   local default_opts = require("config.lsp").get_common_opts()
 
   null_ls.setup(vim.tbl_deep_extend("force", default_opts, {
-    sources = 
-    null_ls.builtins.formatting.prettierd.with {
-      filetypes = { "html", "javascript", "json", "typescript", "yaml", "markdown" },
+    debug = true,
+    sources = {
+      null_ls.builtins.formatting.prettierd,
+      null_ls.builtins.formatting.eslint_d,
+      null_ls.builtins.formatting.stylua,
+      null_ls.builtins.diagnostics.flake8,
     },
-    null_ls.builtins.formatting.eslint_d,
-    null_ls.builtins.formatting.stylua,
-    null_ls.builtins.diagnostics.flake8,
   }))
 end
 
