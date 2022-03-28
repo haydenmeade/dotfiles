@@ -69,6 +69,9 @@ function M.setup()
     -- Jumps
     use "ggandor/lightspeed.nvim"
 
+    --Splits
+    use "mrjones2014/smart-splits.nvim"
+
     -- Git
     use {
       "lewis6991/gitsigns.nvim",
