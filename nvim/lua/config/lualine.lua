@@ -3,7 +3,7 @@ local M = {}
 function M.setup()
   -- avoid running in headless mode since it's harder to detect failures
   if #vim.api.nvim_list_uis() == 0 then
-    local Log = require "lvim.core.log"
+    local Log = require "core.log"
     Log:debug "headless mode detected, skipping running setup for lualine"
     return
   end

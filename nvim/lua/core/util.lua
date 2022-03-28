@@ -1,8 +1,10 @@
 local M = {}
+local Log = require "core.log"
 
 ---Join path segments that were passed as input
 ---@return string
 function _G.join_paths(...)
+  local path_sep = "/"
   local result = table.concat({ ... }, path_sep)
   return result
 end
@@ -58,14 +60,14 @@ function M.reset_cache()
   if impatient then
     impatient.clear_cache()
   end
-  local lvim_modules = {}
+  local modules = {}
   for module, _ in pairs(package.loaded) do
     if module:match "core" or module:match "lsp" then
       package.loaded[module] = nil
-      table.insert(lvim_modules, module)
+      table.insert(modules, module)
     end
   end
-  -- Log:trace(string.format("Cache invalidated for core modules: { %s }", table.concat(lvim_modules, ", ")))
+  Log:trace(string.format("Cache invalidated for core modules: { %s }", table.concat(modules, ", ")))
 end
 
 return M
