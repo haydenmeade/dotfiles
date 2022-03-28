@@ -1,5 +1,31 @@
 local M = {}
 
+---Join path segments that were passed as input
+---@return string
+function _G.join_paths(...)
+  local result = table.concat({ ... }, path_sep)
+  return result
+end
+
+---Get the full path to `$VIM_RUNTIME_DIR`
+---@return string
+function _G.get_runtime_dir()
+  -- when nvim is used directly
+  return vim.fn.stdpath "data"
+end
+
+---Get the full path to `$VIM_CONFIG_DIR`
+---@return string
+function _G.get_config_dir()
+  return vim.fn.stdpath "config"
+end
+
+---Get the full path to `$VIM_CACHE_DIR`
+---@return string
+function _G.get_cache_dir()
+  return vim.fn.stdpath "cache"
+end
+
 -- local Log = require("core.log")
 
 -- Reload all user config lua modules

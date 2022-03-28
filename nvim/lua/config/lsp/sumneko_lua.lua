@@ -1,46 +1,47 @@
 local M = {}
+local Log = require "core.log"
 
-local lsputils = require "config.lsp.utils"
-
--- DATA_PATH = vim.fn.stdpath "data"
-
-function M.config(installed_server)
+function M.luaconfig()
   return {
-    library = { vimruntime = true, types = true, plugins = true },
-    lspconfig = {
-      capabilities = lsputils.get_capabilities(),
-      on_attach = lsputils.lsp_attach,
-      on_init = lsputils.lsp_init,
-      on_exit = lsputils.lsp_exit,
-      cmd_env = installed_server._default_options.cmd_env,
-      settings = {
-        Lua = {
-          runtime = {
-            version = "LuaJIT",
-            path = vim.split(package.path, ";"),
+    settings = {
+      Lua = {
+        diagnostics = { globals = { "vim" } },
+        runtime = {
+          version = "LuaJIT",
+          path = vim.split(package.path, ";"),
+        },
+        workspace = {
+          library = {
+            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
+            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
           },
-          diagnostics = { globals = { "vim" } },
-          workspace = {
-            library = {
-              [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-              [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-            },
-            maxPreload = 100000,
-            preloadFileSize = 1000,
-          },
+          maxPreload = 100000,
+          preloadFileSize = 10000,
         },
       },
     },
   }
 end
 
-function M.setup(installed_server)
-  local opts = {}
-  installed_server:setup(opts)
+function M.config()
+  local lua_dev_loaded, lua_dev = pcall(require, "lua-dev")
+  if not lua_dev_loaded then
+    Log:debug "Lua-dev not loaded"
+    return {}
+  end
 
-  local luadev = require("lua-dev").setup(M.config(installed_server))
-  local lspconfig = require "lspconfig"
-  lspconfig.sumneko_lua.setup(luadev)
+  local dev_opts = {
+    library = {
+      vimruntime = true, -- runtime path
+      types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+      -- plugins = true, -- installed opt or start plugins in packpath
+      -- you can also specify the list of plugins to make available as a workspace library
+      plugins = { "plenary.nvim" },
+    },
+
+    lspconfig = M.luaconfig(),
+  }
+  return lua_dev.setup(dev_opts)
 end
 
 return M

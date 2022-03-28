@@ -1,25 +1,25 @@
 local M = {}
 
-local lsputils = require "config.lsp.utils"
+local Log = require "core.log"
 
 function M.setup()
-  local nls = require "null-ls"
-  local sources = {
-    nls.builtins.formatting.prettierd.with {
+  local status_ok, null_ls = pcall(require, "null-ls")
+  if not status_ok then
+    Log:error "Missing null-ls dependency"
+    return
+  end
+
+  local default_opts = require("config.lsp").get_common_opts()
+
+  null_ls.setup(vim.tbl_deep_extend("force", default_opts, {
+    sources = 
+    null_ls.builtins.formatting.prettierd.with {
       filetypes = { "html", "javascript", "json", "typescript", "yaml", "markdown" },
     },
-    nls.builtins.formatting.eslint_d,
-    nls.builtins.formatting.stylua,
-    nls.builtins.diagnostics.flake8,
-  }
-  nls.setup {
-    sources = sources,
-    on_attach = lsputils.lsp_attach,
-    on_exit = lsputils.lsp_exit,
-    on_init = lsputils.lsp_init,
-    capabilities = lsputils.get_capabilities(),
-    flags = { debounce_text_changes = 150 },
-  }
+    null_ls.builtins.formatting.eslint_d,
+    null_ls.builtins.formatting.stylua,
+    null_ls.builtins.diagnostics.flake8,
+  }))
 end
 
 return M

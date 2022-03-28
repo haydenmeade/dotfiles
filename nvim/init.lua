@@ -1,21 +1,28 @@
 vim.g.loglevel = "debug" -- "trace" | "debug" | "info" | "warn" | "error"
-local present, impatient = pcall(require, "impatient")
-
-if present then
-  impatient.enable_profile()
-end
 
 local core_modules = {
   "core.options",
+  "core.util",
   "core.log",
   "core.autocmds",
 }
 
 for _, module in ipairs(core_modules) do
-  local ok, err = pcall(require, module)
+  local ok, mod = pcall(require, module)
   if not ok then
-    error("Error loading " .. module .. "\n\n" .. err)
+    error("Error loading " .. module .. "\n\n" .. mod)
+  else
+    --if mod then
+--    mod.setup()
+    --end
   end
+end
+require("core.autocmds").setup()
+
+local present, impatient = pcall(require, "impatient")
+
+if present then
+  impatient.enable_profile()
 end
 
 require("plugins").setup()

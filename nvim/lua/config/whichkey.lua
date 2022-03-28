@@ -204,7 +204,6 @@ local mappings = {
 }
 
 local lsp_mappings = {
-
   l = {
     name = "LSP",
     r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
@@ -233,6 +232,19 @@ local lsp_mappings = {
       "Workspace Symbols",
     },
   },
+}
+
+M.lsp_keymappings = {
+  K = { "<Cmd>lua vim.lsp.buf.hover()<CR>", "Hover Definition" },
+  g = {
+    D = { "<Cmd>lua vim.lsp.buf.declaration()<CR>", "Declaration" },
+    d = { "<Cmd>lua vim.lsp.buf.definition()<CR>", "Go to definition" },
+    i = { "<Cmd>lua vim.lsp.buf.implementation()<CR>", "Go to implementation" },
+    r = { "<Cmd>lua vim.lsp.buf.references()<CR>", "Show all references" },
+  },
+  ["<C-k>"] = { "<Cmd>lua vim.lsp.buf.signature_help()<CR>", "Signature help" },
+  ["[d"] = { "<Cmd>lua vim.diagnostic.goto_prev()<CR>", "goto_prev diagnostic" },
+  ["]d"] = { "<Cmd>lua vim.diagnostic.goto_next()<CR>", "goto_next diagnostic" },
 }
 
 local dap_nvim_dap_mappings = {
@@ -264,6 +276,13 @@ end
 function M.register_lsp(client)
   local wk = require "which-key"
   wk.register(lsp_mappings, opts)
+  wk.register(M.lsp_keymappings, {
+    mode = "n",
+    buffer = client,
+    silent = true,
+    noremap = true,
+    nowait = true,
+  })
 end
 
 function M.setup()
