@@ -284,7 +284,7 @@ function M.setup()
     use {
       "kyazdani42/nvim-tree.lua",
       requires = {
-        "kyazdani42/nvim-web-devicons", -- optional, for file icon
+        "kyazdani42/nvim-web-devicons",
       },
       config = function()
         require("nvim-tree").setup {}
@@ -327,6 +327,21 @@ function M.setup()
       after = "neoscroll.nvim",
       config = function()
         require "config.specs"
+      end,
+    }
+
+    -- ZenMode
+    use {
+      "folke/zen-mode.nvim",
+      cmd = "ZenMode",
+      opt = true,
+      wants = "twilight.nvim",
+      requires = { "folke/twilight.nvim" },
+      config = function()
+        require("zen-mode").setup {
+          plugins = { gitsigns = true, kitty = { enabled = false, font = "+2" } },
+          options = { number = true },
+        }
       end,
     }
 

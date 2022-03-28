@@ -27,6 +27,8 @@ local mappings = {
   p = { "<cmd>lua require('session-lens').search_session()<CR>", "Switch Session" },
   e = { "<Cmd>NvimTreeToggle<CR>", "Explorer" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
+  -- Z = { [[<cmd>lua require("zen-mode").reset()<cr>]], "Zen Mode" },
+  Z = { [[<cmd>ZenMode<cr>]], "Zen Mode" },
 
   -- System
   z = {
