@@ -18,21 +18,13 @@ local function packer_init()
   end
 end
 
--- Compile after this file changes
-vim.cmd [[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerInstall | PackerCompile
-  augroup end
-]]
-
 packer_init()
 
 function M.setup()
   -- Packer Config
   local conf = {
-    snapshot = "packer_snapshot.json", -- Snapshot name
-    snapshot_path = join_paths("nvim", "lua"), -- Default save directory for snapshots
+    snapshot = packer_snapshot, -- Snapshot name
+    snapshot_path = packer_snapshot_path, -- Default save directory for snapshots
     compile_path = join_paths(vim.fn.stdpath "config", "lua", "packer_compiled.lua"),
   }
 

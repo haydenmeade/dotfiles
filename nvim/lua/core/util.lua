@@ -1,5 +1,6 @@
 local M = {}
 local Log = require "core.log"
+local Job = require "plenary.job"
 
 ---Join path segments that were passed as input
 ---@return string
@@ -28,7 +29,67 @@ function _G.get_cache_dir()
   return vim.fn.stdpath "cache"
 end
 
--- local Log = require("core.log")
+function M.get_os_command_output(cmd, cwd)
+  if type(cmd) ~= "table" then
+    Log:error("get_os_command_output", {
+      msg = "cmd has to be a table",
+      level = "ERROR",
+    })
+    return {}
+  end
+  local command = table.remove(cmd, 1)
+  local stderr = {}
+  local stdout, ret = Job
+    :new({
+      command = command,
+      args = cmd,
+      cwd = cwd,
+      on_stderr = function(_, data)
+        table.insert(stderr, data)
+      end,
+    })
+    :sync()
+  return stdout, ret, stderr
+end
+
+_G.packer_snapshot = "packer_snapshot.json"
+_G.packer_snapshot_path = join_paths("nvim", "lua")
+
+M.update_packer = function()
+  local packer = require "packer"
+  Log:debug "Updating plugins with packer"
+  packer.sync()
+  local snap_full_path = join_paths(packer_snapshot_path, packer_snapshot)
+  os.remove(snap_full_path)
+  packer.snapshot(packer_snapshot)
+  --
+  -- local temp_json = join_paths(get_cache_dir(), packer_snapshot)
+  -- Log:debug "Formatting Json"
+  -- local stdout, ret, stderr = M.get_os_command_output {
+  --   "jq",
+  --   "--sort-keys",
+  --   ".",
+  --   snap_full_path,
+  --   ">",
+  --   temp_json,
+  -- }
+  -- if not ret then
+  --   Log:error "Unable to format json"
+  --   return
+  -- end
+  -- Log:debug("Created " .. temp_json)
+  -- Log:debug(stdout .. ret .. stderr)
+  -- local stdout, ret, stderr = M.get_os_command_output {
+  --   "mv",
+  --   temp_json,
+  --   snap_full_path,
+  -- }
+  -- -- Log:debug(stdout .. ret .. stderr)
+  -- if not ret then
+  --   Log:error "Unable to move json"
+  --   return
+  -- end
+end
 
 -- Reload all user config lua modules
 M.Reload = function()
@@ -38,6 +99,7 @@ M.Reload = function()
     require("plenary.reload").reload_module(dir)
   end
 end
+
 local get_mapper = function(mode, noremap)
   return function(lhs, rhs, opts)
     opts = opts or {}

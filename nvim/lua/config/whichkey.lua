@@ -43,12 +43,12 @@ local mappings = {
       "<Cmd>lua require('config.telescope').search_dotfiles()<CR>",
       "Configuration",
     },
-    r = { "<Cmd>lua require('util').Reload()<CR>", "Reload config" },
     m = { "<Cmd>messages<Cr>", "Messages" },
+    c = { "<Cmd>put =execute('messages')<Cr>", "Put Messages" },
     p = { "<Cmd>messages clear<Cr>", "Clear messages" },
     f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
-    i = { "<Cmd>PackerUpdate<Cr>", "Packer update" },
-    y = { "<Cmd>PackerSync<Cr>", "Packer update" },
+    -- y = { "<Cmd>PackerSync<Cr>", "Packer update" },
+    y = { "<Cmd>lua require('core.util').update_packer()<CR>", "Update packer" },
   },
 
   -- Buffer

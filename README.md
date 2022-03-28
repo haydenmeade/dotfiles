@@ -4,6 +4,10 @@ to check out:
 andythigpen / nvim-coverage
 b0o / SchemaStore.nvim
 
+# to add to setup:
+
+sudo apt-get install jq -- json for snapshot
+
 Setup:
 install nvim:
 bash ./installnvimfromrelease.sh
