@@ -110,6 +110,7 @@ function link_repo() {
 
   echo "   - $BASEDIR -> $NVIM_BASE_DIR"
   ln -s -f "$BASEDIR" "$NVIM_BASE_DIR"
+  ln -s "$HOME/dotfiles/.zshrc" "$HOME/.zshrc"
 }
 
 function remove_old_cache_files() {
