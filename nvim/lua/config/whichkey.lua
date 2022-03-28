@@ -1,25 +1,15 @@
 local M = {}
 
-local opts = {
+local no_leader_opts = {
   mode = "n",
-  prefix = "<leader>",
   buffer = nil,
   silent = true,
   noremap = true,
   nowait = true,
 }
 
-local vopts = {
-  mode = "v",
-  prefix = "<leader>",
-  buffer = nil,
-  silent = false,
-  noremap = true,
-  nowait = true,
-}
-
-local xopts = {
-  mode = "x",
+local opts = {
+  mode = "n",
   prefix = "<leader>",
   buffer = nil,
   silent = true,
@@ -203,6 +193,19 @@ local mappings = {
   },
 }
 
+local no_leader_mappings = {
+  ["<M-left>"] = "<C-w>>",
+  ["<M-right>"] = "<C-w><",
+  ["<M-up>"] = "<C-w>+",
+  ["<M-down>"] = "<C-w>-",
+  [",h"] = { "<Cmd>wincmd h<Cr>", "Move left" },
+  [",j"] = { "<Cmd>wincmd j<Cr>", "Move down" },
+  [",l"] = { "<Cmd>wincmd l<Cr>", "Move Right" },
+  [",k"] = { "<Cmd>wincmd k<Cr>", "Move Up" },
+  [",s"] = { "<Cmd>split<Cr>", "Horizontal spit" },
+  [",v"] = { "<Cmd>vs<Cr>", "Vertical Split" },
+}
+
 local lsp_mappings = {
   l = {
     name = "LSP",
@@ -213,7 +216,7 @@ local lsp_mappings = {
     a = { "<Cmd>Telescope lsp_code_actions<CR>", "Code actions" },
     e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
     x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
-  n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
+    n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
     t = { "<Cmd>TroubleToggle<CR>", "Trouble" },
     l = { "<Cmd>lua vim.lsp.codelens.refresh()<CR>", "Codelens refresh" },
     s = { "<Cmd>lua vim.lsp.codelens.run()<CR>", "Codelens run" },
@@ -310,6 +313,7 @@ function M.setup()
     },
   }
   wk.register(mappings, opts)
+  wk.register(no_leader_mappings, no_leader_opts)
 end
 
 return M
