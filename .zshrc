@@ -1,5 +1,5 @@
 # Path changes
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 
 alias luamake=/home/hayden/lua-language-server/3rd/luamake/luamake
 . "$HOME/.cargo/env"
@@ -84,9 +84,6 @@ plugins=(
   bundler
   sudo
   zsh-autosuggestions
-  Copydir
-  Copyfile
-  Dirhistory
 )
 #macos
 
@@ -101,7 +98,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='nvim'
+export EDITOR='nvim'
 # else
 #   export EDITOR='mvim'
 # fi
