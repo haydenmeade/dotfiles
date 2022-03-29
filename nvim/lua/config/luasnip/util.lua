@@ -269,18 +269,15 @@ M.snake_case = function(titlecase) --{{{
 end --}}}
 
 M.create_t_run = function(args) --{{{
-  return ls.c(1, {
-    ls.t { "" },
-    ls.sn(
-      nil,
-      fmt('\tt.Run("{}", {}{})\n{}', {
-        ls.i(1, "Case"),
-        ls.t(args[1]),
-        rep(1),
-        ls.d(2, M.create_t_run, ai[1]),
-      })
-    ),
-  })
+  -- Log:debug("create_t_run : " .. Log:dump(args))
+  return ls.sn(
+    nil,
+    fmt('\tt.Run("{}", {}{})\n', {
+      ls.i(1, "Case"),
+      ls.t(args[1]),
+      rep(1),
+    })
+  )
 end --}}}
 
 M.mirror_t_run_funcs = function(args) --{{{
