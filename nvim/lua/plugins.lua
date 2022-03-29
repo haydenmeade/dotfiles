@@ -281,7 +281,14 @@ function M.setup()
         "kyazdani42/nvim-web-devicons",
       },
       config = function()
-        require("nvim-tree").setup {}
+        require("nvim-tree").setup {
+          update_focused_file = {
+            enable = true,
+          },
+          filters = {
+            custom = { ".git", "node_modules", ".cargo" },
+          },
+        }
       end,
     }
 
