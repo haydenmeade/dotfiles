@@ -2,7 +2,7 @@ local M = {}
 
 function M.setup()
   require("Comment").setup {
-    mappings = { extra = true },
+    mappings = { extra = false },
   }
 end
 
