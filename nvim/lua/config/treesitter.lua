@@ -1,10 +1,38 @@
 local M = {}
 
 function M.setup()
-  local parser_configs = require("nvim-treesitter.parsers").get_parser_configs()
-
   require("nvim-treesitter.configs").setup {
-    ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+    ensure_installed = {
+      "bash",
+      "c",
+      "c_sharp",
+      "cmake",
+      "comment",
+      "cpp",
+      "css",
+      "go",
+      "gomod",
+      "gowork",
+      "html",
+      "http",
+      "java",
+      "javascript",
+      "jsdoc",
+      "json",
+      "json5",
+      "kotlin",
+      "latex",
+      "lua",
+      "make",
+      "markdown",
+      "python",
+      "regex",
+      "rust",
+      "ruby",
+      "typescript",
+      "vim",
+      "yaml",
+    },
     highlight = {
       enable = true,
       disable = {},
@@ -64,8 +92,7 @@ function M.setup()
       lsp_interop = {
         enable = true,
         border = "none",
-        peek_definition_code = {
-        },
+        peek_definition_code = {},
       },
     },
     context_commentstring = { enable = true, enable_autocmd = false },
