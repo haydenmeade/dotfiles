@@ -12,12 +12,41 @@ function M.setup()
   local default_opts = require("config.lsp").get_common_opts()
 
   null_ls.setup(vim.tbl_deep_extend("force", default_opts, {
-    debug = true,
     sources = {
+      -- https://github.com/ThePrimeagen/refactoring.nvim
+      -- refactoring ({ "go", "javascript", "lua", "python", "typescript" })
+      null_ls.builtins.code_actions.refactoring,
+
+      -- https://github.com/fsouza/prettierd
+      -- formatting js/ts/html/css/json
       null_ls.builtins.formatting.prettierd,
+      -- https://github.com/mantoni/eslint_d.js
+      -- code actions for js/ts
       null_ls.builtins.formatting.eslint_d,
+
+      -- https://github.com/JohnnyMorganz/StyLua
+      -- lua formatter
       null_ls.builtins.formatting.stylua,
-      null_ls.builtins.diagnostics.flake8,
+
+      -- GO lint:https://golangci-lint.run/
+      -- null_ls.builtins.diagnostics.golangci_lint,
+      -- alt:https://revive.run/
+      null_ls.builtins.diagnostics.revive,
+      -- GO formatter:https://github.com/mvdan/gofumpt
+      null_ls.builtins.formatting.gofumpt,
+
+      -- Ruby formatter https://github.com/ruby-formatter/rufo
+      -- null_ls.builtins.formatting.rufo,
+
+      -- sh
+      null_ls.builtins.diagnostics.shellcheck,
+      null_ls.builtins.formatting.shfmt,
+
+      -- maybe:
+      -- python diagnostics
+      -- null_ls.builtins.diagnostics.flake8,
+      -- python formatter
+      -- null_ls.builtins.formatting.black
     },
   }))
 end

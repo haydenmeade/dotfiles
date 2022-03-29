@@ -262,6 +262,7 @@ function M.setup()
     -- Stuff
     use {
       "folke/which-key.nvim",
+      event = "VimEnter",
       config = function()
         require("config.whichkey").setup()
       end,

@@ -6,6 +6,10 @@ b0o / SchemaStore.nvim
 
 # to add to setup:
 
+go install mvdan.cc/gofumpt@latest
+go install github.com/mgechev/revive@latest
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
+sudo apt install shellcheck
 sudo apt-get install jq -- json for snapshot
 
 Setup:
