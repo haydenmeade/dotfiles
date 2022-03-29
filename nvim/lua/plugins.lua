@@ -241,6 +241,7 @@ function M.setup()
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-symbols.nvim",
         { "cljoly/telescope-repo.nvim" },
+        { "nvim-telescope/telescope-file-browser.nvim" },
         "benfowler/telescope-luasnip.nvim",
         "nvim-lua/popup.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },

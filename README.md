@@ -21,6 +21,7 @@ bash ./setup.sh --[no]-install-dependencies
 
 #Dependencies:
 
+fd
 neovim
 python3
 fzf
