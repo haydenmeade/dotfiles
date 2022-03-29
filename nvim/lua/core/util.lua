@@ -1,6 +1,5 @@
 local M = {}
 local Log = require "core.log"
-local Job = require "plenary.job"
 
 ---Join path segments that were passed as input
 ---@return string
@@ -30,6 +29,7 @@ function _G.get_cache_dir()
 end
 
 function M.get_os_command_output(cmd, cwd)
+  local Job = require "plenary.job"
   if type(cmd) ~= "table" then
     Log:error("get_os_command_output", {
       msg = "cmd has to be a table",
