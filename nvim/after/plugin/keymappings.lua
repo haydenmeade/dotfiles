@@ -5,6 +5,11 @@ local keymap = require "utils.keymap"
 local keymappings = {
   insert_mode = {},
   normal_mode = {
+    -- moving splits
+    ["<C-S-left>"] = "<C-W>H",
+    ["<C-S-down>"] = "<C-W>J",
+    ["<C-S-up>"] = "<C-W>K",
+    ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
     ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
     ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",

@@ -197,14 +197,6 @@ local mappings = {
 }
 
 local no_leader_mappings = {
-  -- ["<M-left>"] = "<C-w>>",
-  -- ["<M-right>"] = "<C-w><",
-  -- ["<M-up>"] = "<C-w>+",
-  -- ["<M-down>"] = "<C-w>-",
-  [",h"] = { "<Cmd>wincmd h<Cr>", "Move left" },
-  [",j"] = { "<Cmd>wincmd j<Cr>", "Move down" },
-  [",l"] = { "<Cmd>wincmd l<Cr>", "Move Right" },
-  [",k"] = { "<Cmd>wincmd k<Cr>", "Move Up" },
   [",s"] = { "<Cmd>split<Cr>", "Horizontal spit" },
   [",v"] = { "<Cmd>vs<Cr>", "Vertical Split" },
 }
