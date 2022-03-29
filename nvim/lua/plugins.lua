@@ -31,6 +31,7 @@ function M.setup()
   local function plugins(use)
     use "lewis6991/impatient.nvim"
 
+    use "nvim-lua/plenary.nvim"
     use "wbthomason/packer.nvim"
 
     use { "antoinemadec/FixCursorHold.nvim" } -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
@@ -229,6 +230,14 @@ function M.setup()
             require("nvim-autopairs").setup {}
           end,
         },
+      },
+    }
+
+    use {
+      "ThePrimeagen/refactoring.nvim",
+      requires = {
+        { "nvim-lua/plenary.nvim" },
+        { "nvim-treesitter/nvim-treesitter" },
       },
     }
 

@@ -36,7 +36,8 @@ vim.api.nvim_exec(
 local mappings = {
   w = { "<Cmd>w!<Cr>", "Save" },
   q = { "<Cmd>q!<Cr>", "Quit" },
-  x = { "<Cmd>x!<Cr>", "Save+Quiet" },
+  x = { "<Cmd>x!<Cr>", "Save+Quit" },
+  X = { "<Cmd>wqall!<Cr>", "Save+Quit all" },
   c = { "<cmd>BufferKill<CR>", "Kill Buffer" },
   f = { "<cmd>lua require('config.telescope').find_project_files()<CR>", "Find File" },
   F = { "<cmd>lua require('config.telescope').live_grep_in_glob()<CR>", "Grep With FT Glob" },

@@ -30,7 +30,7 @@ opt.updatetime = 300 -- set faster update time
 opt.splitbelow = true
 opt.splitright = true
 opt.clipboard = "unnamed,unnamedplus"
-opt.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal"
+opt.sessionoptions = "buffers,curdir,folds,help,winsize,winpos,terminal"
 opt.lazyredraw = true --When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
 
 opt.shortmess:append "sI" -- disable nvim intro
