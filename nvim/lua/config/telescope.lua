@@ -6,7 +6,6 @@ function M.setup()
     return
   end
   local builtin = require "telescope.builtin"
-  local trouble = require "trouble.providers.telescope"
   local utils = require "telescope.utils"
   local actions = require "telescope.actions"
   local previewers = require "telescope.previewers"
@@ -31,6 +30,11 @@ function M.setup()
         previewers.buffer_previewer_maker(filepath, bufnr, opts)
       end
     end)
+  end
+
+  local function openqf(arg)
+    actions.send_to_qflist(arg)
+    require("trouble").open "quickfix"
   end
 
   telescope.setup {
@@ -58,10 +62,10 @@ function M.setup()
           ["<C-k>"] = actions.move_selection_previous,
           ["<C-n>"] = actions.cycle_history_next,
           ["<C-p>"] = actions.cycle_history_prev,
-          ["<C-t>"] = trouble.open_with_trouble,
+          ["<C-t>"] = openqf,
         },
         n = {
-          ["<C-t>"] = trouble.open_with_trouble,
+          ["<C-t>"] = openqf,
         },
       },
     },
