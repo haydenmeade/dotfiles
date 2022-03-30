@@ -122,6 +122,7 @@ local mappings = {
     b = { "<Cmd>Telescope buffers<Cr>", "Search buffers" },
     l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
     t = { "<Cmd>Telescope live_grep<Cr>", "Live grep" },
+    n = { "<Cmd>Telescope grep_string<Cr>", "grep word under cursor" },
     h = { "<Cmd>Telescope help_tags<Cr>", "Help" },
     m = { "<Cmd>Telescope marks<Cr>", "Mark" },
     y = { "<Cmd>Telescope symbols<Cr>", "Symbols" },

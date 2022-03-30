@@ -46,7 +46,6 @@ function M.setup()
     use {
       "numToStr/Comment.nvim",
       event = "VimEnter",
-      keys = { "gc", "gcc", "gbc" },
       config = function()
         require("config.comment").setup()
       end,
