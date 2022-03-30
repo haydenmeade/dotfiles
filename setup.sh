@@ -36,9 +36,9 @@ declare -a __pip_deps=(
 )
 
 declare -a ___rust_deps=(
-	""
-	# "fd::fd-find"
-	# "rg::ripgrep"
+	"stylua"
+	"fd::fd-find"
+	"rg::ripgrep"
 )
 
 function usage() {

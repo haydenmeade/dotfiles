@@ -6,9 +6,6 @@ b0o / SchemaStore.nvim
 
 # to add to setup:
 
-go install mvdan.cc/gofumpt@latest
-go install github.com/mgechev/revive@latest
-go install mvdan.cc/sh/v3/cmd/shfmt@latest
 sudo apt install shellcheck jq
 --get install -- json for snapshot
 
@@ -73,7 +70,8 @@ Win
 Scoop:
 iwr -useb get.scoop.sh | iex
 scoop bucket add versions
-scoop install wget gzip mingw go nvm python neovim-nightly llvm fd ripgrep curl rbenv ruby-build fd ripgrep
+scoop install wget gzip mingw nvm python neovim-nightly llvm fd ripgrep curl rbenv ruby-build fd ripgrep
+-- go doesn't seem to work on windows from scoop?
 
 nvm install latest
 nvm use latest
@@ -81,7 +79,14 @@ npm install --global neovim tree-sitter-cli eslint_d
 
 python -m pip install --user pynvim
 
+Rust:
+https://www.rust-lang.org/tools/install
+cargo install stylua
+
 Go stuff:
+go install mvdan.cc/gofumpt@latest
+go install github.com/mgechev/revive@latest
+go install mvdan.cc/sh/v3/cmd/shfmt@latest
 
 Powershell
 Install-Module posh-git
