@@ -11,10 +11,6 @@ for _, module in ipairs(core_modules) do
   local ok, mod = pcall(require, module)
   if not ok then
     error("Error loading " .. module .. "\n\n" .. mod)
-  else
-    --if mod then
---    mod.setup()
-    --end
   end
 end
 require("core.autocmds").setup()

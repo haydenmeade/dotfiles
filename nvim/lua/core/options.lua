@@ -30,6 +30,34 @@ opt.updatetime = 300 -- set faster update time
 opt.splitbelow = true
 opt.splitright = true
 opt.clipboard = "unnamed,unnamedplus"
+
+-- For windows:
+vim.api.nvim_exec(
+  [[
+if has("win64") || has("win32")
+  let g:clipboard = {
+        \   'name': 'win32yank',
+        \   'copy': {
+        \      '+': 'win32yank.exe -i',
+        \      '*': 'win32yank.exe -i',
+        \    },
+        \   'paste': {
+        \      '+': 'win32yank.exe -o',
+        \      '*': 'win32yank.exe -o',
+        \   },
+        \   'cache_enabled': 0,
+        \ }
+  " see ':h shell-powershell' and
+  " https://github.com/junegunn/vim-plug/issues/895#issuecomment-544130552
+  let &shell = has('win64') ? 'pwsh.exe': 'powershell.exe'
+  set shellquote= shellpipe=\| shellxquote=
+  set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
+  set shellredir=\|\ Out-File\ -Encoding\ UTF8
+endif
+]],
+  true
+)
+
 opt.sessionoptions = "buffers,curdir,folds,help,winsize,winpos,terminal"
 opt.lazyredraw = true --When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
 
