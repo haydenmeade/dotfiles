@@ -68,3 +68,24 @@ clangd
 #Windows(WSL):
 Font: https://github.com/wclr/my-nerd-fonts/blob/master/Consolas%20NF/Consolas%20Nerd%20Font%20Complete%20Mono%20Windows%20Compatible.ttf
 Systemd: https://github.com/DamionGans/ubuntu-wsl2-systemd-script
+
+Win
+Scoop:
+iwr -useb get.scoop.sh | iex
+scoop bucket add versions
+scoop install wget gzip mingw go nvm python neovim-nightly llvm fd ripgrep
+need:require 'nvim-treesitter.install'.compilers = { "clang" }
+
+nvm install latest
+nvm use latest
+npm install --global neovim tree-sitter-cli
+
+python -m pip install --user pynvim
+
+Go stuff:
+
+Powershell
+Install-Module posh-git
+
+Link:
+new-item -itemtype symboliclink -path C:\Users\Hayden\AppData\Local -name nvim -value C:\Users\Hayden\dotfiles\nvim
