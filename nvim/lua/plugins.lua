@@ -84,12 +84,6 @@ function M.setup()
         "kyazdani42/nvim-web-devicons",
         "nvim-lua/plenary.nvim",
       },
-      cmd = {
-        "DiffviewOpen",
-        "DiffviewClose",
-        "DiffviewToggleFiles",
-        "DiffviewFocusFiles",
-      },
     }
     use {
       "TimUntersberger/neogit",
@@ -98,8 +92,6 @@ function M.setup()
         require("config.neogit").setup()
       end,
     }
-
-    use { "rhysd/git-messenger.vim" }
 
     -- Legendary
     use {
