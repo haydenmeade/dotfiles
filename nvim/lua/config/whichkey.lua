@@ -197,20 +197,17 @@ local mappings = {
     s = { "<Cmd>SnipRun<CR>", "Run snippets" },
   },
 
-  -- Notes
+  -- Trouble
   n = {
-    name = "Notes",
-    n = {
-      "<Cmd>FloatermNew nvim ~/notes/<Cr>",
-      "New note",
-    },
-    o = { "<Cmd>GkeepOpen<Cr>", "GKeep Open" },
-    c = { "<Cmd>GkeepClose<Cr>", "GKeep Close" },
-    r = { "<Cmd>GkeepRefresh<Cr>", "GKeep Refresh" },
-    s = { "<Cmd>GkeepSync<Cr>", "GKeep Sync" },
-    p = { "<Cmd>MarkdownPreview<Cr>", "Preview markdown" },
-    z = { "<Cmd>ZenMode<Cr>", "Zen Mode" },
-    g = { "<Cmd>GrammarousCheck<Cr>", "Grammar check" },
+    name = "Trouble",
+    n = { "<Cmd>TroubleToggle<CR>", "Trouble" },
+    w = { "<Cmd>TroubleToggle workspace_diagnostics<CR>", "Workspace Diagnostics" },
+    d = { "<Cmd>TroubleToggle document_diagnostics<CR>", "Document Diagnostics" },
+    y = { "<Cmd>TroubleToggle quickfix<CR>", "Quickfix" },
+    l = { "<Cmd>TroubleToggle loclist<CR>", "Loclist" },
+    r = { "<Cmd>TroubleToggle lsp_references<CR>", "References" },
+    j = { "<Cmd>lua require('trouble').previous({skip_groups=true,jump=true})<CR>", "previous item" },
+    k = { "<Cmd>lua require('trouble').next({skip_groups=true,jump=true})<CR>", "next item" },
   },
 }
 
@@ -230,19 +227,10 @@ local lsp_mappings = {
     e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
     x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
     n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
-    t = { "<Cmd>TroubleToggle<CR>", "Trouble" },
     l = { "<Cmd>lua vim.lsp.codelens.refresh()<CR>", "Codelens refresh" },
     s = { "<Cmd>lua vim.lsp.codelens.run()<CR>", "Codelens run" },
     f = { "<Cmd>lua vim.lsp.buf.formatting()<CR>", "Format" },
     w = { "<cmd>Telescope diagnostics<cr>", "Diagnostics" },
-    j = {
-      "<cmd>lua vim.diagnostic.goto_next()<cr>",
-      "Next Diagnostic",
-    },
-    k = {
-      "<cmd>lua vim.diagnostic.goto_prev()<cr>",
-      "Prev Diagnostic",
-    },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
