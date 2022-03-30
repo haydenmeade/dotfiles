@@ -9,8 +9,8 @@ b0o / SchemaStore.nvim
 go install mvdan.cc/gofumpt@latest
 go install github.com/mgechev/revive@latest
 go install mvdan.cc/sh/v3/cmd/shfmt@latest
-sudo apt install shellcheck
-sudo apt-get install jq -- json for snapshot
+sudo apt install shellcheck jq
+--get install -- json for snapshot
 
 Setup:
 install nvim:
@@ -73,12 +73,11 @@ Win
 Scoop:
 iwr -useb get.scoop.sh | iex
 scoop bucket add versions
-scoop install wget gzip mingw go nvm python neovim-nightly llvm fd ripgrep
-need:require 'nvim-treesitter.install'.compilers = { "clang" }
+scoop install wget gzip mingw go nvm python neovim-nightly llvm fd ripgrep curl rbenv ruby-build fd ripgrep
 
 nvm install latest
 nvm use latest
-npm install --global neovim tree-sitter-cli
+npm install --global neovim tree-sitter-cli eslint_d
 
 python -m pip install --user pynvim
 
