@@ -1,6 +1,6 @@
 local M = {}
 local Log = require "core.log"
-local config = require "config.lsp.config"
+local config = require "lsp.config"
 
 -- TODO autoinstall?
 local lsp_providers = {
@@ -105,7 +105,7 @@ end
 local function resolve_config(name, user_config)
   Log:debug("Resolving " .. name)
   local opts = M.get_common_opts()
-  local has_custom_provider, custom_config = pcall(require, "config/lsp/" .. name)
+  local has_custom_provider, custom_config = pcall(require, join_paths("lsp", name))
   if has_custom_provider then
     Log:debug("Using custom configuration for requested server: " .. name)
     opts = vim.tbl_deep_extend("force", opts, custom_config.config())
@@ -132,9 +132,9 @@ function M.setup()
   end
 
   -- vim handlers
-  require("config.lsp.handlers").setup()
+  require("lsp.handlers").setup()
 
-  require("config.lsp.null-ls").setup()
+  require("lsp.null-ls").setup()
 
   require("core.autocmds").configure_format_on_save()
 

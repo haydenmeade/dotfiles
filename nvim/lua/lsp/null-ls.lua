@@ -9,7 +9,7 @@ function M.setup()
     return
   end
 
-  local default_opts = require("config.lsp").get_common_opts()
+  local default_opts = require("lsp").get_common_opts()
 
   null_ls.setup(vim.tbl_deep_extend("force", default_opts, {
     sources = {

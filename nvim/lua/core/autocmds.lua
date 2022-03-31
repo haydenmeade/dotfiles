@@ -140,7 +140,7 @@ function M.enable_lsp_document_highlight(client_id)
       {
         "CursorHold",
         "<buffer>",
-        string.format("lua require('config.lsp.utils').conditional_document_highlight(%d)", client_id),
+        string.format("lua require('lsp.utils').conditional_document_highlight(%d)", client_id),
       },
       {
         "CursorMoved",

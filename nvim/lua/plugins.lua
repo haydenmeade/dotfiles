@@ -151,7 +151,7 @@ function M.setup()
       as = "nvim-lspconfig",
       after = "nvim-treesitter",
       config = function()
-        require("config.lsp").setup()
+        require("lsp").setup()
       end,
     }
 

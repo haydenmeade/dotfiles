@@ -2,7 +2,7 @@
 -- Note: You can set a prefix per lsp server in the lv-globals.lua file
 local M = {}
 
-local lsp_config = require "config.lsp.config"
+local lsp_config = require "lsp.config"
 function M.setup()
   local config = { -- your config
     virtual_text = lsp_config.diagnostics.virtual_text,
