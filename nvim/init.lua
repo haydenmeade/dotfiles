@@ -13,7 +13,6 @@ for _, module in ipairs(core_modules) do
     error("Error loading " .. module .. "\n\n" .. mod)
   end
 end
-require("core.autocmds").setup()
 
 local present, impatient = pcall(require, "impatient")
 

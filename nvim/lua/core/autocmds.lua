@@ -3,15 +3,14 @@ local M = {}
 local Log = require "core.log"
 local autocmd = vim.api.nvim_create_autocmd
 
-function M.setup()
-  -- Highlight on yank
-  autocmd("TextYankPost", { callback = vim.highlight.on_yank })
+-- Highlight on yank
+autocmd("TextYankPost", { callback = vim.highlight.on_yank })
 
-  -- cursorline only in normal mode
-  autocmd("InsertLeave,WinEnter", { command = "set cursorline" })
-  autocmd("InsertEnter,WinLeave", { command = "set nocursorline" })
+-- cursorline only in normal mode
+autocmd("InsertLeave,WinEnter", { command = "set cursorline" })
+autocmd("InsertEnter,WinLeave", { command = "set nocursorline" })
 
-  vim.cmd [[
+vim.cmd [[
         set wildmode=longest,list,full
         set wildoptions=pum
         set wildmenu
@@ -24,13 +23,13 @@ function M.setup()
         set wildignore+=**/.git/*
     ]]
 
-  vim.cmd [[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]]
+vim.cmd [[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]]
 
-  -- don't auto comment new lines
-  autocmd("BufEnter", { command = "set fo-=c fo-=r fo-=o" })
+-- don't auto comment new lines
+autocmd("BufEnter", { command = "set fo-=c fo-=r fo-=o" })
 
-  vim.api.nvim_exec(
-    [[
+vim.api.nvim_exec(
+  [[
         cnoreabbrev W! w!
         cnoreabbrev Q! q!
         cnoreabbrev Qall! qall!
@@ -42,21 +41,20 @@ function M.setup()
         cnoreabbrev Q q
         cnoreabbrev Qall qall
     ]],
-    false
-  )
+  false
+)
 
-  -- Terminal
-  vim.api.nvim_exec(
-    [[
+-- Terminal
+vim.api.nvim_exec(
+  [[
         augroup auto_term
             autocmd!
             autocmd TermOpen * setlocal nonumber norelativenumber
             autocmd TermOpen * startinsert
         augroup END
     ]],
-    false
-  )
-end
+  false
+)
 
 local format_on_save = true
 
