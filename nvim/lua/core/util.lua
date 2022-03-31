@@ -53,7 +53,7 @@ function M.get_os_command_output(cmd, cwd)
 end
 
 _G.packer_snapshot = "packer_snapshot.json"
-_G.packer_snapshot_path = join_paths("nvim", "lua")
+_G.packer_snapshot_path = join_paths(vim.fn.stdpath "config", "lua")
 
 M.update_packer = function()
   local packer = require "packer"
