@@ -27,6 +27,8 @@ declare -a __npm_deps=(
 	"@fsouza/prettierd"
 	"jsonls"
 	"eslint_d"
+	"typescript"
+	"typescript-language-server"
 )
 
 declare __lsp_deps="gopls pyright bashls clangd jsonls solargraph sumneko_lua tsserver"

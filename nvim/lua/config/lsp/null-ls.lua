@@ -22,7 +22,8 @@ function M.setup()
       null_ls.builtins.formatting.prettierd,
       -- https://github.com/mantoni/eslint_d.js
       -- code actions for js/ts
-      null_ls.builtins.formatting.eslint_d,
+      null_ls.builtins.diagnostics.eslint_d,
+      null_ls.builtins.code_actions.eslint_d,
 
       -- https://github.com/JohnnyMorganz/StyLua
       -- lua formatter

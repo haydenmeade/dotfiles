@@ -52,21 +52,19 @@ local function select_default_formater(client)
   if client.name == "null-ls" then
     return
   end
-  Log:debug("Checking for formatter overriding for " .. client.name)
   local s = require "null-ls.sources"
   local client_filetypes = client.config.filetypes or {}
+  local done = false
   for _, filetype in ipairs(client_filetypes) do
     local supported_formatters = s.get_supported(filetype, "formatting")
     if not vim.tbl_isempty(supported_formatters) then
-      Log:debug(
-        "Formatter overriding detected. "
-          .. Log:dump(supported_formatters)
-          .. " Disabling formatting capabilities for "
-          .. client.name
-      )
+      done = true
       client.resolved_capabilities.document_formatting = false
       client.resolved_capabilities.document_range_formatting = false
     end
+  end
+  if done then
+    Log:debug("Formatter overriding for " .. client.name)
   end
 end
 

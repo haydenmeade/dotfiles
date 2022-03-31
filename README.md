@@ -32,24 +32,7 @@ git
 wget
 aria2
 
-lsp:
-python
-pyright
-https://github.com/pyenv/pyenv
-
 go --https://github.com/canha/golang-tools-install-script
-goenv?
-gopls
-
-lua
-sumneko_lua
-stylua
-
-typescript
-tsserver
-eslint_d
-node version manager
-https://github.com/nvm-sh/nvm
 
 ruby
 *brew install rbenv ruby-build
@@ -75,7 +58,7 @@ scoop install wget gzip mingw nvm python neovim-nightly llvm fd ripgrep curl rbe
 
 nvm install latest
 nvm use latest
-npm install --global neovim tree-sitter-cli eslint_d
+npm install --global neovim tree-sitter-cli eslint_d typescript typescript-language-server @fsouza/prettierd
 
 python -m pip install --user pynvim
 
