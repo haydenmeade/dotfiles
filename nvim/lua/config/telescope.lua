@@ -77,6 +77,12 @@ function M.setup()
       cwd = "$HOME/dotfiles/",
     }
   end
+  M.search_gopath = function()
+    builtin.find_files {
+      prompt_title = "< Go project >",
+      cwd = "$HOME/go/src",
+    }
+  end
 
   -- Smartly opens either git_files or find_files, depending on whether the working directory is
   -- contained in a Git repo.

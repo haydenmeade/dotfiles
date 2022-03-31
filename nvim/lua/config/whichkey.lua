@@ -120,6 +120,7 @@ local mappings = {
     name = "Search",
     c = { "<Cmd>Telescope current_buffer_fuzzy_find<CR>", "Fuzzy find buffer" },
     b = { "<Cmd>Telescope buffers<Cr>", "Search buffers" },
+    g = { "<Cmd>lua require('config.telescope').search_gopath()<CR>", "Search GoPath Src" },
     l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
     t = { "<Cmd>Telescope live_grep<Cr>", "Live grep" },
     n = { "<Cmd>Telescope grep_string<Cr>", "grep word under cursor" },
