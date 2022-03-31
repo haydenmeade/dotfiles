@@ -21,7 +21,9 @@ local keymappings = {
     ["<C-up>"] = "<Cmd>lua require('smart-splits').move_cursor_up()<CR>",
     ["<C-right>"] = "<Cmd>lua require('smart-splits').move_cursor_right()<CR>",
   },
-  visual_mode = {},
+  visual_mode = {
+    ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
+  },
   term_mode = {
     ["<esc>"] = [[<C-\><C-n>]],
   },

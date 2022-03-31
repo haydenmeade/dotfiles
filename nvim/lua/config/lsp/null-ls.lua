@@ -15,7 +15,7 @@ function M.setup()
     sources = {
       -- https://github.com/ThePrimeagen/refactoring.nvim
       -- refactoring ({ "go", "javascript", "lua", "python", "typescript" })
-      null_ls.builtins.code_actions.refactoring,
+      -- null_ls.builtins.code_actions.refactoring,
 
       -- https://github.com/fsouza/prettierd
       -- formatting js/ts/html/css/json

@@ -124,9 +124,9 @@ alias n='nvim'
 ## ZSH plugins
 fpath+=$HOME/.zsh/pure
 
-function git_clone_or_update() {
-  git clone "$1" "$2" 2>/dev/null && print 'Update status: Success' || (cd "$2"; git pull)
-}
+# function git_clone_or_update() {
+#   git clone "$1" "$2" 2>/dev/null && print 'Update status: Success' || (cd "$2"; git pull)
+# }
 
 
 bindkey '^ ' autosuggest-accept
