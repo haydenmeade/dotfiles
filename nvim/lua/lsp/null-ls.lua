@@ -35,6 +35,7 @@ function M.setup()
       null_ls.builtins.diagnostics.revive,
       -- GO formatter:https://github.com/mvdan/gofumpt
       null_ls.builtins.formatting.gofumpt,
+      null_ls.builtins.formatting.goimports,
 
       -- Ruby formatter https://github.com/ruby-formatter/rufo
       -- null_ls.builtins.formatting.rufo,

@@ -28,6 +28,12 @@ vim.cmd [[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]
 -- don't auto comment new lines
 autocmd("BufEnter", { command = "set fo-=c fo-=r fo-=o" })
 
+-- Force write shada on leaving nvim
+autocmd("VimLeave", { command = [[if has('nvim') | wshada! | else | wviminfo! | endif]] })
+
+-- Check if file changed when its window is focus, more eager than 'autoread'
+autocmd("FocusGained", { command = "checktime" })
+
 vim.api.nvim_exec(
   [[
         cnoreabbrev W! w!
