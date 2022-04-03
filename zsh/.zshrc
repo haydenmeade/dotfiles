@@ -91,35 +91,54 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
 export EDITOR='nvim'
-# else
-#   export EDITOR='mvim'
-# fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+extract () {
+     if [ -f $1 ] ; then
+         case $1 in
+             *.tar.bz2)   tar xjf $1        ;;
+             *.tar.gz)    tar xzf $1     ;;
+             *.bz2)       bunzip2 $1       ;;
+             *.rar)       rar x $1     ;;
+             *.gz)        gunzip $1     ;;
+             *.tar)       tar xf $1        ;;
+             *.tbz2)      tar xjf $1      ;;
+             *.tgz)       tar xzf $1       ;;
+             *.zip)       unzip $1     ;;
+             *.Z)         uncompress $1  ;;
+             *.7z)        7z x $1    ;;
+             *)           echo "'$1' cannot be extracted via extract()" ;;
+         esac
+     else
+         echo "'$1' is not a valid file"
+     fi
+}
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# start in home
-# cd ~
+cdls () { 
+    if [[ -z "$PS1" ]]; then
+        builtin cd "$@"
+    else
+        builtin cd "$@" && exa -la; 
+    fi
+}
 
 alias python='python3'
 alias n='nvim'
+alias l='exa -la'
+alias ls='exa -la'
+alias cd='cdls'
+alias dot='cd ~/dotfiles & nvim'
+alias cat=bat
+
+source /usr/share/doc/fzf/examples/key-bindings.zsh
+fzf-history-widget-accept() {
+  fzf-history-widget
+  zle accept-line
+}
+zle     -N     fzf-history-widget-accept
+bindkey '^R'   fzf-history-widget-accept
+bindkey -M vicmd '^R' fzf-history-widget
+bindkey -M viins '^R' fzf-history-widget
 
 ## ZSH plugins
 fpath+=$HOME/.zsh/pure
