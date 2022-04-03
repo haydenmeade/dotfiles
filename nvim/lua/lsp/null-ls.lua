@@ -8,49 +8,91 @@ function M.setup()
     Log:error "Missing null-ls dependency"
     return
   end
-
+  local function exist(bin)
+    return vim.fn.exepath(bin) ~= ""
+  end
   local default_opts = require("lsp").get_common_opts()
 
-  null_ls.setup(vim.tbl_deep_extend("force", default_opts, {
-    sources = {
-      -- https://github.com/ThePrimeagen/refactoring.nvim
-      -- refactoring ({ "go", "javascript", "lua", "python", "typescript" })
-      -- null_ls.builtins.code_actions.refactoring,
+  local sources = {
+    -- https://github.com/ThePrimeagen/refactoring.nvim
+    -- refactoring ({ "go", "javascript", "lua", "python", "typescript" })
+    -- null_ls.builtins.code_actions.refactoring,
 
-      -- https://github.com/fsouza/prettierd
-      -- formatting js/ts/html/css/json
-      null_ls.builtins.formatting.prettierd,
-      -- https://github.com/mantoni/eslint_d.js
-      -- code actions for js/ts
-      null_ls.builtins.diagnostics.eslint_d,
-      null_ls.builtins.code_actions.eslint_d,
+    -- maybe:
+    -- python diagnostics
+    -- null_ls.builtins.diagnostics.flake8,
+    -- python formatter
+    -- null_ls.builtins.formatting.black
+  }
+  if exist "prettierd" then
+    -- https://github.com/fsouza/prettierd
+    -- formatting js/ts/html/css/json
+    table.insert(sources, null_ls.builtins.formatting.prettierd)
+  end
+  if exist "rufo" then
+    -- Ruby formatter https://github.com/ruby-formatter/rufo
+    table.insert(sources, null_ls.builtins.formatting.rufo)
+  end
 
-      -- https://github.com/JohnnyMorganz/StyLua
-      -- lua formatter
-      null_ls.builtins.formatting.stylua,
+  -- shell script
+  if exist "shellcheck" then
+    table.insert(sources, null_ls.builtins.diagnostics.shellcheck)
+  end
 
-      -- GO lint:https://golangci-lint.run/
-      -- null_ls.builtins.diagnostics.golangci_lint,
-      -- alt:https://revive.run/
-      null_ls.builtins.diagnostics.revive,
-      -- GO formatter:https://github.com/mvdan/gofumpt
-      null_ls.builtins.formatting.gofumpt,
-      null_ls.builtins.formatting.goimports,
+  -- shell script
+  if exist "shfmt" then
+    table.insert(sources, null_ls.builtins.formatting.shfmt)
+  end
 
-      -- Ruby formatter https://github.com/ruby-formatter/rufo
-      -- null_ls.builtins.formatting.rufo,
+  -- golang
+  if exist "gofumpt" then
+    table.insert(sources, null_ls.builtins.formatting.gofumpt)
+    table.insert(
+      sources,
+      null_ls.builtins.formatting.golines.with {
+        extra_args = {
+          "--max-len=120",
+          "--base-formatter=gofumpt",
+        },
+      }
+    )
+  end
+  if exist "goimports" then
+    table.insert(sources, null_ls.builtins.formatting.goimports)
+  end
 
-      -- sh
-      null_ls.builtins.diagnostics.shellcheck,
-      null_ls.builtins.formatting.shfmt,
+  if exist "revive" then
+    -- GO lint:https://golangci-lint.run/
+    -- https://revive.run/
+    table.insert(sources, null_ls.builtins.diagnostics.revive)
+  end
 
-      -- maybe:
-      -- python diagnostics
-      -- null_ls.builtins.diagnostics.flake8,
-      -- python formatter
-      -- null_ls.builtins.formatting.black
-    },
-  }))
+  -- docker
+  if exist "hadolint" then
+    table.insert(sources, null_ls.builtins.diagnostics.hadolint)
+  end
+
+  if exist "eslint_d" then
+    -- https://github.com/mantoni/eslint_d.js
+    -- code actions for js/ts
+    table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+    table.insert(sources, null_ls.builtins.code_actions.eslint_d)
+  end
+  -- js, ts
+  if exist "prettierd" then
+    table.insert(sources, null_ls.builtins.formatting.prettierd)
+  end
+  -- lua
+  if exist "selene" then
+    table.insert(sources, null_ls.builtins.diagnostics.selene)
+  end
+
+  if exist "stylua" then
+    -- https://github.com/JohnnyMorganz/StyLua
+    table.insert(sources, null_ls.builtins.formatting.stylua)
+  end
+
+  null_ls.setup(vim.tbl_deep_extend("force", default_opts, { sources = sources }))
 end
 
 return M
