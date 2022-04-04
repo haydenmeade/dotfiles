@@ -33,7 +33,6 @@ scoop install neovim-nightly
 
 ```
 brew install --HEAD neovim
-
 ```
 
 ## Dependencies:
@@ -57,7 +56,7 @@ lua-language-server
 
 mingw
 
-> go packages
+> go
 
 https://github.com/canha/golang-tools-install-script
 _go doesn't seem to work on windows from scoop?_
@@ -66,13 +65,15 @@ _go doesn't seem to work on windows from scoop?_
 go install mvdan.cc/gofumpt@latest github.com/mgechev/revive@latest mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
 
-> ruby gems
+> ruby
+
+https://gorails.com/setup/windows/10
 
 ```
 gem install solargraph
 ```
 
-> Node
+> Node.js
 
 ```
 nvm install latest
@@ -93,8 +94,6 @@ https://www.rust-lang.org/tools/install
 ```
 cargo install stylua ripgrep exa bat fd
 ```
-
-- https://gorails.com/setup/windows/10
 
 > C/C++
 
