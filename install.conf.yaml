@@ -1,0 +1,20 @@
+- defaults:
+    link:
+      relink: true
+
+- clean: ["~"]
+
+- create:
+    - ~/.config/nvim/
+
+- link:
+    ~/.config/nvim: nvim
+    ~/.gitconfig: .gitconfig
+    ~/.zshrc: zsh/.zshrc
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [
+        nvim --headless -c "autocmd User PackerComplete quitall" -c "PackerSync",
+        Installing nvim plugins.,
+      ]

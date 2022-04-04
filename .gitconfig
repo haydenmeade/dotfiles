@@ -1,0 +1,5 @@
+[user]
+	email = haydenmeade@gmail.com
+	name = haydenmeade
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe
