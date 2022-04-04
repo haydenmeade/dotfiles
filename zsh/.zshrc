@@ -130,6 +130,7 @@ alias python='python3'
 alias n='nvim'
 alias l='exa -la'
 alias ls='exa -la'
+alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
 
