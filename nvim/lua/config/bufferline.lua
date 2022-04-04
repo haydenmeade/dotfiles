@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-doc-name
 local M = {}
 
 local function is_ft(b, ft)
@@ -182,6 +183,31 @@ function M.buf_kill(kill_command, bufnr, force)
   if api.nvim_buf_is_valid(bufnr) and bo[bufnr].buflisted then
     vim.cmd(string.format("%s %d", kill_command, bufnr))
   end
+end
+
+function M.close_others()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local last_buffer = vim.fn.bufnr "$"
+  local deleted = 0
+  local n = 1
+  while n <= last_buffer do
+    if n ~= bufnr and vim.fn.buflisted(n) ~= 0 then
+      if vim.api.nvim_buf_get_option(n, "modified") then
+        print(string.format("Buffer %d is modified", n))
+        vim.cmd(string.format("buffer %d", n))
+        return
+      else
+        vim.cmd(string.format("silent bdel %d", n))
+        if vim.fn.buflisted(n) == 0 then
+          deleted = deleted + 1
+        end
+      end
+    end
+
+    n = n + 1
+  end
+
+  vim.cmd [[silent only]]
 end
 
 return M

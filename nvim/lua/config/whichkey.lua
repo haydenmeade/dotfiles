@@ -84,7 +84,7 @@ local mappings = {
     j = { "<cmd>BufferLinePick<cr>", "Jump" },
     f = { "<cmd>Telescope buffers<cr>", "Find" },
     b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    -- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
+    o = { "<cmd>lua require('config.bufferline').close_others()<cr>", "Close others" },
     e = {
       "<cmd>BufferLinePickClose<cr>",
       "Pick which buffer to close",

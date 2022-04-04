@@ -134,6 +134,7 @@ alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
 
+# fzf command history search
 source /usr/share/doc/fzf/examples/key-bindings.zsh
 fzf-history-widget-accept() {
   fzf-history-widget
@@ -144,17 +145,15 @@ bindkey '^R'   fzf-history-widget-accept
 bindkey -M vicmd '^R' fzf-history-widget
 bindkey -M viins '^R' fzf-history-widget
 
-## ZSH plugins
-fpath+=$HOME/.zsh/pure
 
 # function git_clone_or_update() {
 #   git clone "$1" "$2" 2>/dev/null && print 'Update status: Success' || (cd "$2"; git pull)
 # }
 
-
 bindkey '^ ' autosuggest-accept
 bindkey '^n' autosuggest-accept
 
-# Set up the prompt
+# Set up theme
+fpath+=$HOME/.zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
