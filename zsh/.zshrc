@@ -122,12 +122,15 @@ cdls () {
     fi
 }
 
+dot () {
+    builtin cd ~/dotfiles/ && nvim
+}
+
 alias python='python3'
 alias n='nvim'
 alias l='exa -la'
 alias ls='exa -la'
 alias cd='cdls'
-alias dot='cd ~/dotfiles & nvim'
 alias cat=bat
 
 source /usr/share/doc/fzf/examples/key-bindings.zsh
