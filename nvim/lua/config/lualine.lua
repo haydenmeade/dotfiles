@@ -214,10 +214,10 @@ function M.setup()
     },
     sections = {
       lualine_a = { components.mode },
-      lualine_b = { components.branch, components.filename },
+      lualine_b = { components.filename },
       lualine_c = { components.gps },
-      lualine_x = { components.diagnostics, components.lsp, components.diff },
-      lualine_y = {},
+      lualine_x = { components.diagnostics, components.lsp },
+      lualine_y = { components.branch, components.diff },
       lualine_z = { components.location, components.scrollbar },
     },
     inactive_sections = {
@@ -232,16 +232,6 @@ function M.setup()
     tabline = {},
     extensions = { "nvim-tree" },
   }
-
-  -- Inserts a component in lualine_c at left section
-  local function ins_left(component)
-    table.insert(config.sections.lualine_c, component)
-  end
-
-  -- Inserts a component in lualine_x ot right section
-  local function ins_right(component)
-    table.insert(config.sections.lualine_x, component)
-  end
 
   -- Now don't forget to initialize lualine
   lualine.setup(config)

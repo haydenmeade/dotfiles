@@ -59,9 +59,9 @@ M.update_packer = function()
   local packer = require "packer"
   Log:debug "Updating plugins with packer"
   packer.sync()
-  local snap_full_path = join_paths(packer_snapshot_path, packer_snapshot)
-  os.remove(snap_full_path)
-  packer.snapshot(packer_snapshot)
+  -- local snap_full_path = join_paths(packer_snapshot_path, packer_snapshot)
+  -- os.remove(snap_full_path)
+  -- packer.snapshot(packer_snapshot)
   --
   -- local temp_json = join_paths(get_cache_dir(), packer_snapshot)
   -- Log:debug "Formatting Json"

@@ -23,9 +23,9 @@ packer_init()
 function M.setup()
   -- Packer Config
   local conf = {
-    snapshot = packer_snapshot, -- Snapshot name
-    snapshot_path = packer_snapshot_path, -- Default save directory for snapshots
-    compile_path = join_paths(vim.fn.stdpath "config", "lua", "packer_compiled.lua"),
+    -- snapshot = packer_snapshot, -- Snapshot name
+    -- snapshot_path = packer_snapshot_path, -- Default save directory for snapshots
+    -- compile_path = join_paths(vim.fn.stdpath "config", "lua", "packer_compiled.lua"),
   }
 
   local function plugins(use)
@@ -363,7 +363,6 @@ function M.setup()
       "lukas-reineke/indent-blankline.nvim",
       config = function()
         require("indent_blankline").setup {
-          -- context is off by default, use this to turn it on
           show_current_context = true,
           show_current_context_start = true,
           space_char_blankline = " ",
@@ -389,6 +388,7 @@ function M.setup()
     -- colorscheme
     use "rebelot/kanagawa.nvim"
     use "luisiacc/gruvbox-baby"
+    use "eddyekofo94/gruvbox-flat.nvim"
     use {
       "folke/tokyonight.nvim",
       config = function()

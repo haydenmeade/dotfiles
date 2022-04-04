@@ -46,7 +46,6 @@ function M.setup()
       "--column",
       "--smart-case",
     },
-    use_less = true,
     extensions = {
       fzf = {
         override_generic_sorter = false,
@@ -88,10 +87,13 @@ function M.setup()
   -- contained in a Git repo.
   function M.find_project_files()
     local _, ret, _ = utils.get_os_command_output { "git", "rev-parse", "--is-inside-work-tree" }
+    local opts = {
+      sort_last_used = true,
+    }
     if ret == 0 then
-      builtin.git_files()
+      builtin.git_files(opts)
     else
-      builtin.find_files()
+      builtin.find_files(opts)
     end
   end
 
