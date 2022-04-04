@@ -41,10 +41,10 @@ function M.setup()
     incremental_selection = {
       enable = true,
       keymaps = {
-        init_selection = "gnn",
-        node_incremental = "grn",
-        scope_incremental = "grc",
-        node_decremental = "grm",
+        init_selection = "<M-w>",
+        node_incremental = "<M-w>",
+        node_decremental = "<M-n>",
+        scope_incremental = "<M-t>",
       },
     },
     indent = { enable = true },
