@@ -103,7 +103,6 @@ end
 ---@param user_config table [optional]
 ---@return table
 local function resolve_config(name, user_config)
-  Log:debug("Resolving " .. name)
   local opts = M.get_common_opts()
   local has_custom_provider, custom_config = pcall(require, join_paths("lsp", name))
   if has_custom_provider then
