@@ -4,47 +4,54 @@
 git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./install
 ```
 
-to check out:
-andythigpen / nvim-coverage
-b0o / SchemaStore.nvim
+> to check out:
+> andythigpen/nvim-coverage
+> b0o/SchemaStore.nvim
 
-## Setup:
-
-### Neovim
+## Neovim
 
 ```
 bash ./installnvimfromrelease.sh
 ```
 
-or
+### linux:
 
-## linux:
-
+```
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 sudo apt install neovim -y
+```
 
-## Windows:
+### Windows:
 
 ```
 scoop bucket add versions
 scoop install neovim-nightly
 ```
 
+### OSX
+
+```
+brew install --HEAD neovim
+
+```
+
 ## Dependencies:
 
-gzip
-nvm
+git
 curl
+wget
+gzip
+lazygit
+fzf
+shellcheck
 rbenv
 ruby-build
-shellcheck
 jq
-fzf
-git
-wget
+nvm
 python3
 llvm
+lua-language-server
 
 > Windows only:
 
@@ -56,9 +63,7 @@ https://github.com/canha/golang-tools-install-script
 _go doesn't seem to work on windows from scoop?_
 
 ```
-go install mvdan.cc/gofumpt@latest
-go install github.com/mgechev/revive@latest
-go install mvdan.cc/sh/v3/cmd/shfmt@latest
+go install mvdan.cc/gofumpt@latest github.com/mgechev/revive@latest mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
 
 > ruby gems
@@ -72,7 +77,7 @@ gem install solargraph
 ```
 nvm install latest
 nvm use latest
-npm install --global neovim tree-sitter-cli eslint_d typescript typescript-language-server @fsouza/prettierd
+npm install --global neovim tree-sitter-cli eslint_d eslint typescript typescript-language-server @fsouza/prettierd pure-prompt tldr jsonls bash-language-server
 ```
 
 > python
@@ -98,7 +103,8 @@ clangd: https://clangd.llvm.org/installation.html
 ## Windows(WSL):
 
 Systemd: https://github.com/DamionGans/ubuntu-wsl2-systemd-script
-Scoop:
+
+> Scoop
 
 ```
 iwr -useb get.scoop.sh | iex
