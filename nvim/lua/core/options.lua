@@ -61,12 +61,10 @@ endif
 g.do_filetype_lua = 1
 -- disable filetype.vim and use only filetype.lua (at your own risk)
 g.did_load_filetypes = 0
+g.loaded_perl_provider = 0
 
 opt.sessionoptions = "buffers,curdir,folds,help,winsize,winpos,terminal"
 opt.lazyredraw = true --When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
-
-g.loaded_perl_provider = 0
-
 opt.shortmess:append "sI" -- disable nvim intro
 opt.completeopt = {
   "menu",

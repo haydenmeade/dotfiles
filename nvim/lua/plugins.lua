@@ -241,6 +241,7 @@ function M.setup()
           "nvim-treesitter/playground",
           after = "nvim-treesitter",
           run = ":TSInstall query",
+          opt = true,
           cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
         },
         {

@@ -71,11 +71,13 @@ function M.setup()
   }
 
   M.search_dotfiles = function()
-    builtin.find_files {
+    builtin.git_files {
       prompt_title = "< Nvim Config >",
       cwd = "$HOME/dotfiles/",
+      use_git_root = false,
     }
   end
+
   M.search_gopath = function()
     builtin.find_files {
       prompt_title = "< Go project >",
