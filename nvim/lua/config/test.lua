@@ -2,6 +2,23 @@ vim.g.ultest_use_pty = 1
 
 local M = {}
 
+function M.coverage()
+  local ok, coverage = h.safe_require "coverage"
+  if not ok then
+    return
+  end
+
+  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+
+  coverage.setup {
+    commands = false,
+    highlights = {
+      covered = { fg = colors.green },
+      uncovered = { fg = colors.red },
+    },
+  }
+end
+
 function M.setup()
   vim.api.nvim_exec(
     [[

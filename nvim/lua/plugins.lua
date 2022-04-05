@@ -231,10 +231,11 @@ function M.setup()
       end,
       requires = {
         "jose-elias-alvarez/nvim-lsp-ts-utils",
-        "nvim-treesitter/nvim-treesitter-textobjects",
+        "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
         "JoosepAlviste/nvim-ts-context-commentstring",
-        "David-Kunz/treesitter-unit",
+        "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
         "nvim-treesitter/nvim-treesitter-refactor",
+        "RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages
         {
           "nvim-treesitter/playground",
           after = "nvim-treesitter",
@@ -284,6 +285,13 @@ function M.setup()
       config = "require('config.test').setup()",
       run = ":UpdateRemotePlugins",
       requires = { "vim-test/vim-test" },
+    }
+    use {
+      "andythigpen/nvim-coverage", -- Display test coverage information
+      module = "coverage",
+      config = function()
+        require("config.test").coverage()
+      end,
     }
 
     -- Stuff
@@ -362,7 +370,7 @@ function M.setup()
     use {
       "lukas-reineke/indent-blankline.nvim",
       config = function()
-        require("indent_blankline").setup(require "config.indent-blankline")
+        require("config.indent-blankline").setup()
       end,
     }
 
@@ -382,6 +390,7 @@ function M.setup()
     }
 
     -- colorscheme
+    use "olimorris/onedarkpro.nvim"
     use "rebelot/kanagawa.nvim"
     use "luisiacc/gruvbox-baby"
     use "eddyekofo94/gruvbox-flat.nvim"

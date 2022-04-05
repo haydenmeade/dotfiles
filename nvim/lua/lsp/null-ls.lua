@@ -29,9 +29,9 @@ function M.setup()
     -- formatting js/ts/html/css/json
     table.insert(sources, null_ls.builtins.formatting.prettierd)
   end
-  if exist "rufo" then
-    -- Ruby formatter https://github.com/ruby-formatter/rufo
-    table.insert(sources, null_ls.builtins.formatting.rufo)
+  if exist "rubocop" then
+    -- Ruby formatter
+    table.insert(sources, null_ls.builtins.formatting.rubocop)
   end
 
   -- shell script

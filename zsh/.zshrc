@@ -14,13 +14,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
+eval "$(rbenv init - zsh)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 DISABLE_AUTO_TITLE=true
 
+rbenv global 3.1.1 && rbenv rehash
 ZSH_THEME=""
 
 # Uncomment the following line to use case-sensitive completion.

@@ -1,9 +1,9 @@
-local global = {}
 local home = os.getenv "HOME"
-local path_sep = global.is_windows and "\\" or "/"
+local path_sep = h.is_windows and "\\" or "/"
 local os_name = vim.loop.os_uname().sysname
+_G.h = {}
 
-function global:load_variables()
+function h:load_variables()
   self.is_mac = os_name == "Darwin"
   self.is_linux = os_name == "Linux"
   self.is_windows = os_name == "Windows" or os_name == "Windows_NT"
@@ -24,6 +24,17 @@ function global:load_variables()
   self.log_path = string.format("%s%s%s", self.log_dir, path_sep, "nvim_debug.log")
 end
 
-global:load_variables()
+h:load_variables()
 
-return global
+---Require a module using [pcall] and report any errors
+---@param module string
+---@param opts table?
+---@return boolean, any
+function h.safe_require(module, opts)
+  opts = opts or { silent = false }
+  local ok, result = pcall(require, module)
+  if not ok and not opts.silent then
+    vim.notify(result, vim.log.levels.ERROR, { title = string.format("Error requiring: %s", module) })
+  end
+  return ok, result
+end
