@@ -1,7 +1,11 @@
 local M = {}
 
 function M.setup()
-  require("toggleterm").setup {
+  local ok, term = h.safe_require "toggleterm"
+  if not ok then
+    return
+  end
+  term.setup {
     size = 20,
     hide_numbers = true,
     open_mapping = [[<c-\>]],

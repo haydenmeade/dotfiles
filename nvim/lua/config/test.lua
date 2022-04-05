@@ -20,6 +20,10 @@ function M.coverage()
 end
 
 function M.setup()
+  local ok, ultest = h.safe_require "ultest"
+  if not ok then
+    return
+  end
   vim.api.nvim_exec(
     [[
         let test#strategy = "dispatch"
@@ -56,7 +60,7 @@ function M.setup()
       }
     end,
   }
-  require("ultest").setup { builders = builders }
+  ultest.setup { builders = builders }
 end
 
 return M

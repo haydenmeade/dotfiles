@@ -8,8 +8,14 @@ function M.setup()
     return
   end
 
-  local lualine = require "lualine"
-  local gps = require "nvim-gps"
+  local ok, lualine = h.safe_require "lualine"
+  if not ok then
+    return
+  end
+  local ok, gps = h.safe_require "nvim-gps"
+  if not ok then
+    return
+  end
 
   -- Color table for highlights
   local colors = {

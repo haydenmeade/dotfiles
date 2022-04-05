@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup()
-  local ok, telescope = pcall(require, "telescope")
+  local ok, telescope = h.safe_require "telescope"
   if not ok then
     return
   end

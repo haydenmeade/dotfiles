@@ -1,12 +1,11 @@
 local M = {}
 
-local function close_nvim_tree()
-  local nvim_tree = require "nvim-tree"
-  nvim_tree.close()
-end
-
 function M.setup()
-  require("auto-session").setup {
+  local ok, session = h.safe_require "auto-session"
+  if not ok then
+    return
+  end
+  session.setup {
     log_level = "error",
     pre_save_cmds = { "NvimTreeClose" },
   }

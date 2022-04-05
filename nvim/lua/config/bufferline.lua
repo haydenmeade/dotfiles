@@ -35,7 +35,11 @@ local function custom_filter(buf, buf_nums)
 end
 
 M.setup = function()
-  require("bufferline").setup {
+  local ok, bufferline = h.safe_require "bufferline"
+  if not ok then
+    return
+  end
+  bufferline.setup {
     active = true,
     on_config_done = nil,
     keymap = {

@@ -1,4 +1,8 @@
-require("neoscroll").setup {}
+local ok, neoscroll = h.safe_require "neoscroll"
+if not ok then
+  return
+end
+neoscroll.setup {}
 local map = {}
 
 map["<C-u>"] = { "scroll", { "-vim.wo.scroll", "true", "80" } }

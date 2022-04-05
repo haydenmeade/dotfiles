@@ -1,7 +1,10 @@
 local M = {}
 
 function M.setup()
-  local ls = require "luasnip"
+  local ok, ls = h.safe_require "luasnip"
+  if not ok then
+    return
+  end
   local types = require "luasnip.util.types"
 
   require("luasnip.loaders.from_lua").lazy_load()

@@ -1,4 +1,8 @@
-require("specs").setup {
+local ok, specs = h.safe_require "specs"
+if not ok then
+  return
+end
+specs.setup {
   show_jumps = true,
   min_jump = 10,
   popup = {

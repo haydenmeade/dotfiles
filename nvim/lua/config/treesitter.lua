@@ -1,6 +1,10 @@
 local M = {}
 
 function M.setup()
+  local ok, _ = h.safe_require "nvim-treesitter"
+  if not ok then
+    return
+  end
   require("nvim-treesitter.configs").setup {
     ensure_installed = {
       "bash",

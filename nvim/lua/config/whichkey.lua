@@ -290,7 +290,10 @@ function M.register_lsp(client)
 end
 
 function M.setup()
-  local wk = require "which-key"
+  local ok, wk = h.safe_require "which-key"
+  if not ok then
+    return
+  end
   wk.setup {
     setup = {
       plugins = {

@@ -1,7 +1,11 @@
 local M = {}
 
 function M.setup()
-  require("neogit").setup { integrations = { diffview = true } }
+  local ok, neogit = h.safe_require "neogit"
+  if not ok then
+    return
+  end
+  neogit.setup { integrations = { diffview = true } }
 end
 
 return M

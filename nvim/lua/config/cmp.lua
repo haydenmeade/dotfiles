@@ -1,11 +1,14 @@
 local M = {}
 
 function M.setup()
-  local ok, cmp = pcall(require, "cmp")
+  local ok, cmp = h.safe_require "cmp"
   if not ok then
     return
   end
-  local ls = require "luasnip"
+  local ok, ls = h.safe_require "luasnip"
+  if not ok then
+    return
+  end
   local compare = require "cmp.config.compare"
 
   local function has_words_before()

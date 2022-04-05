@@ -21,13 +21,6 @@ end
 packer_init()
 
 function M.setup()
-  -- Packer Config
-  local conf = {
-    -- snapshot = packer_snapshot, -- Snapshot name
-    -- snapshot_path = packer_snapshot_path, -- Default save directory for snapshots
-    -- compile_path = join_paths(vim.fn.stdpath "config", "lua", "packer_compiled.lua"),
-  }
-
   local function plugins(use)
     use "lewis6991/impatient.nvim"
 
@@ -89,6 +82,14 @@ function M.setup()
     use "rcarriga/nvim-dap-ui"
     use "theHamsta/nvim-dap-virtual-text"
     use "nvim-telescope/telescope-dap.nvim"
+
+    use {
+      "pianocomposer321/yabs.nvim", -- Build and run your code
+      module = "yabs",
+      config = function()
+        require("config.yabs").setup()
+      end,
+    }
 
     -- Jumps
     use "ggandor/lightspeed.nvim"
@@ -338,7 +339,6 @@ function M.setup()
 
     use {
       "SmiteshP/nvim-gps",
-      module = "nvim-gps",
       config = function()
         require("nvim-gps").setup()
       end,
@@ -409,7 +409,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init(conf)
+  require("packer").init()
   require("packer").startup(plugins)
 end
 return M

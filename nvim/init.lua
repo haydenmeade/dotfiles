@@ -1,10 +1,11 @@
-vim.g.loglevel = "debug" -- "trace" | "debug" | "info" | "warn" | "error"
+vim.g.loglevel = "info" -- "trace" | "debug" | "info" | "warn" | "error"
 
 local core_modules = {
   "core.options",
   "core.util",
   "core.log",
   "core.autocmds",
+  "core.global",
 }
 
 for _, module in ipairs(core_modules) do

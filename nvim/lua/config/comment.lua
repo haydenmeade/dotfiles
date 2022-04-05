@@ -1,7 +1,11 @@
 local M = {}
 
 function M.setup()
-  require("Comment").setup {
+  local ok, comment = h.safe_require "Comment"
+  if not ok then
+    return
+  end
+  comment.setup {
     mappings = {
       -- gco
       -- gcO
