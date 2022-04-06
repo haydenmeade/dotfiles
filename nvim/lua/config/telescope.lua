@@ -15,6 +15,7 @@ function M.setup()
   telescope.load_extension "luasnip"
   telescope.load_extension "repo"
   telescope.load_extension "file_browser"
+  telescope.load_extension "file_create"
 
   local largeFilesIgnoringPreviewer = function(filepath, bufnr, opts)
     opts = opts or {}
