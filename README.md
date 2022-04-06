@@ -1,7 +1,7 @@
 # DOTFILES
 
 ```
-git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./install
+git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./ubuntu
 ```
 
 ## Neovim
@@ -34,6 +34,7 @@ brew install --HEAD neovim
 ## Dependencies:
 
 git
+zsh
 curl
 wget
 gzip
@@ -51,6 +52,20 @@ lua-language-server
 > Windows only:
 
 mingw
+
+## ZSH
+
+> https://github.com/ohmyzsh/ohmyzsh
+
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+```
+
+```
+git clone https://github.com/lukechilds/zsh-nvm ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-nvm
+git clone https://github.com/mroth/evalcache ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/evalcache
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
+```
 
 > go
 
