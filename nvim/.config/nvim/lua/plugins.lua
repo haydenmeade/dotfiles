@@ -168,6 +168,7 @@ function M.setup()
     use "williamboman/nvim-lsp-installer"
     use "jose-elias-alvarez/null-ls.nvim"
     use "ray-x/lsp_signature.nvim"
+
     use {
       "onsails/lspkind-nvim",
       config = function()
@@ -400,6 +401,11 @@ function M.setup()
     use "rebelot/kanagawa.nvim"
     use "luisiacc/gruvbox-baby"
     use "eddyekofo94/gruvbox-flat.nvim"
+    use "EdenEast/nightfox.nvim"
+    use {
+      "catppuccin/nvim",
+      as = "catppuccin",
+    }
     use {
       "folke/tokyonight.nvim",
       config = function()

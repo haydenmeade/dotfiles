@@ -21,7 +21,6 @@ opt.cursorline = true -- enable cursor line
 opt.smarttab = true -- make tab behaviour smarter
 opt.undofile = true -- persistent undo
 opt.termguicolors = true -- true colours for better experience
-opt.termguicolors = true -- true colours for better experience
 opt.inccommand = "split" -- incrementally show result of command
 opt.signcolumn = "yes" -- enable sign column all the time 4 column
 opt.timeoutlen = 300
