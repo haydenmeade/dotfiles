@@ -253,6 +253,11 @@ function M.setup()
         },
       },
     }
+    use {
+      "iamcco/markdown-preview.nvim",
+      ft = "markdown",
+      run = { "cd app && yarn install" },
+    }
 
     use {
       "ThePrimeagen/refactoring.nvim",

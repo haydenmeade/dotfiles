@@ -4,10 +4,6 @@
 git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./install
 ```
 
-> to check out:
-> andythigpen/nvim-coverage
-> b0o/SchemaStore.nvim
-
 ## Neovim
 
 ```

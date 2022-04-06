@@ -205,7 +205,6 @@ local mappings = {
     l = { "<Cmd>TroubleToggle loclist<CR>", "Loclist" },
     r = { "<Cmd>TroubleToggle lsp_references<CR>", "References" },
 
-    -- cdo s/this/that
     j = { "<Cmd>lua require('trouble').previous({skip_groups=true,jump=true})<CR>", "previous item" },
     k = { "<Cmd>lua require('trouble').next({skip_groups=true,jump=true})<CR>", "next item" },
   },
