@@ -218,6 +218,7 @@ local no_leader_mappings = {
 local lsp_mappings = {
   l = {
     name = "LSP",
+    R = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
     r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
     u = { "<Cmd>Telescope lsp_references<CR>", "References" },
     o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },

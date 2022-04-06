@@ -2,18 +2,18 @@ local M = {}
 local Log = require "core.log"
 local config = require "lsp.config"
 
--- TODO autoinstall?
-local lsp_providers = {
-  "pyright",
-  "gopls",
-  "sumneko_lua",
-  "tsserver",
-  "solargraph",
-  "clangd",
-  "jsonls",
-  "bashls",
-  "yamlls",
-}
+-- TODO autoinstall
+-- local lsp_providers = {
+--   "pyright",
+--   "gopls",
+--   "sumneko_lua",
+--   "tsserver",
+--   "solargraph",
+--   "clangd",
+--   "jsonls",
+--   "bashls",
+--   "yamlls",
+-- }
 
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
