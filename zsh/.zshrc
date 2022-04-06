@@ -112,13 +112,17 @@ function work-on-issue() {
     fi
 }
 
-alias python='python3'
+alias py='python3'
 alias n='nvim'
 alias l='exa -la'
 alias ls='exa -la'
 alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
+
+alias gs='git status'
+alias ga='git add .'
+alias gc='git commit'
 
 # fzf command history search
 source /usr/share/doc/fzf/examples/key-bindings.zsh
