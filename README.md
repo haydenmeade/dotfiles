@@ -35,6 +35,7 @@ brew install --HEAD neovim
 
 git
 zsh
+stow
 curl
 wget
 gzip
