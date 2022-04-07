@@ -39,14 +39,6 @@ function M.setup()
   end
 
   telescope.setup {
-    find_command = {
-      "rg",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-    },
     extensions = {
       fzf = {
         override_generic_sorter = false,
@@ -56,6 +48,15 @@ function M.setup()
     },
     defaults = {
       buffer_previewer_maker = largeFilesIgnoringPreviewer,
+      vimgrep_arguments = {
+        "rg",
+        "--color=never",
+        "--no-heading",
+        "--with-filename",
+        "--line-number",
+        "--column",
+        "--smart-case",
+      },
       mappings = {
         i = {
           ["<C-j>"] = actions.move_selection_next,
@@ -81,8 +82,8 @@ function M.setup()
 
   M.search_gopath = function()
     builtin.find_files {
-      prompt_title = "< Go project >",
-      cwd = "$HOME/go/src",
+      prompt_title = "< Go projects >",
+      cwd = "$GOPATH/src",
     }
   end
 
@@ -110,6 +111,7 @@ function M.setup()
         "--line-number",
         "--column",
         "--smart-case",
+        "--hidden",
         "--glob=" .. (glob_pattern or ""),
       },
     }

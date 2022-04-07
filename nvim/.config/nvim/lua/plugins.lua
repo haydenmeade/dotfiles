@@ -276,8 +276,9 @@ function M.setup()
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-symbols.nvim",
-        { "cljoly/telescope-repo.nvim" },
-        { "nvim-telescope/telescope-file-browser.nvim" },
+        "cljoly/telescope-repo.nvim",
+        "nvim-telescope/telescope-file-browser.nvim",
+        "nvim-telescope/telescope-live-grep-raw.nvim",
         "benfowler/telescope-luasnip.nvim",
         "nvim-lua/popup.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },

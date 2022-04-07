@@ -124,6 +124,7 @@ local mappings = {
     g = { "<Cmd>lua require('config.telescope').search_gopath()<CR>", "Search GoPath Src" },
     l = { "<Cmd>Telescope luasnip<CR>", "Search snippets" },
     t = { "<Cmd>Telescope live_grep<Cr>", "Live grep" },
+    N = { "<Cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<Cr>", "Raw grep" },
     n = { "<Cmd>Telescope grep_string<Cr>", "grep word under cursor" },
     h = { "<Cmd>Telescope help_tags<Cr>", "Help" },
     m = { "<Cmd>Telescope marks<Cr>", "Mark" },

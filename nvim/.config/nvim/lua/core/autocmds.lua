@@ -7,21 +7,8 @@ local autocmd = vim.api.nvim_create_autocmd
 autocmd("TextYankPost", { callback = vim.highlight.on_yank })
 
 -- cursorline only in normal mode
-autocmd("InsertLeave,WinEnter", { command = "set cursorline" })
-autocmd("InsertEnter,WinLeave", { command = "set nocursorline" })
-
-vim.cmd [[
-        set wildmode=longest,list,full
-        set wildoptions=pum
-        set wildmenu
-        set wildignore+=*.pyc
-        set wildignore+=*_build/*
-        set wildignore+=**/coverage/*
-        set wildignore+=**/node_modules/*
-        set wildignore+=**/android/*
-        set wildignore+=**/ios/*
-        set wildignore+=**/.git/*
-    ]]
+-- autocmd("InsertLeave,WinEnter", { command = "set cursorline" })
+-- autocmd("InsertEnter,WinLeave", { command = "set nocursorline" })
 
 vim.cmd [[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]]
 

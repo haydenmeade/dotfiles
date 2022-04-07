@@ -48,6 +48,7 @@ source $ZSH/oh-my-zsh.sh
 
 # rbenv caching
 _evalcache rbenv init - zsh
+# rbenv init - zsh
 # rbenv global 3.1.1 && rbenv rehash
 
 # User configuration
