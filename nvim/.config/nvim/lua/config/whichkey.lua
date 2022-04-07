@@ -39,6 +39,7 @@ local mappings = {
   x = { "<Cmd>x!<Cr>", "Save+Quit" },
   X = { "<Cmd>wqall!<Cr>", "Save+Quit all" },
   c = { "<cmd>BufferKill<CR>", "Kill Buffer" },
+  C = { "<cmd>Telescope file_create<CR>", "Create File" },
   f = { "<cmd>lua require('config.telescope').find_project_files()<CR>", "Find File" },
   F = { "<cmd>lua require('config.telescope').live_grep_in_glob()<CR>", "Grep With FT Glob" },
   p = { "<cmd>lua require('session-lens').search_session()<CR>", "Switch Session" },

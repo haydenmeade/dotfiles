@@ -1,5 +1,3 @@
-vim.g.ultest_use_pty = 1
-
 local M = {}
 
 function M.coverage()
@@ -24,16 +22,18 @@ function M.setup()
   if not ok then
     return
   end
+
+  vim.g.ultest_use_pty = 1
+  -- vim.g.ultest_virtual_text = 1
   vim.api.nvim_exec(
     [[
         let test#strategy = "dispatch"
-        let test#neovim#term_position = "belowright"
-        let g:test#preserve_screen = 1
     ]],
     false
   )
 
   local builders = {
+    -- Go Test Debugging
     ["go#richgo"] = function(cmd)
       local args = {}
 

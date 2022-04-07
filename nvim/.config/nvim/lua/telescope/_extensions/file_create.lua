@@ -17,7 +17,7 @@ end
 
 local folder_list = function()
   local list = {}
-  local p = io.popen "fd . -t d"
+  local p = io.popen "find . -type d -not -path '**git**'"
   for file in p:lines() do
     table.insert(list, file:sub(3))
   end
