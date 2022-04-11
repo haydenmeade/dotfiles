@@ -194,7 +194,7 @@ function M.setup()
       config = function()
         require("config.luasnip").setup()
       end,
-      after = { "nvim-cmp" },
+      after = { "nvim-cmp", "nvim-treesitter" },
     }
 
     -- Autocomplete
@@ -347,9 +347,11 @@ function M.setup()
 
     use {
       "SmiteshP/nvim-gps",
+      as = "nvim-gps",
       config = function()
         require("nvim-gps").setup()
       end,
+      after = "nvim-treesitter",
     }
 
     use {
@@ -422,7 +424,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init()
+  require("packer").init { log = { level = "debug" }, max_jobs = 5 }
   require("packer").startup(plugins)
 end
 return M

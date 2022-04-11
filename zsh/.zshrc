@@ -8,19 +8,20 @@ fi
 # Path changes
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 
-alias luamake=/home/hayden/lua-language-server/3rd/luamake/luamake
 . "$HOME/.cargo/env"
 # GoLang
-export GOROOT=/home/hayden/.go
-export PATH=$GOROOT/bin:$PATH
-export GOPATH=/home/hayden/go
+# export GOROOT=$HOME/.go
+# export PATH=$GOROOT/bin:$PATH
+export GOPATH=$HOME/go
 export PATH=$GOPATH/bin:$PATH
 
+
 # WSL
-export PATH=$PATH:/mnt/c/Windows/System32/
-export BROWSER='/mnt/c/Windows/explorer.exe'
+ # export PATH=$PATH:/mnt/c/Windows/System32/
+#export BROWSER='/mnt/c/Windows/explorer.exe'
 
 export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -28,13 +29,8 @@ DISABLE_AUTO_TITLE=true
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
-# Add wisely, as too many plugins slow down shell startup.
-export NVM_LAZY_LOAD=true
-export NVM_COMPLETION=true
-
 plugins=( 
   evalcache 
-  zsh-nvm 
   git
   npm
   zsh-autosuggestions
@@ -144,7 +140,8 @@ alias gc='git commit'
 # alias _='sudo '
 
 # fzf command history search
-source /usr/share/doc/fzf/examples/key-bindings.zsh
+# source /usr/share/doc/fzf/examples/key-bindings.zsh
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fzf-history-widget-accept() {
   fzf-history-widget
   zle accept-line
@@ -169,3 +166,4 @@ bindkey '^n' autosuggest-accept
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
