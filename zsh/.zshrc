@@ -9,19 +9,6 @@ fi
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
 
 . "$HOME/.cargo/env"
-# GoLang
-# export GOROOT=$HOME/.go
-# export PATH=$GOROOT/bin:$PATH
-export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
-
-
-# WSL
- # export PATH=$PATH:/mnt/c/Windows/System32/
-#export BROWSER='/mnt/c/Windows/explorer.exe'
-
-export NVM_DIR="$HOME/.nvm"
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -30,22 +17,14 @@ DISABLE_AUTO_TITLE=true
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=( 
-  evalcache 
   git
   npm
+  asdf
   zsh-autosuggestions
+  macos
 )
-#macos
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 
 source $ZSH/oh-my-zsh.sh
-
-# rbenv caching
-_evalcache rbenv init - zsh
-# rbenv init - zsh
-# rbenv global 3.1.1 && rbenv rehash
 
 # User configuration
 
@@ -144,7 +123,7 @@ alias gc='git commit'
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 fzf-history-widget-accept() {
   fzf-history-widget
-  zle accept-line
+  # zle accept-line
 }
 zle     -N     fzf-history-widget-accept
 bindkey '^R'   fzf-history-widget-accept
@@ -167,3 +146,47 @@ bindkey '^n' autosuggest-accept
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# CultureAmp
+# unalias g
+# # Load custom executable functions
+# for function in ~/.zsh/functions/*; do
+#   source $function
+# done
+#
+# # Extra files in ~/.zsh/configs/pre, ~/.zsh/configs, and ~/.zsh/configs/post.
+# # These are loaded first, second, and third, respectively.
+# _load_settings() {
+#   _dir="$1"
+#   if [ -d "$_dir" ]; then
+#     if [ -d "$_dir/pre" ]; then
+#       for config in "$_dir"/pre/**/*~*.zwc(N-.); do
+#         . $config
+#       done
+#     fi
+#
+#     for config in "$_dir"/**/*(N-.); do
+#       case "$config" in
+#         "$_dir"/(pre|post)/*|*.zwc)
+#           :
+#           ;;
+#         *)
+#           . $config
+#           ;;
+#       esac
+#     done
+#
+#     if [ -d "$_dir/post" ]; then
+#       for config in "$_dir"/post/**/*~*.zwc(N-.); do
+#         . $config
+#       done
+#     fi
+#   fi
+# }
+# _load_settings "$HOME/.zsh/configs"
+#
+# # Local config
+# [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
+#
+# # Aliases
+# [[ -f ~/.aliases ]] && source ~/.aliases
+#

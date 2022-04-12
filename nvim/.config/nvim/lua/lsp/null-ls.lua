@@ -72,12 +72,12 @@ function M.setup()
     table.insert(sources, null_ls.builtins.diagnostics.hadolint)
   end
 
-  if exist "eslint_d" then
-    -- https://github.com/mantoni/eslint_d.js
-    -- code actions for js/ts
-    table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
-    table.insert(sources, null_ls.builtins.code_actions.eslint_d)
-  end
+  -- if exist "eslint_d" then
+  --   -- https://github.com/mantoni/eslint_d.js
+  --   -- code actions for js/ts
+  --   table.insert(sources, null_ls.builtins.diagnostics.eslint_d)
+  --   table.insert(sources, null_ls.builtins.code_actions.eslint_d)
+  -- end
   -- js, ts
   if exist "prettierd" then
     table.insert(sources, null_ls.builtins.formatting.prettierd)

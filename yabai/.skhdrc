@@ -1,0 +1,51 @@
+#!/usr/bin/env sh
+
+# Yabai
+#
+# Navigation
+cmd + alt - left  : yabai -m window --focus west
+cmd + alt - down  : yabai -m window --focus south
+cmd + alt - up    : yabai -m window --focus north
+cmd + alt - right : yabai -m window --focus east
+
+# move to next display
+ctrl + cmd - n  : yabai -m window --display next; yabai -m display --focus next
+ctrl + cmd + shift - 1  : yabai -m window --display 1; yabai -m display --focus 1
+
+# Moving windows
+cmd + shift + alt - left  : yabai -m window --warp west
+cmd + shift + alt - down  : yabai -m window --warp south
+cmd + shift + alt - up    : yabai -m window --warp north
+cmd + shift + alt - right : yabai -m window --warp east
+
+# Equalize size of windows
+cmd + alt - e : yabai -m space --balance
+
+# Rotate windows clockwise and anticlockwise
+cmd + alt - r         : yabai -m space --rotate 270
+
+# Rotate on X and Y Axis
+cmd + alt - x : yabai -m space --mirror x-axis
+cmd + alt - y : yabai -m space --mirror y-axis
+
+# Float / Unfloat window
+cmd + shift + alt - space : \
+    yabai -m window --toggle float; \
+
+# focus display
+cmd + alt - 1 : yabai -m display --focus 1
+cmd + alt - 2 : yabai -m display --focus 2
+cmd + alt - 3 : yabai -m display --focus 3
+cmd + alt - s : yabai -m display --focus next || yabai -m display --focus first; yabai -m space --focus next
+
+# Restart Yabai
+cmd + ctrl + alt - r : \
+    /usr/bin/env osascript <<< \
+        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+
+# Close active application
+ctrl + alt + cmd - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+
+# Make window native fullscreen
+cmd + ctrl + alt - return : yabai -m window --toggle zoom-fullscreen

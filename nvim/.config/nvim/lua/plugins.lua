@@ -424,7 +424,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init { log = { level = "debug" }, max_jobs = 5 }
+  require("packer").init { log = { level = "debug" }, max_jobs = 10 }
   require("packer").startup(plugins)
 end
 return M
