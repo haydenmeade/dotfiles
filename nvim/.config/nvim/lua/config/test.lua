@@ -9,7 +9,15 @@ function M.coverage()
   local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
 
   coverage.setup {
-    commands = false,
+    commands = true,
+    lang = {
+      typescript = {
+        coverage_file = "coverage/lcov.info",
+      },
+      javascript = {
+        coverage_file = "coverage/lcov.info",
+      },
+    },
     highlights = {
       covered = { fg = colors.green },
       uncovered = { fg = colors.red },

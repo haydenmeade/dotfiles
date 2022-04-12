@@ -16,11 +16,11 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # Space settings
 yabai -m config layout bsp
-yabai -m config top_padding    7
-yabai -m config bottom_padding 7
-yabai -m config left_padding   7
-yabai -m config right_padding  7
-yabai -m config window_gap     7
+yabai -m config top_padding    1
+yabai -m config bottom_padding 1
+yabai -m config left_padding   1
+yabai -m config right_padding  1
+yabai -m config window_gap     1
 
 # Spaces
 yabai -m space 1 --label one

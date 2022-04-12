@@ -297,6 +297,15 @@ function M.setup()
     }
     use {
       "andythigpen/nvim-coverage", -- Display test coverage information
+      cmd = {
+        "Coverage",
+        "CoverageLoad",
+        "CoverageShow",
+        "CoverageHide",
+        "CoverageToggle",
+        "CoverageClear",
+        "CoverageSummary",
+      },
       module = "coverage",
       config = function()
         require("config.test").coverage()

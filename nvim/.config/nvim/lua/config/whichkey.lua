@@ -65,7 +65,7 @@ local mappings = {
       "Configuration",
     },
     m = { "<Cmd>messages<Cr>", "Messages" },
-    c = { "<Cmd>put =execute('messages')<Cr>", "Put Messages" },
+    M = { "<Cmd>put =execute('messages')<Cr>", "Put Messages" },
     p = { "<Cmd>messages clear<Cr>", "Clear messages" },
     f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
     -- y = { "<Cmd>PackerSync<Cr>", "Packer update" },

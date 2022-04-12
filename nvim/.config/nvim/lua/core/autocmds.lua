@@ -4,7 +4,8 @@ local Log = require "core.log"
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Highlight on yank
-autocmd("TextYankPost", { callback = vim.highlight.on_yank })
+-- autocmd("TextYankPost", { callback = vim.highlight.on_yank })
+vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank()]]
 
 -- cursorline only in normal mode
 -- autocmd("InsertLeave,WinEnter", { command = "set cursorline" })

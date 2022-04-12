@@ -11,6 +11,8 @@ cmd + alt - right : yabai -m window --focus east
 # move to next display
 ctrl + cmd - n  : yabai -m window --display next; yabai -m display --focus next
 ctrl + cmd + shift - 1  : yabai -m window --display 1; yabai -m display --focus 1
+ctrl + cmd + shift - 2  : yabai -m window --display 2; yabai -m display --focus 2
+ctrl + cmd + shift - 3  : yabai -m window --display 3; yabai -m display --focus 3
 
 # Moving windows
 cmd + shift + alt - left  : yabai -m window --warp west
