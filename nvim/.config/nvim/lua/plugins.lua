@@ -168,6 +168,7 @@ function M.setup()
     use "williamboman/nvim-lsp-installer"
     use "jose-elias-alvarez/null-ls.nvim"
     use "ray-x/lsp_signature.nvim"
+    use "b0o/schemastore.nvim"
 
     use {
       "onsails/lspkind-nvim",
