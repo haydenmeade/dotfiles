@@ -95,7 +95,7 @@ function M.define_augroups(definitions, buffer)
 end
 
 function M.enable_format_on_save(opts)
-  local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_sync({}, %s)", opts.timeout)
+  local fmd_cmd = string.format(":silent lua vim.lsp.buf.formatting_seq_sync({}, %s)", opts.timeout)
   M.define_augroups {
     format_on_save = { { "BufWritePre", opts.pattern, fmd_cmd } },
   }

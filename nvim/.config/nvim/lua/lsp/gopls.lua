@@ -7,7 +7,7 @@ function M.config()
       analyses = { unusedparams = true, unreachable = false },
       codelenses = { generate = true, gc_details = true, test = true, tidy = true },
       experimentalPostfixCompletions = true,
-      gofumpt = false,
+      gofumpt = true,
     },
   }
 end
