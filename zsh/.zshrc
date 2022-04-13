@@ -143,6 +143,11 @@ timezsh() {
 bindkey '^ ' autosuggest-accept
 bindkey '^n' autosuggest-accept
 
+# dir in title
+settitle() { printf "\e]0;$@\a" }
+dir_in_title() { settitle $PWD }
+chpwd_functions=(dir_in_title)
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
