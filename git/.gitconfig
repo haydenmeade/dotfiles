@@ -1,5 +1,17 @@
 [user]
 	email = haydenmeade@gmail.com
 	name = Hayden Meade
+[push]
+  default = current
+[color]
+  ui = auto
+[alias]
+  ap = add --patch
+  co = checkout
 [core]
-	complession = 0
+  excludesfile = ~/.gitignore
+  autocrlf = input
+[commit]
+  template = ~/.gitmessage
+[fetch]
+  prune = true

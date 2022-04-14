@@ -1,0 +1,22 @@
+# Comments and blank lines are allowed.
+
+RCS
+.+,v
+
+CVS
+\.\#.+       
+\.cvsignore
+
+\.svn
+_darcs
+\.hg
+
+\.git
+# \.gitignore # allow git/.gitignore to be stowed
+
+.+~          
+\#.*\#      
+
+^/README.*
+^/LICENSE.*
+^/COPYING
