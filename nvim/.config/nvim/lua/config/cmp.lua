@@ -40,21 +40,13 @@ function M.setup()
         },
       },
     },
-    documentation = {
-      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-    },
     sorting = {
+      priority_weight = 1.0,
       comparators = {
-        function(...)
-          return require("cmp_buffer"):compare_locality(...)
-        end,
-        compare.offset,
-        compare.exact,
-        compare.score,
+        compare.locality,
         compare.recently_used,
-        compare.kind,
-        compare.sort_text,
-        compare.length,
+        compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
+        compare.offset,
         compare.order,
       },
     },
@@ -110,7 +102,7 @@ function M.setup()
     sources = {
       { name = "nvim_lsp", max_item_count = 10 },
       { name = "nvim_lua", max_item_count = 5 },
-      { name = "luasnip", priority = 10 },
+      { name = "luasnip", priority = 3 },
       { name = "treesitter", max_item_count = 10 },
       { name = "buffer", keyword_length = 5, max_item_count = 5 },
       { name = "path" },
