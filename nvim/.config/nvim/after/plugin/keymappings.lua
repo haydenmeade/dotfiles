@@ -2,7 +2,10 @@ local M = {}
 
 local keymappings = {
   i = {},
-  n = {},
+  n = {
+    j = "gj",
+    k = "gk",
+  },
   v = {
     ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
   },
