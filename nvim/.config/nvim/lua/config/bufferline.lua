@@ -1,37 +1,20 @@
----@diagnostic disable: undefined-doc-name
 local M = {}
 
-local function is_ft(b, ft)
-  return vim.bo[b].filetype == ft
-end
-
-local function diagnostics_indicator(_, _, diagnostics)
-  local result = {}
-  local symbols = { error = "", warning = "", info = "" }
-  for name, count in pairs(diagnostics) do
-    if symbols[name] and count > 0 then
-      table.insert(result, symbols[name] .. " " .. count)
-    end
-  end
-  result = table.concat(result, " ")
-  return #result > 0 and result or ""
-end
-
-local function custom_filter(buf, buf_nums)
-  local logs = vim.tbl_filter(function(b)
-    return is_ft(b, "log")
-  end, buf_nums)
-  if vim.tbl_isempty(logs) then
-    return true
-  end
-  local tab_num = vim.fn.tabpagenr()
-  local last_tab = vim.fn.tabpagenr "$"
-  local is_log = is_ft(buf, "log")
-  if last_tab == 1 then
-    return true
-  end
-  -- only show log buffers in secondary tabs
-  return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
+local function diagnostics_indicator(total_count, _, diagnostics, _)
+  -- if total_count == 0 then
+  return ""
+  -- else
+  --   return "(" + total_count + ")"
+  -- end
+  -- local result = {}
+  -- local symbols = { error = "", warning = "", info = "" }
+  -- for name, count in pairs(diagnostics) do
+  --   if symbols[name] and count > 0 then
+  --     table.insert(result, symbols[name] .. " " .. count)
+  --   end
+  -- end
+  -- result = table.concat(result, " ")
+  -- return #result > 0 and result or ""
 end
 
 M.setup = function()
@@ -42,9 +25,6 @@ M.setup = function()
   bufferline.setup {
     active = true,
     on_config_done = nil,
-    keymap = {
-      normal_mode = {},
-    },
     highlights = {
       background = {
         gui = "italic",
@@ -84,8 +64,6 @@ M.setup = function()
       diagnostics = "nvim_lsp",
       diagnostics_update_in_insert = false,
       diagnostics_indicator = diagnostics_indicator,
-      -- NOTE: this will be called a lot so don't do any heavy processing here
-      custom_filter = custom_filter,
       offsets = {
         {
           filetype = "undotree",
@@ -129,6 +107,7 @@ end
 
 -- Common kill function for bdelete and bwipeout
 -- credits: based on bbye and nvim-bufdel
+---@diagnostic disable: undefined-doc-name
 ---@param kill_command String defaults to "bd"
 ---@param bufnr Number defaults to the current buffer
 ---@param force Boolean defaults to false
