@@ -13,7 +13,7 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # .. more yabai startup stuff
 #############################################################################
-# trying to fix popup windows
+# fix popup windows
 yabai -m config window_topmost off
 
 # Space settings
@@ -31,7 +31,7 @@ yabai -m space 3 --label three
 
 # float preferences
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
-# yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
+yabai -m rule --add app="^OpenVPN Connect$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 
 # global settings

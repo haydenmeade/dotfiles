@@ -47,7 +47,7 @@ cmd + ctrl + alt - r : \
     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 # Close active application
-ctrl + alt + cmd - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+cmd + ctrl  - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
 # Make window native fullscreen
-cmd + ctrl + alt - return : yabai -m window --toggle zoom-fullscreen
+cmd + ctrl  - return : yabai -m window --toggle zoom-fullscreen
