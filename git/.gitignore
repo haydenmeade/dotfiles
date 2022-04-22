@@ -10,3 +10,4 @@ tmp/**/*
 .byebug_history
 .pryrc
 .overmind*.sock
+coverage.*
