@@ -11,6 +11,7 @@ function M.setup()
   local function exist(bin)
     return vim.fn.exepath(bin) ~= ""
   end
+
   local default_opts = require("lsp").get_common_opts()
 
   local sources = {
@@ -45,17 +46,21 @@ function M.setup()
   end
 
   -- golang
-  if exist "gofumpt" then
-    table.insert(sources, null_ls.builtins.formatting.gofumpt)
-    table.insert(
-      sources,
-      null_ls.builtins.formatting.golines.with {
-        extra_args = {
-          "--max-len=120",
-          "--base-formatter=gofumpt",
-        },
-      }
-    )
+  if exist "golines" then
+    -- table.insert(sources, null_ls.builtins.formatting.gofumpt)
+
+    -- golines too slow
+    -- table.insert(
+    --   sources,
+    --   null_ls.builtins.formatting.golines.with {
+    --     extra_args = {
+    --       "--max-len=120",
+    --       "--base-formatter=gofumpt",
+    --     },
+    --   }
+    -- )
+    -- elseif exist "gofmt" then
+    --   table.insert(sources, null_ls.builtins.formatting.gofmt)
   end
   if exist "goimports" then
     table.insert(sources, null_ls.builtins.formatting.goimports)
@@ -65,6 +70,8 @@ function M.setup()
     -- GO lint:https://golangci-lint.run/
     -- https://revive.run/
     table.insert(sources, null_ls.builtins.diagnostics.revive)
+  elseif exist "golangci-lint" then
+    table.insert(sources, null_ls.builtins.diagnostics.golangci_lint)
   end
 
   -- docker
@@ -79,12 +86,12 @@ function M.setup()
   --   table.insert(sources, null_ls.builtins.code_actions.eslint_d)
   -- end
   -- js, ts
-  if exist "prettierd" then
-    table.insert(sources, null_ls.builtins.formatting.prettierd)
-  end
   -- lua
   if exist "selene" then
     table.insert(sources, null_ls.builtins.diagnostics.selene)
+  end
+  if exist "markdownlint" then
+    table.insert(sources, null_ls.builtins.diagnostics.markdownlint)
   end
 
   if exist "stylua" then

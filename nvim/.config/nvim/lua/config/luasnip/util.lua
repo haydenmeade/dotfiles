@@ -95,7 +95,7 @@ local function transform(text, info) --{{{
   return ls.t(text)
 end --}}}
 
-local get_node_text = vim.treesitter.get_node_text
+local get_node_text = vim.treesitter.query.get_node_text
 local handlers = { --{{{
   parameter_list = function(node, info)
     local result = {}
@@ -238,6 +238,7 @@ M.uuid = function() --{{{
     local v = (((c == "x") and math.random(0, 15)) or math.random(8, 11))
     return string.format("%x", v)
   end
+
   out = template:gsub("[xy]", subs)
   return out
 end --}}}

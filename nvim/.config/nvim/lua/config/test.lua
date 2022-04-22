@@ -17,6 +17,9 @@ function M.coverage()
       javascript = {
         coverage_file = "coverage/lcov.info",
       },
+      go = {
+        coverage_file = "coverage.lcov",
+      },
     },
     highlights = {
       covered = { fg = colors.green },

@@ -226,14 +226,14 @@ function M.setup()
     -- Better syntax
     use {
       "nvim-treesitter/nvim-treesitter",
-      event = { "BufRead", "BufNewFile", "InsertEnter" },
+      event = { "VimEnter" },
       as = "nvim-treesitter",
       run = ":TSUpdate",
       config = function()
         require("config.treesitter").setup()
       end,
       requires = {
-        "jose-elias-alvarez/nvim-lsp-ts-utils",
+        "jose-elias-alvarez/typescript.nvim",
         "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
         "JoosepAlviste/nvim-ts-context-commentstring",
         "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
@@ -255,8 +255,11 @@ function M.setup()
         },
       },
     }
+
+    -- markdown
     use {
       "iamcco/markdown-preview.nvim",
+      opt = true,
       ft = "markdown",
       run = { "cd app && yarn install" },
     }
@@ -409,12 +412,23 @@ function M.setup()
       end,
     }
 
-    -- colorscheme
+    -- colorschemes
     use "olimorris/onedarkpro.nvim"
     use "rebelot/kanagawa.nvim"
     use "luisiacc/gruvbox-baby"
     use "eddyekofo94/gruvbox-flat.nvim"
     use "EdenEast/nightfox.nvim"
+    use "Shatur/neovim-ayu"
+    use "Mofiqul/dracula.nvim"
+    use "vimpostor/vim-lumen"
+    use {
+      "mcchrish/zenbones.nvim",
+      requires = "rktjmp/lush.nvim",
+    }
+    use {
+      "rose-pine/neovim",
+      as = "rose-pine",
+    }
     use {
       "catppuccin/nvim",
       as = "catppuccin",
@@ -437,4 +451,5 @@ function M.setup()
   require("packer").init { log = { level = "debug" }, max_jobs = 10 }
   require("packer").startup(plugins)
 end
+
 return M

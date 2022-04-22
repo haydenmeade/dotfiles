@@ -29,7 +29,7 @@ vim.api.nvim_exec(
 
   xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
   xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-]],
+]] ,
   false
 )
 
@@ -185,8 +185,9 @@ local mappings = {
     d = { "<Cmd>w<CR><cmd>UltestDebug<CR>", "Test debug" },
     g = { "<Cmd>w<CR><cmd>UltestDebugNearest<CR>", "Test debug nearest" },
     t = { "<Cmd>w<CR><cmd>UltestSummary<CR>", "Test summary" },
-    c = { "<Cmd>w<CR><cmd>UltestClear<CR>", "Test clear" },
     s = { "<Cmd>w<CR><cmd>UltestStop<CR>", "Test stop" },
+    c = { "<cmd>Coverage<CR>", "Coverage" },
+    y = { "<cmd>CoverageSummary<CR>", "Coverage Summary" },
   },
 
   -- Run
