@@ -51,6 +51,10 @@ function M.setup()
         require("trouble").setup { auto_open = false }
       end,
     }
+    use {
+      "ThePrimeagen/harpoon",
+      requires = { "nvim-lua/plenary.nvim" },
+    }
 
     -- Go development
     -- use "fatih/vim-go"
@@ -118,6 +122,18 @@ function M.setup()
       cmd = "Neogit",
       config = function()
         require("config.neogit").setup()
+      end,
+    }
+
+    use {
+      "pwntester/octo.nvim",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-telescope/telescope.nvim",
+        "kyazdani42/nvim-web-devicons",
+      },
+      config = function()
+        require("config.octo").setup()
       end,
     }
 
@@ -448,7 +464,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init { log = { level = "debug" }, max_jobs = 10 }
+  require("packer").init { log = { level = "warning" }, max_jobs = 20 }
   require("packer").startup(plugins)
 end
 
