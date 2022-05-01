@@ -126,25 +126,25 @@ function M.toggle_format_on_save()
   format_on_save = not format_on_save
 end
 
-function M.enable_lsp_document_highlight(client_id)
-  M.define_augroups({
-    lsp_document_highlight = {
-      {
-        "CursorHold",
-        "<buffer>",
-        string.format("lua require('lsp.utils').conditional_document_highlight(%d)", client_id),
-      },
-      {
-        "CursorMoved",
-        "<buffer>",
-        "lua vim.lsp.buf.clear_references()",
-      },
-    },
-  }, true)
-end
-
-function M.disable_lsp_document_highlight()
-  M.disable_augroup "lsp_document_highlight"
-end
+-- function M.enable_lsp_document_highlight(client_id)
+--   M.define_augroups({
+--     lsp_document_highlight = {
+--       {
+--         "CursorHold",
+--         "<buffer>",
+--         string.format("lua require('lsp.utils').conditional_document_highlight(%d)", client_id),
+--       },
+--       {
+--         "CursorMoved",
+--         "<buffer>",
+--         "lua vim.lsp.buf.clear_references()",
+--       },
+--     },
+--   }, true)
+-- end
+--
+-- function M.disable_lsp_document_highlight()
+--   M.disable_augroup "lsp_document_highlight"
+-- end
 
 return M
