@@ -38,7 +38,7 @@ function M.setup()
   -- vim.g.ultest_virtual_text = 1
   vim.api.nvim_exec(
     [[
-        let test#strategy = "dispatch"
+        let test#strategy = "neovim"
     ]],
     false
   )
