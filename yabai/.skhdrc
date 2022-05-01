@@ -30,6 +30,10 @@ cmd + ctrl - r         : yabai -m space --rotate 270
 cmd + ctrl - x : yabai -m space --mirror x-axis
 cmd + ctrl - y : yabai -m space --mirror y-axis
 
+# resize
+cmd + ctrl + shift + alt - right : yabai -m window --resize left:0:-20
+cmd + ctrl + shift + alt - left : yabai -m window --resize left:-20:0
+
 # Float / Unfloat window
 cmd + shift + ctrl - space : \
     yabai -m window --toggle float; \

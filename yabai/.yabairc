@@ -32,6 +32,7 @@ yabai -m space 3 --label three
 # float preferences
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
 yabai -m rule --add app="^OpenVPN Connect$" sticky=on layer=above manage=off
+yabai -m rule --add app="^Stats$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 
 # global settings
