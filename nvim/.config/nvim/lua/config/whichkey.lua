@@ -105,6 +105,19 @@ local mappings = {
     },
   },
 
+  m = {
+    name = "Harpoon",
+    i = { "<Cmd>lua require('harpoon.mark').add_file()<Cr>", "add mark" },
+    m = { "<Cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "view" },
+    n = { "<Cmd>lua require('harpoon.ui').nav_next()<CR>", "next" },
+    t = { "<Cmd>lua require('harpoon.ui').nav_prev()<CR>", "prev" },
+
+    y = { "<Cmd>lua require('harpoon.ui').nav_file(1)<CR>", "1" },
+    h = { "<Cmd>lua require('harpoon.ui').nav_file(2)<CR>", "2" },
+    e = { "<Cmd>lua require('harpoon.ui').nav_file(3)<CR>", "3" },
+    a = { "<Cmd>lua require('harpoon.ui').nav_file(4)<CR>", "4" },
+  },
+
   -- Quick fix
   -- c = {
   -- 	name = "Quickfix",
@@ -177,8 +190,10 @@ local mappings = {
   -- Testing
   t = {
     name = "Test",
-    n = { "<Cmd>w<CR><cmd>UltestNearest<CR>", "Test nearest" },
-    f = { "<Cmd>w<CR><cmd>Ultest<CR>", "Test file" },
+    n = { "<Cmd>w<CR><cmd>TestNearest<CR>", "Test nearest" },
+    N = { "<Cmd>w<CR><cmd>UltestNearest<CR>", "Test nearest" },
+    f = { "<Cmd>w<CR><cmd>TestFile<CR>", "Test file" },
+    F = { "<Cmd>w<CR><cmd>Ultest<CR>", "Test file" },
     o = { "<Cmd>w<CR><cmd>UltestOutput<CR>", "Test output" },
     l = { "<Cmd>w<CR><cmd>UltestLast<CR>", "Test last" },
     v = { "<Cmd>w<CR><cmd>TestVisit<CR>", "Test visit" },
@@ -226,7 +241,7 @@ local lsp_mappings = {
     u = { "<Cmd>Telescope lsp_references<CR>", "References" },
     o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },
     d = { "<Cmd>Telescope lsp_definitions<CR>", "Definition" },
-    a = { "<Cmd>Telescope lsp_code_actions<CR>", "Code actions" },
+    a = { "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Code actions" },
     e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
     x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
     n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
