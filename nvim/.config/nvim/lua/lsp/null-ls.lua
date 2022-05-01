@@ -46,24 +46,8 @@ function M.setup()
   end
 
   -- golang
-  if exist "golines" then
-    -- table.insert(sources, null_ls.builtins.formatting.gofumpt)
-
-    -- golines too slow
-    -- table.insert(
-    --   sources,
-    --   null_ls.builtins.formatting.golines.with {
-    --     extra_args = {
-    --       "--max-len=120",
-    --       "--base-formatter=gofumpt",
-    --     },
-    --   }
-    -- )
-    -- elseif exist "gofmt" then
-    --   table.insert(sources, null_ls.builtins.formatting.gofmt)
-  end
-  if exist "goimports" then
-    table.insert(sources, null_ls.builtins.formatting.goimports)
+  if exist "gofumpt" then
+    table.insert(sources, null_ls.builtins.formatting.gofumpt)
   end
 
   if exist "revive" then

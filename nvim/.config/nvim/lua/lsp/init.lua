@@ -59,12 +59,12 @@ local function select_default_formater(client)
     local supported_formatters = s.get_supported(filetype, "formatting")
     if not vim.tbl_isempty(supported_formatters) then
       done = true
-      -- client.resolved_capabilities.document_formatting = false
-      -- client.resolved_capabilities.document_range_formatting = false
+      client.server_capabilities.documentFormattingProvider = false
+      client.server_capabilities.documentRangeFormattingProvider = false
     end
   end
   if done then
-    -- Log:debug("Formatter overriding for " .. client.name)
+    Log:debug("Formatter overriding for " .. client.name)
   end
 end
 
@@ -82,10 +82,10 @@ function M.common_on_attach(client, bufnr)
 
   require("config.whichkey").register_lsp(bufnr)
 
-  if client.resolved_capabilities.document_formatting then
+  if client.server_capabilities.documentFormattingProvider then
     require("core.autocmds").configure_format_on_save()
   end
-  require("core.autocmds").enable_lsp_document_highlight(bufnr)
+  -- require("core.autocmds").enable_lsp_document_highlight(bufnr)
 end
 
 function M.get_common_opts()

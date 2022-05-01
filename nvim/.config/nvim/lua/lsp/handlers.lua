@@ -15,8 +15,11 @@ function M.setup()
   vim.diagnostic.config(config)
 
   vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = true,
-    underline = false,
+    virtual_text = {
+      -- source = "if_many",
+      severity = vim.diagnostic.severity.ERROR,
+    },
+    underline = true,
     signs = true,
     update_in_insert = false,
   })
@@ -31,6 +34,18 @@ function M.setup()
   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
     border = "rounded",
   })
+
+  vim.lsp.handlers["window/showMessage"] = function(_, result, ctx)
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    local lvl = ({ "ERROR", "WARN", "INFO", "DEBUG" })[result.type]
+    vim.notify({ result.message }, lvl, {
+      title = "LSP | " .. client.name,
+      timeout = 10000,
+      keep = function()
+        return lvl == "ERROR" or lvl == "WARN"
+      end,
+    })
+  end
 end
 
 function M.show_line_diagnostics()
