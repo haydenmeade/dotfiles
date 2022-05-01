@@ -8,7 +8,7 @@ fi
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
 # Path changes
-export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$PATH
+export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
 
 . "$HOME/.cargo/env"
 
@@ -97,25 +97,32 @@ function work-on-issue() {
     # echo $branchname
 
     # Mark as in progress
+    issueStatus=$(echo $issueStatus | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -s '-')
+    echo $issueStatus
 
-    if [[ $issueStatus == "TO-DO" ]]; then
-        read -t 3 -n 1 -p "Do you want to mark as in progress? (y/n)? " mark
-        [ -z "$mark" ] && mark="y"  # if 'yes' have to be default choice
-        if [[ $mark == "y" ]]; then
-            jira issue assign $issueKey $(jira me)
-        fi
-    fi
     # Assign 
     if [[ $issueAssignee != "Hayden-Meade" ]]; then
-        read -t 3 -n 1 -p "Do you want to assign to self? (y/n)? " assign
+        echo "Do you want to assign to self? (Y/n)? " 
+        read -n 1 assign
         [ -z "$assign" ] && assign="y"  # if 'yes' have to be default choice
         if [[ $assign == "y" ]]; then
             jira issue assign $issueKey $(jira me)
         fi
     fi
 
+    # mark as in progress
+    if [[ $issueStatus == "to-do" || $issueStatus == "" ]]; then
+        echo "Do you want to mark as in progress? (Y/n)? " 
+        read -n 1 mark
+        [ -z "$mark" ] && mark="y"  # if 'yes' have to be default choice
+        if [[ $mark == "y" ]]; then
+            jira issue move $issueKey "In Progress"
+        fi
+    fi
+
     # Git Branch:
-    read -t 3 -n 1 -p "Do you want to create git branch? (y/n)? " gitb
+    echo "Do you want to create git branch? (Y/n)? " 
+    read -n 1 gitb
     [ -z "$gitb" ] && gitb="y"  # if 'yes' have to be default choice
     if [[ $gitb != "y" ]]; then
         return
