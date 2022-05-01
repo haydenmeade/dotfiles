@@ -42,6 +42,15 @@ return {
   ),
 
   ls.s(
+    { trig = "tr", name = "Test Run", dscr = "Create a test run definition" },
+    fmta("t.Run(\"<desc>\", func(t *testing.T) { \n<tt> \n})", {
+      desc = ls.i(1, "Description"),
+      tt = ls.i(0, ""),
+    }),
+    in_func
+  ),
+
+  ls.s(
     { trig = "ifcall", name = "IF CALL", dscr = "Call a function and check the error" },
     fmt(
       [[
@@ -58,7 +67,7 @@ return {
         err2    = rep(2),
         err3    = ls.d(5, util.make_return_nodes, { 2 }),
         finally = ls.i(0),
-    }),
+      }),
     in_func
   ),
 
@@ -71,18 +80,18 @@ return {
           {finally}
         }}
       ]], {
-        name1 = rep(2),
-        desc  = ls.i(5, "description"),
-        rec   = ls.c(1, {
+        name1   = rep(2),
+        desc    = ls.i(5, "description"),
+        rec     = ls.c(1, {
           ls.t(""),
           ls.sn(nil, fmt("({} {}) ", {
             ls.i(1, "r"),
             ls.i(2, "receiver"),
           })),
         }),
-        name2 = ls.i(2, "Name"),
-        args  = ls.i(3),
-        ret   = ls.c(4, {
+        name2   = ls.i(2, "Name"),
+        args    = ls.i(3),
+        ret     = ls.c(4, {
           ls.i(1, "error"),
           ls.sn(nil, fmt("({}, {}) ", {
             ls.i(1, "ret"),
@@ -90,7 +99,7 @@ return {
           })),
         }),
         finally = ls.i(0),
-    })
+      })
   ),
 
   -- Append
@@ -100,10 +109,10 @@ return {
       [[
         {arr1} = append({arr}, {var}) 
       ]], {
-      arr1= rep(1),
-      arr= ls.i(1, "arr"),
-      var=ls.i(0, "var"),
-    }),
+        arr1 = rep(1),
+        arr = ls.i(1, "arr"),
+        var = ls.i(0, "var"),
+      }),
     in_func
   ),
 
@@ -148,7 +157,7 @@ return {
         ls.f(function(args) return util.snake_case(args[1][1]) end, { 1 }),
         ls.i(1, "Client"),
         ls.i(2, "pkg.Interface"),
-    })
+      })
   ), --}}}
 
   -- Nolint {{{
@@ -209,7 +218,7 @@ return {
       ]], {
         ls.i(1, "want"),
         ls.i(2, "got"),
-    }),
+      }),
     in_test_func
   ), --}}}
 
