@@ -25,7 +25,7 @@ function M.setup()
       if not stat then
         return
       end
-      if stat.size > 100000 then
+      if stat.size > 1000000 then
         return
       else
         previewers.buffer_previewer_maker(filepath, bufnr, opts)
@@ -47,6 +47,9 @@ function M.setup()
       },
     },
     defaults = {
+      layout_config = {
+        horizontal = { width = 0.95, height = 0.95 },
+      },
       buffer_previewer_maker = largeFilesIgnoringPreviewer,
       vimgrep_arguments = {
         "rg",
