@@ -17,15 +17,15 @@ local keymappings = {
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
-    ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
-    ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",
-    ["<A-up>"] = "<Cmd>lua require('smart-splits').resize_up(5)<CR>",
-    ["<A-right>"] = "<Cmd>lua require('smart-splits').resize_right(5)<CR>",
+    ["<A-left>"] = "<Cmd>lua require('tmux').resize_left()<CR>",
+    ["<A-down>"] = "<Cmd>lua require('tmux').resize_down()<CR>",
+    ["<A-up>"] = "<Cmd>lua require('tmux').resize_up()<CR>",
+    ["<A-right>"] = "<Cmd>lua require('tmux').resize_right()<CR>",
     -- moving between splits
-    ["<C-left>"] = "<Cmd>lua require('smart-splits').move_cursor_left()<CR>",
-    ["<C-down>"] = "<Cmd>lua require('smart-splits').move_cursor_down()<CR>",
-    ["<C-up>"] = "<Cmd>lua require('smart-splits').move_cursor_up()<CR>",
-    ["<C-right>"] = "<Cmd>lua require('smart-splits').move_cursor_right()<CR>",
+    ["<C-left>"] = "<cmd>lua require('tmux').move_left()<cr>",
+    ["<C-down>"] = "<Cmd>lua require('tmux').move_down()<CR>",
+    ["<C-up>"] = "<Cmd>lua require('tmux').move_up()<CR>",
+    ["<C-right>"] = "<Cmd>lua require('tmux').move_right()<CR>",
   },
   [""] = {
     -- moving splits
@@ -34,15 +34,15 @@ local keymappings = {
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
-    ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
-    ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",
-    ["<A-up>"] = "<Cmd>lua require('smart-splits').resize_up(5)<CR>",
-    ["<A-right>"] = "<Cmd>lua require('smart-splits').resize_right(5)<CR>",
+    ["<A-left>"] = "<Cmd>lua require('tmux').resize_left()<CR>",
+    ["<A-down>"] = "<Cmd>lua require('tmux').resize_down()<CR>",
+    ["<A-up>"] = "<Cmd>lua require('tmux').resize_up()<CR>",
+    ["<A-right>"] = "<Cmd>lua require('tmux').resize_right()<CR>",
     -- moving between splits
-    ["<C-left>"] = "<Cmd>lua require('smart-splits').move_cursor_left()<CR>",
-    ["<C-down>"] = "<Cmd>lua require('smart-splits').move_cursor_down()<CR>",
-    ["<C-up>"] = "<Cmd>lua require('smart-splits').move_cursor_up()<CR>",
-    ["<C-right>"] = "<Cmd>lua require('smart-splits').move_cursor_right()<CR>",
+    ["<C-left>"] = "<cmd>lua require('tmux').move_left()<cr>",
+    ["<C-down>"] = "<Cmd>lua require('tmux').move_down()<CR>",
+    ["<C-up>"] = "<Cmd>lua require('tmux').move_up()<CR>",
+    ["<C-right>"] = "<Cmd>lua require('tmux').move_right()<CR>",
   },
 }
 

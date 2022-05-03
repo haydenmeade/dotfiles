@@ -99,8 +99,13 @@ function M.setup()
     -- Maybe use this another time
     -- use "ggandor/lightspeed.nvim"
 
-    --Splits
-    use "mrjones2014/smart-splits.nvim"
+    --tmux
+    use {
+      "aserowy/tmux.nvim",
+      config = function()
+        require("config.tmux").setup()
+      end,
+    }
 
     -- Git
     use {
