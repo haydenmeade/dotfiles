@@ -106,6 +106,7 @@ function M.setup()
         require("config.tmux").setup()
       end,
     }
+    use "preservim/vimux"
 
     -- Git
     use {

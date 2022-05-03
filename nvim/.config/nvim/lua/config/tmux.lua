@@ -1,10 +1,28 @@
 local M = {}
 
+M.toggle_term = function()
+  vim.api.nvim_exec(
+    [[
+       if !exists('g:VimuxRunnerIndex')
+         call VimuxOpenRunner()
+       else
+         call VimuxTogglePane()
+       endif
+    ]],
+    false
+  )
+end
+
 function M.setup()
   local ok, term = h.safe_require "tmux"
   if not ok then
     return
   end
+
+  -- Configure vimux
+  vim.g.VimuxHeight = "40"
+  -- vim.g.VimuxRunnerIndex = "1"
+
   term.setup {
     -- overwrite default configuration
     -- here, e.g. to enable default bindings

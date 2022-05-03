@@ -8,7 +8,7 @@ function M.setup()
   term.setup {
     size = 20,
     hide_numbers = true,
-    open_mapping = [[<c-\>]],
+    -- open_mapping = [[<c-\>]],
     shade_filetypes = {},
     shade_terminals = false,
     shading_factor = 0.3,

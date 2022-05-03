@@ -38,10 +38,11 @@ function M.setup()
   end
 
   vim.g.ultest_use_pty = 1
+  vim.g.preserve_screen = 1
   -- vim.g.ultest_virtual_text = 1
   vim.api.nvim_exec(
     [[
-        let test#strategy = "neovim"
+        let test#strategy = "vimux"
     ]],
     false
   )

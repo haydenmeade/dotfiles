@@ -58,8 +58,8 @@ local mappings = {
     },
     s = { "<cmd>SaveSession<Cr>", "Save session" },
     l = { "<cmd>SearchSession<Cr>", "Load session" },
-    h = { "<Cmd>ToggleTerm<CR>", "New horizontal terminal" },
-    t = { "<Cmd>terminal<CR>", "New terminal" },
+    h = { "<Cmd>VimuxOpenRunner<CR>", "New tmux split Horizontal" },
+    t = { "<Cmd>terminal<CR>", "New terminal tab" },
     z = {
       "<Cmd>lua require('config.telescope').search_dotfiles()<CR>",
       "Configuration",

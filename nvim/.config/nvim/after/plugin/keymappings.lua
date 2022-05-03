@@ -5,6 +5,7 @@ local keymappings = {
   n = {
     j = "gj",
     k = "gk",
+    ["<c-\\>"] = "<cmd>lua require('config.tmux').toggle_term()<cr>",
   },
   v = {
     ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
@@ -18,13 +19,13 @@ local keymappings = {
     ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
     ["<A-left>"] = "<Cmd>lua require('tmux').resize_left()<CR>",
-    ["<A-down>"] = "<Cmd>lua require('tmux').resize_down()<CR>",
-    ["<A-up>"] = "<Cmd>lua require('tmux').resize_up()<CR>",
+    ["<A-down>"] = "<Cmd>lua require('tmux').resize_bottom()<CR>",
+    ["<A-up>"] = "<Cmd>lua require('tmux').resize_top()<CR>",
     ["<A-right>"] = "<Cmd>lua require('tmux').resize_right()<CR>",
     -- moving between splits
     ["<C-left>"] = "<cmd>lua require('tmux').move_left()<cr>",
-    ["<C-down>"] = "<Cmd>lua require('tmux').move_down()<CR>",
-    ["<C-up>"] = "<Cmd>lua require('tmux').move_up()<CR>",
+    ["<C-down>"] = "<Cmd>lua require('tmux').move_bottom()<CR>",
+    ["<C-up>"] = "<Cmd>lua require('tmux').move_top()<CR>",
     ["<C-right>"] = "<Cmd>lua require('tmux').move_right()<CR>",
   },
   [""] = {
@@ -34,15 +35,15 @@ local keymappings = {
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
-    ["<A-left>"] = "<Cmd>lua require('tmux').resize_left()<CR>",
-    ["<A-down>"] = "<Cmd>lua require('tmux').resize_down()<CR>",
-    ["<A-up>"] = "<Cmd>lua require('tmux').resize_up()<CR>",
-    ["<A-right>"] = "<Cmd>lua require('tmux').resize_right()<CR>",
+    ["<A-left>"] = "<Cmd>silent lua require('tmux').resize_left()<CR>",
+    ["<A-down>"] = "<Cmd>silent lua require('tmux').resize_bottom()<CR>",
+    ["<A-up>"] = "<Cmd>silent lua require('tmux').resize_top()<CR>",
+    ["<A-right>"] = "<Cmd>silent lua require('tmux').resize_right()<CR>",
     -- moving between splits
-    ["<C-left>"] = "<cmd>lua require('tmux').move_left()<cr>",
-    ["<C-down>"] = "<Cmd>lua require('tmux').move_down()<CR>",
-    ["<C-up>"] = "<Cmd>lua require('tmux').move_up()<CR>",
-    ["<C-right>"] = "<Cmd>lua require('tmux').move_right()<CR>",
+    ["<C-left>"] = "<cmd>silent lua require('tmux').move_left()<cr>",
+    ["<C-down>"] = "<Cmd>silent lua require('tmux').move_bottom()<CR>",
+    ["<C-up>"] = "<Cmd>silent lua require('tmux').move_top()<CR>",
+    ["<C-right>"] = "<Cmd>silent lua require('tmux').move_right()<CR>",
   },
 }
 
