@@ -96,7 +96,8 @@ function M.setup()
     }
 
     -- Jumps
-    use "ggandor/lightspeed.nvim"
+    -- Maybe use this another time
+    -- use "ggandor/lightspeed.nvim"
 
     --Splits
     use "mrjones2014/smart-splits.nvim"
@@ -429,26 +430,26 @@ function M.setup()
     }
 
     -- colorschemes
-    use "olimorris/onedarkpro.nvim"
-    use "rebelot/kanagawa.nvim"
-    use "luisiacc/gruvbox-baby"
-    use "eddyekofo94/gruvbox-flat.nvim"
-    use "EdenEast/nightfox.nvim"
+    -- use "olimorris/onedarkpro.nvim"
+    -- use "rebelot/kanagawa.nvim"
+    -- use "luisiacc/gruvbox-baby"
+    -- use "eddyekofo94/gruvbox-flat.nvim"
+    -- use "EdenEast/nightfox.nvim"
     use "Shatur/neovim-ayu"
-    use "Mofiqul/dracula.nvim"
-    use "vimpostor/vim-lumen"
-    use {
-      "mcchrish/zenbones.nvim",
-      requires = "rktjmp/lush.nvim",
-    }
-    use {
-      "rose-pine/neovim",
-      as = "rose-pine",
-    }
-    use {
-      "catppuccin/nvim",
-      as = "catppuccin",
-    }
+    -- use "Mofiqul/dracula.nvim"
+    -- use "vimpostor/vim-lumen"
+    -- use {
+    --   "mcchrish/zenbones.nvim",
+    --   requires = "rktjmp/lush.nvim",
+    -- }
+    -- use {
+    --   "rose-pine/neovim",
+    --   as = "rose-pine",
+    -- }
+    -- use {
+    --   "catppuccin/nvim",
+    --   as = "catppuccin",
+    -- }
     use {
       "folke/tokyonight.nvim",
       config = function()

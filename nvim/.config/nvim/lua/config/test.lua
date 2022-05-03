@@ -6,7 +6,10 @@ function M.coverage()
     return
   end
 
-  local colors = require("onedarkpro").get_colors(vim.g.onedarkpro_style)
+  local colors = {
+    green = "#98be65",
+    red = "#ec5f67",
+  }
 
   coverage.setup {
     commands = true,
