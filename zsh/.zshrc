@@ -13,6 +13,7 @@ export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PAT
 . "$HOME/.cargo/env"
 
 export BROWSER="open"
+export KITTY_LISTEN_ON=unix:/tmp/mykitty
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"

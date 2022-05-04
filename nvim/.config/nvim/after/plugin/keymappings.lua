@@ -17,16 +17,6 @@ local keymappings = {
     ["<C-S-down>"] = "<C-W>J",
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
-    -- resizing splits
-    ["<A-left>"] = "<Cmd>lua require('tmux').resize_left()<CR>",
-    ["<A-down>"] = "<Cmd>lua require('tmux').resize_bottom()<CR>",
-    ["<A-up>"] = "<Cmd>lua require('tmux').resize_top()<CR>",
-    ["<A-right>"] = "<Cmd>lua require('tmux').resize_right()<CR>",
-    -- moving between splits
-    ["<C-left>"] = "<cmd>lua require('tmux').move_left()<cr>",
-    ["<C-down>"] = "<Cmd>lua require('tmux').move_bottom()<CR>",
-    ["<C-up>"] = "<Cmd>lua require('tmux').move_top()<CR>",
-    ["<C-right>"] = "<Cmd>lua require('tmux').move_right()<CR>",
   },
   [""] = {
     -- moving splits
@@ -35,15 +25,15 @@ local keymappings = {
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
     -- resizing splits
-    ["<A-left>"] = "<Cmd>silent lua require('tmux').resize_left()<CR>",
-    ["<A-down>"] = "<Cmd>silent lua require('tmux').resize_bottom()<CR>",
-    ["<A-up>"] = "<Cmd>silent lua require('tmux').resize_top()<CR>",
-    ["<A-right>"] = "<Cmd>silent lua require('tmux').resize_right()<CR>",
+    ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
+    ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",
+    ["<A-up>"] = "<Cmd>lua require('smart-splits').resize_up(5)<CR>",
+    ["<A-right>"] = "<Cmd>lua require('smart-splits').resize_right(5)<CR>",
     -- moving between splits
-    ["<C-left>"] = "<cmd>silent lua require('tmux').move_left()<cr>",
-    ["<C-down>"] = "<Cmd>silent lua require('tmux').move_bottom()<CR>",
-    ["<C-up>"] = "<Cmd>silent lua require('tmux').move_top()<CR>",
-    ["<C-right>"] = "<Cmd>silent lua require('tmux').move_right()<CR>",
+    ["<C-left>"] = "<cmd>KittyNavigateLeft<cr>",
+    ["<C-down>"] = "<Cmd>KittyNavigateDown<CR>",
+    ["<C-up>"] = "<Cmd>KittyNavigateUp<CR>",
+    ["<C-right>"] = "<Cmd>KittyNavigateRight<CR>",
   },
 }
 

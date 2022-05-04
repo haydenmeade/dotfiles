@@ -99,14 +99,17 @@ function M.setup()
     -- Maybe use this another time
     -- use "ggandor/lightspeed.nvim"
 
-    --tmux
+    --Splits
+    use "mrjones2014/smart-splits.nvim"
+
+    -- kitty
     use {
-      "aserowy/tmux.nvim",
+      "knubie/vim-kitty-navigator",
       config = function()
-        require("config.tmux").setup()
+        require("config.kitty").setup()
       end,
+      run = { "cp ./*.py ~/.config/kitty/" },
     }
-    use "preservim/vimux"
 
     -- Git
     use {
