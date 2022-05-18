@@ -51,7 +51,18 @@ cmd + ctrl + alt - r : \
     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
 # Close active application
-cmd + ctrl  - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+cmd + ctrl - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
 # Make window native fullscreen
-cmd + ctrl  - return : yabai -m window --toggle zoom-fullscreen
+cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
+
+cmd - 1 : id="$(yabai -m query --windows | jq -c 'map(select((.app == "kitty") and (.title | startswith("kitty") | not)))' | jq '.[].id' )" && \
+                  yabai -m window --focus "${id}" 
+cmd - 2 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Google Chrome"))' | jq '.[].id' )" && \
+                  yabai -m window --focus "${id}" 
+cmd - 3 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Slack"))' | jq '.[].id' )" && \
+                  yabai -m window --focus "${id}" 
+cmd - 4 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Spotify"))' | jq '.[].id' )" && \
+                  yabai -m window --focus "${id}" 
+  
+

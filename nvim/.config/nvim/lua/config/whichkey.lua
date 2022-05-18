@@ -118,16 +118,12 @@ local mappings = {
     a = { "<Cmd>lua require('harpoon.ui').nav_file(4)<CR>", "4" },
   },
 
-  -- Quick fix
-  -- c = {
-  -- 	name = "Quickfix",
-  -- 	o = { "<Cmd>copen<Cr>", "Open quickfix" },
-  -- 	c = { "<Cmd>cclose<Cr>", "Close quickfix" },
-  -- 	n = { "<Cmd>cnext<Cr>", "Next quickfix" },
-  -- 	p = { "<Cmd>cprev<Cr>", "Previous quickfix" },
-  -- 	x = { "<Cmd>cex []<Cr>", "Clear quickfix" },
-  -- 	t = { "<Cmd>BqfAutoToggle<Cr>", "Toggle preview" },
-  -- },
+  -- GitHub
+  i = {
+    name = "GitHub",
+    a = { "<Cmd>Octo pr list<Cr>", "Search PR all" },
+    s = { "<Cmd>Octo search assignee:haydenmeade is:pr<Cr>", "Search PR me" },
+  },
 
   -- Search
   s = {
@@ -237,13 +233,14 @@ local no_leader_mappings = {
 local lsp_mappings = {
   l = {
     name = "LSP",
-    R = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
-    r = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+    r = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
+    R = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
     u = { "<Cmd>Telescope lsp_references<CR>", "References" },
     o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },
     d = { "<Cmd>Telescope lsp_definitions<CR>", "Definition" },
     a = { "<Cmd>lua vim.lsp.buf.code_action()<CR>", "Code actions" },
-    e = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
+    e = { "<Cmd>lua vim.diagnostic.open_float()<CR>", "Open diagnostics" },
+    X = { "<Cmd>lua vim.diagnostic.enable()<CR>", "Enable diagnostics" },
     x = { "<Cmd>lua vim.diagnostic.disable()<CR>", "Disable diagnostics" },
     n = { "<Cmd>lua require('core.autocmds').toggle_format_on_save()<CR>", "Toggle format on save" },
     l = { "<Cmd>lua vim.lsp.codelens.refresh()<CR>", "Codelens refresh" },

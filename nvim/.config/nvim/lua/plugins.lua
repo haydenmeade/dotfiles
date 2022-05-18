@@ -29,12 +29,20 @@ function M.setup()
 
     use { "antoinemadec/FixCursorHold.nvim" } -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
 
+    -- notify override
+    use {
+      "rcarriga/nvim-notify",
+      event = "VimEnter",
+      config = function()
+        require("config.notify").setup()
+      end,
+    }
+
     -- Development
-    use { "tpope/vim-fugitive", event = "BufRead" }
     use "tpope/vim-repeat"
     use { "tpope/vim-surround", event = "BufRead" }
-    use { "tpope/vim-dispatch", opt = true, cmd = { "Dispatch", "Make", "Focus", "Start" } }
     use { "tpope/vim-sleuth" }
+    use "tpope/vim-abolish"
 
     use {
       "numToStr/Comment.nvim",
@@ -59,33 +67,33 @@ function M.setup()
     -- Go development
     -- use "fatih/vim-go"
     -- use { "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" }
-    use {
-      "ray-x/go.nvim",
-      config = function()
-        require("go").setup {
-          test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-          run_in_floaterm = false, -- set to true to run in float window.
-          --float term recommand if you use richgo/ginkgo with terminal color
-          dap_debug = true, -- set to true to enable dap
-          dap_debug_keymap = false, -- set keymaps for debugger
-          dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
-          dap_debug_vt = true, -- set to true to enable dap virtual text
-          -- Disable everything for LSP
-          lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
-          lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-          lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
-          gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
-        }
-      end,
-    }
+    -- use {
+    --   "ray-x/go.nvim",
+    --   config = function()
+    --     require("go").setup {
+    --       test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+    --       run_in_floaterm = false, -- set to true to run in float window.
+    --       --float term recommand if you use richgo/ginkgo with terminal color
+    --       dap_debug = true, -- set to true to enable dap
+    --       dap_debug_keymap = false, -- set keymaps for debugger
+    --       dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+    --       dap_debug_vt = true, -- set to true to enable dap virtual text
+    --       -- Disable everything for LSP
+    --       lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
+    --       lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+    --       lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
+    --       gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
+    --     }
+    --   end,
+    -- }
     -- Lua development
-    use { "folke/lua-dev.nvim", event = "VimEnter" }
+    use "folke/lua-dev.nvim"
 
     -- Debug adapter protocol
-    use "mfussenegger/nvim-dap"
-    use "rcarriga/nvim-dap-ui"
-    use "theHamsta/nvim-dap-virtual-text"
-    use "nvim-telescope/telescope-dap.nvim"
+    -- use "mfussenegger/nvim-dap"
+    -- use "rcarriga/nvim-dap-ui"
+    -- use "theHamsta/nvim-dap-virtual-text"
+    -- use "nvim-telescope/telescope-dap.nvim"
 
     use {
       "pianocomposer321/yabs.nvim", -- Build and run your code
@@ -134,9 +142,15 @@ function M.setup()
         require("config.neogit").setup()
       end,
     }
+    use {
+      "akinsho/git-conflict.nvim",
+      config = function()
+        require("git-conflict").setup()
+      end,
+    }
 
     use {
-      "pwntester/octo.nvim",
+      "haydenmeade/octo.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
@@ -145,16 +159,6 @@ function M.setup()
       config = function()
         require("config.octo").setup()
       end,
-    }
-
-    -- Legendary
-    use {
-      "mrjones2014/legendary.nvim",
-      keys = { [[<C-p>]] },
-      config = function()
-        require("config.legendary").setup()
-      end,
-      requires = { "stevearc/dressing.nvim" },
     }
 
     -- Logging
@@ -174,14 +178,14 @@ function M.setup()
     }
 
     -- terminal
-    use {
-      "akinsho/toggleterm.nvim",
-      keys = { [[<c-\>]] },
-      cmd = { "ToggleTerm", "TermExec" },
-      config = function()
-        require("config.toggleterm").setup()
-      end,
-    }
+    -- use {
+    --   "akinsho/toggleterm.nvim",
+    --   keys = { [[<c-\>]] },
+    --   cmd = { "ToggleTerm", "TermExec" },
+    --   config = function()
+    --     require("config.toggleterm").setup()
+    --   end,
+    -- }
 
     --LSP
     use {
@@ -192,10 +196,10 @@ function M.setup()
       end,
     }
     use "williamboman/nvim-lsp-installer"
-    use "jose-elias-alvarez/null-ls.nvim"
+    use "jose-elias-alvarez/typescript.nvim"
     use "ray-x/lsp_signature.nvim"
     use "b0o/schemastore.nvim"
-
+    use "jose-elias-alvarez/null-ls.nvim"
     use {
       "onsails/lspkind-nvim",
       config = function()
@@ -205,7 +209,7 @@ function M.setup()
     use {
       "neovim/nvim-lspconfig",
       as = "nvim-lspconfig",
-      after = "nvim-treesitter",
+      after = { "nvim-treesitter" },
       config = function()
         require("lsp").setup()
       end,
@@ -259,7 +263,6 @@ function M.setup()
         require("config.treesitter").setup()
       end,
       requires = {
-        "jose-elias-alvarez/typescript.nvim",
         "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
         "JoosepAlviste/nvim-ts-context-commentstring",
         "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
@@ -443,14 +446,20 @@ function M.setup()
     -- use "rebelot/kanagawa.nvim"
     -- use "luisiacc/gruvbox-baby"
     -- use "eddyekofo94/gruvbox-flat.nvim"
-    -- use "EdenEast/nightfox.nvim"
+    use "EdenEast/nightfox.nvim"
     use "Shatur/neovim-ayu"
     -- use "Mofiqul/dracula.nvim"
-    -- use "vimpostor/vim-lumen"
-    -- use {
-    --   "mcchrish/zenbones.nvim",
-    --   requires = "rktjmp/lush.nvim",
-    -- }
+    use {
+      "f-person/auto-dark-mode.nvim",
+      event = "VimEnter",
+      config = function()
+        require("config.theme").setup()
+      end,
+    }
+    use {
+      "mcchrish/zenbones.nvim",
+      requires = "rktjmp/lush.nvim",
+    }
     -- use {
     --   "rose-pine/neovim",
     --   as = "rose-pine",
@@ -459,12 +468,7 @@ function M.setup()
     --   "catppuccin/nvim",
     --   as = "catppuccin",
     -- }
-    use {
-      "folke/tokyonight.nvim",
-      config = function()
-        require "config.theme"
-      end,
-    }
+    -- use "folke/tokyonight.nvim"
 
     if packer_bootstrap then
       print "Setting up Neovim. Restart required after installation!"

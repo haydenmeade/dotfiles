@@ -60,14 +60,14 @@ return {
         }}
         {finally}
       ]], {
-        val     = ls.i(1, { "val" }),
-        err1    = ls.i(2, { "err" }),
-        func    = ls.i(3, { "Func" }),
-        args    = ls.i(4),
-        err2    = rep(2),
-        err3    = ls.d(5, util.make_return_nodes, { 2 }),
-        finally = ls.i(0),
-      }),
+      val     = ls.i(1, { "val" }),
+      err1    = ls.i(2, { "err" }),
+      func    = ls.i(3, { "Func" }),
+      args    = ls.i(4),
+      err2    = rep(2),
+      err3    = ls.d(5, util.make_return_nodes, { 2 }),
+      finally = ls.i(0),
+    }),
     in_func
   ),
 
@@ -80,26 +80,26 @@ return {
           {finally}
         }}
       ]], {
-        name1   = rep(2),
-        desc    = ls.i(5, "description"),
-        rec     = ls.c(1, {
-          ls.t(""),
-          ls.sn(nil, fmt("({} {}) ", {
-            ls.i(1, "r"),
-            ls.i(2, "receiver"),
-          })),
-        }),
-        name2   = ls.i(2, "Name"),
-        args    = ls.i(3),
-        ret     = ls.c(4, {
-          ls.i(1, "error"),
-          ls.sn(nil, fmt("({}, {}) ", {
-            ls.i(1, "ret"),
-            ls.i(2, "error"),
-          })),
-        }),
-        finally = ls.i(0),
-      })
+      name1   = rep(2),
+      desc    = ls.i(5, "description"),
+      rec     = ls.c(1, {
+        ls.t(""),
+        ls.sn(nil, fmt("({} {}) ", {
+          ls.i(1, "r"),
+          ls.i(2, "receiver"),
+        })),
+      }),
+      name2   = ls.i(2, "Name"),
+      args    = ls.i(3),
+      ret     = ls.c(4, {
+        ls.i(1, "error"),
+        ls.sn(nil, fmt("({}, {}) ", {
+          ls.i(1, "ret"),
+          ls.i(2, "error"),
+        })),
+      }),
+      finally = ls.i(0),
+    })
   ),
 
   -- Append
@@ -109,16 +109,16 @@ return {
       [[
         {arr1} = append({arr}, {var}) 
       ]], {
-        arr1 = rep(1),
-        arr = ls.i(1, "arr"),
-        var = ls.i(0, "var"),
-      }),
+      arr1 = rep(1),
+      arr = ls.i(1, "arr"),
+      var = ls.i(0, "var"),
+    }),
     in_func
   ),
 
   -- If error
   ls.s(
-    { trig = "ife", name = "If error", dscr = "If error, return wrapped" },
+    { trig = "ie", name = "If error", dscr = "If error, return wrapped" },
     fmt("if {} != nil {{\n\treturn {}\n}}\n{}", {
       ls.i(1, "err"),
       ls.d(2, util.make_return_nodes, { 1 }),
@@ -151,13 +151,13 @@ return {
           {}
         }}
       ]], {
-        rep(1),
-        rep(2),
-        rep(1),
-        ls.f(function(args) return util.snake_case(args[1][1]) end, { 1 }),
-        ls.i(1, "Client"),
-        ls.i(2, "pkg.Interface"),
-      })
+      rep(1),
+      rep(2),
+      rep(1),
+      ls.f(function(args) return util.snake_case(args[1][1]) end, { 1 }),
+      ls.i(1, "Client"),
+      ls.i(2, "pkg.Interface"),
+    })
   ), --}}}
 
   -- Nolint {{{
@@ -216,9 +216,9 @@ return {
         	t.Errorf("(-want +got):\\n%s", diff)
         }}
       ]], {
-        ls.i(1, "want"),
-        ls.i(2, "got"),
-      }),
+      ls.i(1, "want"),
+      ls.i(2, "got"),
+    }),
     in_test_func
   ), --}}}
 

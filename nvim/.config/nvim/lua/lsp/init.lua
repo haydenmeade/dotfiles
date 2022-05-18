@@ -2,19 +2,6 @@ local M = {}
 local Log = require "core.log"
 local config = require "lsp.config"
 
--- TODO autoinstall
--- local lsp_providers = {
---   "pyright",
---   "gopls",
---   "sumneko_lua",
---   "tsserver",
---   "solargraph",
---   "clangd",
---   "jsonls",
---   "bashls",
---   "yamlls",
--- }
-
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -29,15 +16,15 @@ function M.common_capabilities()
   -- Code actions
   capabilities.textDocument.codeAction = {
     dynamicRegistration = true,
-    codeActionLiteralSupport = {
-      codeActionKind = {
-        valueSet = (function()
-          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-          table.sort(res)
-          return res
-        end)(),
-      },
-    },
+    -- codeActionLiteralSupport = {
+    --   codeActionKind = {
+    --     valueSet = (function()
+    --       local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+    --       table.sort(res)
+    --       return res
+    --     end)(),
+    --   },
+    -- },
   }
 
   local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -48,44 +35,17 @@ function M.common_capabilities()
   return capabilities
 end
 
-local function select_default_formater(client)
-  if client.name == "null-ls" then
-    return
-  end
-  local s = require "null-ls.sources"
-  local client_filetypes = client.config.filetypes or {}
-  local done = false
-  for _, filetype in ipairs(client_filetypes) do
-    local supported_formatters = s.get_supported(filetype, "formatting")
-    if not vim.tbl_isempty(supported_formatters) then
-      done = true
-      client.server_capabilities.documentFormattingProvider = false
-      client.server_capabilities.documentRangeFormattingProvider = false
-    end
-  end
-  if done then
-    Log:debug("Formatter overriding for " .. client.name)
-  end
-end
-
 function M.common_on_exit(_, _) end
 
-function M.common_on_init(client, _)
-  select_default_formater(client)
-end
+function M.common_on_init(_, _) end
 
-function M.common_on_attach(client, bufnr)
+function M.common_on_attach(_, bufnr)
   require("lsp_signature").on_attach {
     bind = true,
     handler_opts = { border = "single" },
   }
 
   require("config.whichkey").register_lsp(bufnr)
-
-  if client.server_capabilities.documentFormattingProvider then
-    require("core.autocmds").configure_format_on_save()
-  end
-  -- require("core.autocmds").enable_lsp_document_highlight(bufnr)
 end
 
 function M.get_common_opts()
@@ -100,9 +60,8 @@ end
 
 ---Resolve the configuration for a server based on both common and user configuration
 ---@param name string
----@param user_config table [optional]
 ---@return table
-local function resolve_config(name, user_config)
+local function resolve_config(name)
   local opts = M.get_common_opts()
   local has_custom_provider, custom_config = pcall(require, join_paths("lsp", name))
   if has_custom_provider then
@@ -110,19 +69,12 @@ local function resolve_config(name, user_config)
     opts = vim.tbl_deep_extend("force", opts, custom_config.config())
   end
 
-  if user_config then
-    opts = vim.tbl_deep_extend("force", opts, user_config)
-  end
-
   return opts
 end
 
 function M.setup()
-  Log:debug "Setting up LSP support"
-
-  local lsp_status_ok, _ = pcall(require, "lspconfig")
-  if not lsp_status_ok then
-    Log:debug "No lspconfig"
+  local ok, lspconfig = h.safe_require "lspconfig"
+  if not ok then
     return
   end
 
@@ -130,16 +82,42 @@ function M.setup()
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
-  -- vim handlers
+  -- custom handlers
   require("lsp.handlers").setup()
 
   require("lsp.null-ls").setup()
 
   require("core.autocmds").configure_format_on_save()
 
-  require("nvim-lsp-installer").on_server_ready(function(server)
-    server:setup(resolve_config(server.name))
-  end)
+  local lspinstaller = require "nvim-lsp-installer"
+  lspinstaller.setup {
+    ensure_installed = {
+      "gopls",
+      "golangci_lint_ls",
+      "eslint",
+      "tsserver",
+      "jsonls",
+      "solargraph",
+      "sumneko_lua",
+      "yamlls",
+      "bashls",
+      "ccls",
+    },
+    -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
+    -- debugging issues with server installations.
+    log_level = vim.log.levels.INFO,
+  }
+
+  lspconfig.gopls.setup(resolve_config "gopls")
+  lspconfig.golangci_lint_ls.setup(resolve_config "golangci_lint_ls")
+  lspconfig.eslint.setup(resolve_config "eslint")
+  require("lsp.tsserver").config()
+  lspconfig.jsonls.setup(resolve_config "jsonls")
+  lspconfig.solargraph.setup(resolve_config "solargraph")
+  lspconfig.sumneko_lua.setup(resolve_config "sumneko_lua")
+  lspconfig.yamlls.setup(resolve_config "yamlls")
+  lspconfig.bashls.setup(resolve_config "bashls")
+  lspconfig.ccls.setup(resolve_config "ccls")
 end
 
 return M

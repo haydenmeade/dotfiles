@@ -1,4 +1,6 @@
 local M = {}
+local M = {}
+local M = {}
 
 local Log = require "core.log"
 local autocmd = vim.api.nvim_create_autocmd
@@ -57,7 +59,18 @@ function M.configure_format_on_save()
   if format_on_save then
     vim.api.nvim_create_autocmd("BufWritePre", {
       callback = function()
-        vim.lsp.buf.format { timeout_ms = 2000 }
+        vim.lsp.buf.format {
+          timeout_ms = 1000,
+          -- filter = function(clients)
+          --   -- local newc = vim.tbl_filter(function(client)
+          --   --   return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
+          --   -- end, clients)
+          --   for _, c in ipairs(clients) do
+          --     require "notify"(c.name)
+          --   end
+          --   return clients
+          -- end,
+        }
       end,
       group = augid,
     })

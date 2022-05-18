@@ -119,6 +119,35 @@ function M.setup()
 
   -- Use cmdline & path source for ':'.
   cmp.setup.cmdline(":", {
+    mapping = {
+      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<C-y>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ["<C-Space>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end),
+    },
     sources = cmp.config.sources({
       { name = "path", max_item_count = 5 },
     }, {
@@ -128,6 +157,35 @@ function M.setup()
 
   -- lsp_document_symbols
   cmp.setup.cmdline("/", {
+    mapping = {
+      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
+      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
+      ["<C-e>"] = cmp.mapping.close(),
+      ["<C-y>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ["<C-Space>"] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        else
+          fallback()
+        end
+      end),
+    },
     sources = cmp.config.sources({
       { name = "nvim_lsp_document_symbol", max_item_count = 8, keyword_length = 3 },
     }, {

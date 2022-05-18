@@ -1,14 +1,22 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
+# settitle(){print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
+# print -Pn "\e]0;%(4~|.../%3~|%~)\a"
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 (( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
 
+function precmd () {
+  window_title="\e]0;%(4~|.../%3~|%~)\a"
+  print -Pn "$window_title"
+}
+
 # Path changes
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
+export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
 
@@ -44,7 +52,6 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 
-settitle(){print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
 cdls () { 
     if [[ -z "$PS1" ]]; then
         builtin cd "$@"
@@ -161,6 +168,7 @@ alias gs='git status'
 alias ga='git add .'
 alias gc='git commit'
 alias ji='jira issue list -a$(jira me)'
+alias c='pbcopy'
 
 # useful defaults:
 # alias ~/cd=cd ~
@@ -183,27 +191,27 @@ if [[ -f ~/.zshprv ]]; then
     source $HOME/.zshprv
 fi
 
+# aws profiles
+use_aws_profile(){
+  prn=$1
+  export $(aws-vault exec $prn -- env | sort | grep -E 'AWS_(ACC|SECR|SESS)')
+}
+alias awsdev='use_aws_profile dev-admin'
+
 # fzf command history search
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-fzf-history-widget-accept() {
-  fzf-history-widget
-  # zle accept-line
-}
-zle     -N     fzf-history-widget-accept
-bindkey '^R'   fzf-history-widget-accept
-bindkey -M vicmd '^R' fzf-history-widget
-bindkey -M viins '^R' fzf-history-widget
-
-bindkey '^ ' autosuggest-accept
-bindkey '^n' autosuggest-accept
+bindkey '^R'   fzf-history-widget
+bindkey '^ '   autosuggest-accept
 
 # dir in title
-case $TERM in
-    xterm*)
-        precmd () {print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
-        ;;
-esac
+# case $TERM in
+#     xterm*)
+#         precmd () {print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
+#         ;;
+# esac
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
