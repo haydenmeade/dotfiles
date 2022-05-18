@@ -11,3 +11,5 @@ tmp/**/*
 .pryrc
 .overmind*.sock
 coverage.*
+coverage.*
+**/lazygit/state.yml
