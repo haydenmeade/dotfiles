@@ -10,13 +10,6 @@ function M.setup()
   local actions = require "telescope.actions"
   local previewers = require "telescope.previewers"
 
-  telescope.load_extension "session-lens"
-  telescope.load_extension "fzf"
-  telescope.load_extension "luasnip"
-  telescope.load_extension "repo"
-  telescope.load_extension "file_browser"
-  telescope.load_extension "file_create"
-
   local largeFilesIgnoringPreviewer = function(filepath, bufnr, opts)
     opts = opts or {}
 
@@ -74,6 +67,14 @@ function M.setup()
       },
     },
   }
+
+  telescope.load_extension "session-lens"
+  telescope.load_extension "fzf"
+  telescope.load_extension "luasnip"
+  telescope.load_extension "repo"
+  telescope.load_extension "file_browser"
+  telescope.load_extension "file_create"
+  telescope.load_extension "ui-select"
 
   M.search_dotfiles = function()
     builtin.git_files {

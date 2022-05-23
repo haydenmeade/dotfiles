@@ -1,10 +1,4 @@
--- DATA_PATH = vim.fn.stdpath "data"
----@return string
-local function get_runtime_dir()
-  return vim.fn.stdpath "data"
-end
 return {
-  templates_dir = join_paths(get_runtime_dir(), "site", "after", "ftplugin"),
   diagnostics = {
     signs = {
       active = true,
@@ -16,7 +10,7 @@ return {
       },
     },
     virtual_text = true,
-    update_in_insert = false,
+    update_in_insert = true,
     underline = true,
     severity_sort = true,
     float = {
@@ -36,23 +30,9 @@ return {
       end,
     },
   },
-  document_highlight = true,
-  code_lens_refresh = true,
   float = {
     focusable = true,
     style = "minimal",
     border = "rounded",
-  },
-  on_attach_callback = nil,
-  on_init_callback = nil,
-  automatic_servers_installation = true,
-  buffer_mappings = {
-    normal_mode = {},
-    insert_mode = {},
-    visual_mode = {},
-  },
-  null_ls = {
-    setup = {},
-    config = {},
   },
 }

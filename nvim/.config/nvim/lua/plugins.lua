@@ -67,25 +67,25 @@ function M.setup()
     -- Go development
     -- use "fatih/vim-go"
     -- use { "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" }
-    -- use {
-    --   "ray-x/go.nvim",
-    --   config = function()
-    --     require("go").setup {
-    --       test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-    --       run_in_floaterm = false, -- set to true to run in float window.
-    --       --float term recommand if you use richgo/ginkgo with terminal color
-    --       dap_debug = true, -- set to true to enable dap
-    --       dap_debug_keymap = false, -- set keymaps for debugger
-    --       dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
-    --       dap_debug_vt = true, -- set to true to enable dap virtual text
-    --       -- Disable everything for LSP
-    --       lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
-    --       lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-    --       lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
-    --       gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
-    --     }
-    --   end,
-    -- }
+    use {
+      "ray-x/go.nvim",
+      config = function()
+        require("go").setup {
+          test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+          run_in_floaterm = false, -- set to true to run in float window.
+          --float term recommand if you use richgo/ginkgo with terminal color
+          dap_debug = true, -- set to true to enable dap
+          dap_debug_keymap = false, -- set keymaps for debugger
+          dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+          dap_debug_vt = true, -- set to true to enable dap virtual text
+          -- Disable everything for LSP
+          lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
+          lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+          lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
+          gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
+        }
+      end,
+    }
     -- Lua development
     use "folke/lua-dev.nvim"
 
@@ -188,13 +188,13 @@ function M.setup()
     -- }
 
     --LSP
-    use {
-      "j-hui/fidget.nvim", -- loading progress
-      event = "BufReadPre",
-      config = function()
-        require("fidget").setup {}
-      end,
-    }
+    -- use {
+    --   "j-hui/fidget.nvim", -- loading progress
+    --   event = "BufReadPre",
+    --   config = function()
+    --     require("fidget").setup {}
+    --   end,
+    -- }
     use "williamboman/nvim-lsp-installer"
     use "jose-elias-alvarez/typescript.nvim"
     use "ray-x/lsp_signature.nvim"
@@ -313,6 +313,7 @@ function M.setup()
         "nvim-telescope/telescope-file-browser.nvim",
         "nvim-telescope/telescope-live-grep-raw.nvim",
         "benfowler/telescope-luasnip.nvim",
+        "nvim-telescope/telescope-ui-select.nvim",
         "nvim-lua/popup.nvim",
         { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
       },

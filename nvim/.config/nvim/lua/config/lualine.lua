@@ -84,6 +84,8 @@ function M.setup()
     filename = {
       "filename",
       condition = conditions.buffer_not_empty,
+      path = 1,
+      shorting_target = 40,
       color = { fg = colors.magenta, gui = "bold" },
     },
 
@@ -160,6 +162,7 @@ function M.setup()
           end
           return string.format("%.1f%s", size, sufixes[i])
         end
+
         local file = vim.fn.expand "%:p"
         if string.len(file) == 0 then
           return ""
@@ -223,7 +226,7 @@ function M.setup()
       lualine_b = { components.filename },
       lualine_c = { components.gps },
       lualine_x = { components.diagnostics, components.lsp },
-      lualine_y = { components.branch, components.diff },
+      lualine_y = { components.diff },
       lualine_z = { components.location, components.scrollbar },
     },
     inactive_sections = {

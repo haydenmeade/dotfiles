@@ -16,15 +16,15 @@ function M.common_capabilities()
   -- Code actions
   capabilities.textDocument.codeAction = {
     dynamicRegistration = true,
-    -- codeActionLiteralSupport = {
-    --   codeActionKind = {
-    --     valueSet = (function()
-    --       local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-    --       table.sort(res)
-    --       return res
-    --     end)(),
-    --   },
-    -- },
+    codeActionLiteralSupport = {
+      codeActionKind = {
+        valueSet = (function()
+          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
+          table.sort(res)
+          return res
+        end)(),
+      },
+    },
   }
 
   local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
@@ -77,6 +77,7 @@ function M.setup()
   if not ok then
     return
   end
+  -- require "notify" "load me please"
 
   for _, sign in ipairs(config.diagnostics.signs.values) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
@@ -103,15 +104,16 @@ function M.setup()
       "bashls",
       "ccls",
     },
+    automatic_installation = true,
     -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
     -- debugging issues with server installations.
     log_level = vim.log.levels.INFO,
   }
 
+  require("lsp.tsserver").config()
+  lspconfig.eslint.setup(resolve_config "eslint")
   lspconfig.gopls.setup(resolve_config "gopls")
   lspconfig.golangci_lint_ls.setup(resolve_config "golangci_lint_ls")
-  lspconfig.eslint.setup(resolve_config "eslint")
-  require("lsp.tsserver").config()
   lspconfig.jsonls.setup(resolve_config "jsonls")
   lspconfig.solargraph.setup(resolve_config "solargraph")
   lspconfig.sumneko_lua.setup(resolve_config "sumneko_lua")
