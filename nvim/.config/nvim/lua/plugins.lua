@@ -188,13 +188,13 @@ function M.setup()
     -- }
 
     --LSP
-    -- use {
-    --   "j-hui/fidget.nvim", -- loading progress
-    --   event = "BufReadPre",
-    --   config = function()
-    --     require("fidget").setup {}
-    --   end,
-    -- }
+    use {
+      "j-hui/fidget.nvim", -- loading progress
+      event = "BufReadPre",
+      config = function()
+        require("fidget").setup {}
+      end,
+    }
     use "williamboman/nvim-lsp-installer"
     use "jose-elias-alvarez/typescript.nvim"
     use "ray-x/lsp_signature.nvim"
@@ -380,13 +380,13 @@ function M.setup()
       end,
     }
 
-    use {
-      "akinsho/nvim-bufferline.lua",
-      config = function()
-        require("config.bufferline").setup()
-      end,
-      event = "BufReadPre",
-    }
+    -- use {
+    --   "akinsho/nvim-bufferline.lua",
+    --   config = function()
+    --     require("config.bufferline").setup()
+    --   end,
+    --   event = "BufReadPre",
+    -- }
 
     use {
       "SmiteshP/nvim-gps",

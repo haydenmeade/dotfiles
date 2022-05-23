@@ -16,6 +16,7 @@ function precmd () {
 
 # Path changes
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -198,11 +199,35 @@ use_aws_profile(){
 }
 alias awsdev='use_aws_profile dev-admin'
 
+bindkey -v
+
 # fzf command history search
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 bindkey '^R'   fzf-history-widget
 bindkey '^ '   autosuggest-accept
+
+# Quick edit
+vzv() {
+    fzf -1 -m --preview 'bat --color=always {}' </dev/tty | xargs -r -o $EDITOR;
+}
+ # Search with fzf and open selected file with Vim
+zle -N vzv vzv
+bindkey '^v' vzv
+
+export ZVM_NORMAL_MODE_CURSOR=bbl
+
+# +-------------+
+# | zsh-vi-mode |
+# +-------------+
+
+# The zsh-vi-mode plugin causes my FZF mapping to disappear, 
+# because it has a hook that is run after this script, that 
+# reinitializes the keymap. => we set it again in the
+# zvm_after_init hook.
+# check out: https://github.com/jeffreytse/zsh-vi-mode
+source "$ZSH_CUSTOM/plugins/zsh-vi-mode/zsh-vi-mode.zsh"
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
 # dir in title
 # case $TERM in
@@ -214,4 +239,3 @@ bindkey '^ '   autosuggest-accept
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"

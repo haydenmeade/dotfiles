@@ -38,11 +38,11 @@ local mappings = {
   q = { "<Cmd>q!<Cr>", "Quit" },
   x = { "<Cmd>x!<Cr>", "Save+Quit" },
   X = { "<Cmd>wqall!<Cr>", "Save+Quit all" },
-  c = { "<cmd>BufferKill<CR>", "Kill Buffer" },
+  o = { "<Cmd>%bd|e#|bd#<Cr>", "Delete all buffers but current" },
+  c = { "<Cmd>bdelete<Cr>", "Delete current buffer" },
   C = { "<cmd>Telescope file_create<CR>", "Create File" },
   f = { "<cmd>lua require('config.telescope').find_project_files()<CR>", "Find File" },
   F = { "<cmd>lua require('config.telescope').live_grep_in_glob()<CR>", "Grep With FT Glob" },
-  p = { "<cmd>lua require('session-lens').search_session()<CR>", "Switch Session" },
   E = { "<cmd>Telescope file_browser<CR>", "Telescope Explorer" },
   e = { "<Cmd>NvimTreeToggle<CR>", "NvimTree" },
   h = { "<cmd>nohlsearch<CR>", "No Highlight" },
@@ -52,57 +52,11 @@ local mappings = {
   -- System
   z = {
     name = "System",
-    b = {
-      "<Cmd>hi Normal ctermbg=none guibg=none<CR>",
-      "Transparent background",
-    },
     s = { "<cmd>SaveSession<Cr>", "Save session" },
     l = { "<cmd>SearchSession<Cr>", "Load session" },
-    h = { "<Cmd>VimuxOpenRunner<CR>", "New tmux split Horizontal" },
-    t = { "<Cmd>terminal<CR>", "New terminal tab" },
-    z = {
-      "<Cmd>lua require('config.telescope').search_dotfiles()<CR>",
-      "Configuration",
-    },
     m = { "<Cmd>messages<Cr>", "Messages" },
     M = { "<Cmd>put =execute('messages')<Cr>", "Put Messages" },
-    p = { "<Cmd>messages clear<Cr>", "Clear messages" },
-    f = { "<Cmd>FloatermNew<Cr>", "Floating terminal" },
-    -- y = { "<Cmd>PackerSync<Cr>", "Packer update" },
     y = { "<Cmd>lua require('core.util').update_packer()<CR>", "Update packer" },
-  },
-
-  -- Buffer
-  b = {
-    name = "Buffer",
-    a = { "<Cmd>BWipeout other<Cr>", "Delete all buffers" },
-    d = { "<Cmd>bdelete<Cr>", "Delete current buffer" },
-    n = { "<Cmd>bn<Cr>", "Next buffer" },
-    p = { "<Cmd>bp<Cr>", "Previous buffer" },
-    x = { "<Cmd>xa!<Cr>", "Save all & quit" },
-    r = { "<Cmd>e!<CR>", "Reload file" },
-    c = { "<Cmd>ene <BAR> startinsert <Cr>", "Create file" },
-    j = { "<cmd>BufferLinePick<cr>", "Jump" },
-    f = { "<cmd>Telescope buffers<cr>", "Find" },
-    b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
-    o = { "<cmd>lua require('config.bufferline').close_others()<cr>", "Close others" },
-    e = {
-      "<cmd>BufferLinePickClose<cr>",
-      "Pick which buffer to close",
-    },
-    h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
-    l = {
-      "<cmd>BufferLineCloseRight<cr>",
-      "Close all to the right",
-    },
-    D = {
-      "<cmd>BufferLineSortByDirectory<cr>",
-      "Sort by directory",
-    },
-    L = {
-      "<cmd>BufferLineSortByExtension<cr>",
-      "Sort by language",
-    },
   },
 
   m = {
