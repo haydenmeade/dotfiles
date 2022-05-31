@@ -61,15 +61,9 @@ function M.configure_format_on_save()
       callback = function()
         vim.lsp.buf.format {
           timeout_ms = 1000,
-          -- filter = function(clients)
-          --   -- local newc = vim.tbl_filter(function(client)
-          --   --   return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
-          --   -- end, clients)
-          --   for _, c in ipairs(clients) do
-          --     require "notify"(c.name)
-          --   end
-          --   return clients
-          -- end,
+          filter = function(client)
+            return client.name ~= "tsserver" --and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
+          end,
         }
       end,
       group = augid,
