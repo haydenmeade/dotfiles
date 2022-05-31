@@ -324,10 +324,8 @@ function M.setup()
 
     -- Testing
     use {
-      "rcarriga/vim-ultest",
+      "vim-test/vim-test",
       config = "require('config.test').setup()",
-      run = ":UpdateRemotePlugins",
-      requires = { "vim-test/vim-test" },
     }
     use {
       "andythigpen/nvim-coverage", -- Display test coverage information

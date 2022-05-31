@@ -23,6 +23,7 @@ export CONFIG_DIR=$HOME/.config/lazygit
 
 export BROWSER="open"
 export KITTY_LISTEN_ON=unix:/tmp/mykitty
+export HOMEBREW_NO_ENV_HINTS=true
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -55,17 +56,17 @@ export EDITOR='nvim'
 
 cdls () { 
     if [[ -z "$PS1" ]]; then
-        builtin cd "$@"
+        z "$@"
     else
-        builtin cd "$@" && exa -la; 
+        z "$@" && exa -la; 
     fi
 }
 
 dot () {
-    builtin cd ~/dotfiles/ && nvim
+    z ~/dotfiles/ && nvim
 }
 notes () {
-    builtin cd ~/notes/ && nvim
+    z ~/notes/ && nvim
 }
 
 culture_amp (){
@@ -76,8 +77,11 @@ culture_amp (){
     if [[ -d "$CA_ROOT_DIR/src" ]]; then
         dir="$CA_ROOT_DIR/src"
     fi
+    if [[ -d "$CA_ROOT_DIR/v2_src" ]]; then
+        dir="$CA_ROOT_DIR/v2_src"
+    fi
 
-    cd $dir
+    z $dir
 }
 
 can (){
@@ -164,6 +168,7 @@ alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
 alias bb='brew bundle'
+alias de='direnv allow .'
 
 alias gs='git status'
 alias ga='git add .'
@@ -228,6 +233,8 @@ export ZVM_NORMAL_MODE_CURSOR=bbl
 # check out: https://github.com/jeffreytse/zsh-vi-mode
 source "$ZSH_CUSTOM/plugins/zsh-vi-mode/zsh-vi-mode.zsh"
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+
+eval "$(zoxide init zsh)"
 
 # dir in title
 # case $TERM in

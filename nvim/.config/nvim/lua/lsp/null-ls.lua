@@ -15,9 +15,18 @@ function M.setup()
     null_ls.builtins.formatting.rubocop,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.formatting.shfmt,
-    null_ls.builtins.diagnostics.markdownlint,
     null_ls.builtins.formatting.stylua,
+    null_ls.builtins.diagnostics.hadolint,
   }
+  local function exist(bin)
+    return vim.fn.exepath(bin) ~= ""
+  end
+
+  for _, source in ipairs(sources) do
+    if not exist(source.name) then
+      require "notify" ("unable to find shell tool - " .. source.name)
+    end
+  end
 
   null_ls.setup(vim.tbl_deep_extend("force", default_opts, { sources = sources }))
 end

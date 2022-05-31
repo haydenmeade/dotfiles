@@ -7,12 +7,15 @@ cmd + ctrl - left  : yabai -m window --focus west
 cmd + ctrl - down  : yabai -m window --focus south
 cmd + ctrl - up    : yabai -m window --focus north
 cmd + ctrl - right : yabai -m window --focus east
+# spaces
+cmd + shift - 6: yabai -m space --focus recent
 
 # move to next display
 ctrl + cmd - n  : yabai -m window --display next; yabai -m display --focus next
 ctrl + cmd + shift - 1  : yabai -m window --display 1; yabai -m display --focus 1
 ctrl + cmd + shift - 2  : yabai -m window --display 2; yabai -m display --focus 2
 ctrl + cmd + shift - 3  : yabai -m window --display 3; yabai -m display --focus 3
+
 
 # Moving windows
 cmd + shift + ctrl - left  : yabai -m window --warp west
@@ -50,19 +53,37 @@ cmd + ctrl + alt - r : \
         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
+# create desktop, move window and follow focus
+shift + cmd - n : yabai -m space --create;\
+                  id="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')";\
+                  yabai -m window --space "$id";\
+                  yabai -m space --focus "$id"
+
 # Close active application
 cmd + ctrl - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
 
 # Make window native fullscreen
 cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
 
-cmd - 1 : id="$(yabai -m query --windows | jq -c 'map(select((.app == "kitty") and (.title | startswith("kitty") | not)))' | jq '.[].id' )" && \
-                  yabai -m window --focus "${id}" 
-cmd - 2 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Google Chrome"))' | jq '.[].id' )" && \
-                  yabai -m window --focus "${id}" 
-cmd - 3 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Slack"))' | jq '.[].id' )" && \
-                  yabai -m window --focus "${id}" 
-cmd - 4 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Spotify"))' | jq '.[].id' )" && \
-                  yabai -m window --focus "${id}" 
+cmd - 1 : id="$(yabai -m query --windows | jq -c 'map(select((.app == "kitty") and (.title | startswith("kitty") | not)))')" && \
+          space_id="$(echo "$id" | jq '.[].space' )" && \
+          win_id="$(echo "$id" | jq '.[].id' )" && \
+          yabai -m space --focus "${space_id}" && \
+          yabai -m window --focus "${win_id}" 
+cmd - 2 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Google Chrome"))')" && \
+          space_id="$(echo "$id" | jq '.[].space' )" && \
+          win_id="$(echo "$id" | jq '.[].id' )" && \
+          yabai -m space --focus "${space_id}" && \
+          yabai -m window --focus "${win_id}" 
+cmd - 3 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Slack"))')" && \
+          space_id="$(echo "$id" | jq '.[].space' )" && \
+          win_id="$(echo "$id" | jq '.[].id' )" && \
+          yabai -m space --focus "${space_id}" && \
+          yabai -m window --focus "${win_id}" 
+cmd - 4 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Spotify"))')" && \
+          space_id="$(echo "$id" | jq '.[].space' )" && \
+          win_id="$(echo "$id" | jq '.[].id' )" && \
+          yabai -m space --focus "${space_id}" && \
+          yabai -m window --focus "${win_id}" 
   
 
