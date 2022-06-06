@@ -64,26 +64,12 @@ cmd + ctrl - backspace : $(yabai -m window $(yabai -m query --windows --window |
 
 # Make window native fullscreen
 cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
+cmd + shift - 1 : /Applications/kitty.app/Contents/MacOS/kitty --override allow_remote_control=yes --single-instance --listen-on unix:/tmp/mykitty --directory ~
 
-cmd - 1 : id="$(yabai -m query --windows | jq -c 'map(select((.app == "kitty") and (.title | startswith("kitty") | not)))')" && \
-          space_id="$(echo "$id" | jq '.[].space' )" && \
-          win_id="$(echo "$id" | jq '.[].id' )" && \
-          yabai -m space --focus "${space_id}" && \
-          yabai -m window --focus "${win_id}" 
-cmd - 2 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Google Chrome"))')" && \
-          space_id="$(echo "$id" | jq '.[].space' )" && \
-          win_id="$(echo "$id" | jq '.[].id' )" && \
-          yabai -m space --focus "${space_id}" && \
-          yabai -m window --focus "${win_id}" 
-cmd - 3 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Slack"))')" && \
-          space_id="$(echo "$id" | jq '.[].space' )" && \
-          win_id="$(echo "$id" | jq '.[].id' )" && \
-          yabai -m space --focus "${space_id}" && \
-          yabai -m window --focus "${win_id}" 
-cmd - 4 : id="$(yabai -m query --windows | jq -c 'map(select(.app == "Spotify"))')" && \
-          space_id="$(echo "$id" | jq '.[].space' )" && \
-          win_id="$(echo "$id" | jq '.[].id' )" && \
-          yabai -m space --focus "${space_id}" && \
-          yabai -m window --focus "${win_id}" 
-  
-
+cmd - 1 : switchTo "kitty"
+cmd - 2 : switchTo "Google Chrome"
+cmd - 3 : switchTo "Slack"
+cmd - 4 : switchTo "Spotify"
+cmd - 5 : switchTo "Postman"
+cmd - 6 : switchTo "Authy Desktop"
+cmd - 7 : switchTo "zoom.us"

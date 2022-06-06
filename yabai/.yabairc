@@ -13,21 +13,14 @@ yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 
 # .. more yabai startup stuff
 #############################################################################
-# fix popup windows
-yabai -m config window_topmost off
-
 # Space settings
+# yabai -m config external_bar all:20:0
 yabai -m config layout bsp
 yabai -m config top_padding 0
 yabai -m config bottom_padding 0
 yabai -m config left_padding 0
 yabai -m config right_padding 0
 yabai -m config window_gap 0
-
-# Spaces
-yabai -m space 1 --label one
-yabai -m space 2 --label two
-yabai -m space 3 --label three
 
 # float preferences
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
@@ -37,6 +30,7 @@ yabai -m rule --add app="^Stats$" sticky=on layer=above manage=off
 yabai -m rule --add app="^Finder$" sticky=on layer=above manage=off
 
 # global settings
+yabai -m config window_topmost off
 yabai -m config status_bar off
 yabai -m config mouse_follows_focus on
 yabai -m config focus_follows_mouse off
