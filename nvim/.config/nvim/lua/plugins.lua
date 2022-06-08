@@ -344,6 +344,15 @@ function M.setup()
         require("config.test").coverage()
       end,
     }
+    use {
+      "rcarriga/neotest",
+      requires = {
+        "nvim-lua/plenary.nvim",
+        "nvim-treesitter/nvim-treesitter",
+        "antoinemadec/FixCursorHold.nvim",
+        "rcarriga/neotest-vim-test",
+      },
+    }
 
     -- Stuff
     use {
