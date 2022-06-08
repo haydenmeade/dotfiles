@@ -15,10 +15,6 @@ for _, module in ipairs(core_modules) do
   end
 end
 
-local present, impatient = pcall(require, "impatient")
-
--- if present then
---   impatient.enable_profile()
--- end
+require "impatient"
 
 require("plugins").setup()

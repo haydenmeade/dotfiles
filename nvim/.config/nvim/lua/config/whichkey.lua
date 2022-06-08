@@ -157,12 +157,12 @@ local mappings = {
   },
 
   -- Run
-  r = {
-    name = "Run",
-    x = "Swap next parameter",
-    X = "Swap previous parameter",
-    s = { "<Cmd>SnipRun<CR>", "Run snippets" },
-  },
+  -- r = {
+  --   name = "Run",
+  --   x = "Swap next parameter",
+  --   X = "Swap previous parameter",
+  --   s = { "<Cmd>SnipRun<CR>", "Run snippets" },
+  -- },
 
   -- Trouble
   n = {
@@ -187,8 +187,9 @@ local no_leader_mappings = {
 local lsp_mappings = {
   l = {
     name = "LSP",
-    r = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
-    R = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
+    r = { "<Cmd>IncRename<CR>", "Rename" },
+    R = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
+    -- R = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
     u = { "<Cmd>Telescope lsp_references<CR>", "References" },
     o = { "<Cmd>Telescope lsp_document_symbols<CR>", "Document symbols" },
     d = { "<Cmd>Telescope lsp_definitions<CR>", "Definition" },

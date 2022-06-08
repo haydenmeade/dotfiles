@@ -30,19 +30,19 @@ function M.setup()
     use { "antoinemadec/FixCursorHold.nvim" } -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
 
     -- notify override
-    use {
-      "rcarriga/nvim-notify",
-      event = "VimEnter",
-      config = function()
-        require("config.notify").setup()
-      end,
-    }
+    use "rcarriga/nvim-notify"
 
     -- Development
     use "tpope/vim-repeat"
     use { "tpope/vim-surround", event = "BufRead" }
     use { "tpope/vim-sleuth" }
     use "tpope/vim-abolish"
+    use {
+      "smjonas/inc-rename.nvim",
+      config = function()
+        require("inc_rename").setup()
+      end,
+    }
 
     use {
       "numToStr/Comment.nvim",
@@ -284,6 +284,7 @@ function M.setup()
         },
       },
     }
+    use "nvim-treesitter/nvim-treesitter-context"
 
     -- markdown
     use {
@@ -477,7 +478,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init { log = { level = "warning" }, max_jobs = 20 }
+  require("packer").init { log = { level = "debug" }, max_jobs = 20 }
   require("packer").startup(plugins)
 end
 

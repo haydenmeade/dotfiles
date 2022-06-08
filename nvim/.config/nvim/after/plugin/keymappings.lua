@@ -44,6 +44,9 @@ function M.setup()
       vim.api.nvim_set_keymap(mode, keys, cmd, opts)
     end
   end
+  vim.keymap.set("n", "<leader>r", function()
+    return ":IncRename " .. vim.fn.expand "<cword>"
+  end, { expr = true })
 end
 
 M.setup()

@@ -4,8 +4,8 @@ local util = require "config.luasnip.util"
 
 return {
   ls.s(-- logger.log {{{
-    { trig = "l", dsce = "logger.log something" },
-    fmt([[ logger.{}}({}) ]], {
+    { trig = "ll", dsce = "logger.log something" },
+    fmt([[ logger.{}({}) ]], {
       ls.c(1, {
         ls.t "info",
         ls.t "warn",
