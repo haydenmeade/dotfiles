@@ -1,6 +1,6 @@
-local async = require "neotest.async"
-local Path = require "plenary.path"
+---@diagnostic disable: undefined-field
 local lib = require "neotest.lib"
+local logger = require "neotest.logging"
 
 ---@type neotest.Adapter
 local adapter = { name = "neotest-jest" }
@@ -8,7 +8,20 @@ local adapter = { name = "neotest-jest" }
 adapter.root = lib.files.match_root_pattern "package.json"
 
 function adapter.is_test_file(file_path)
-  return vim.endswith(file_path, ".test.ts")
+  if file_path == nil then
+    return false
+  end
+  if string.match(file_path, "__tests__") then
+    return true
+  end
+  for _, x in ipairs { "spec", "test" } do
+    for _, ext in ipairs { "js", "jsx", "coffee", "ts", "tsx" } do
+      if string.match(file_path, x .. "%." .. ext .. "$") then
+        return true
+      end
+    end
+  end
+  return false
 end
 
 ---@async
@@ -29,20 +42,12 @@ function adapter.discover_positions(path)
   return lib.treesitter.parse_positions(path, query, { nested_tests = true })
 end
 
--- TODO
--- if filereadable('node_modules/.bin/jest')
---    return 'node_modules/.bin/jest'
---  else
---    return 'jest'
---  endif
-
 ---@param args neotest.RunArgs
 ---@return neotest.RunSpec | nil
 function adapter.build_spec(args)
-  local notify = require "notify"
-  -- notify(vim.pretty_print(args))
-  notify "build spec"
-  local results_path = vim.fn.tempname()
+  --logger.debug("buildspec", args, "args")
+  --lib.
+  local results_path = vim.fn.tempname() .. ".json"
   local tree = args.tree
   if not tree then
     return
@@ -50,23 +55,28 @@ function adapter.build_spec(args)
   local pos = args.tree:data()
   -- if pos.type == "dir" then
   --   return
+  --roots
+  -- A list of paths to directories that Jest should use to search for files in.
   -- end
-  -- local filters = {}
-  -- if pos.type == "namespace" or pos.type == "test" then
-  --   table.insert(filters, 1, { pos.range[1], pos.range[3] })
-  --   for parent in tree:iter_parents() do
-  --     local parent_pos = parent:data()
-  --     if parent_pos.type ~= "namespace" then
-  --       break
-  --     end
-  --     table.insert(filters, 1, { parent_pos.range[1], parent_pos.range[3] })
-  --   end
-  -- end
+  local testNamePattern = ".*"
+  if pos.type == "test" then
+    testNamePattern = pos.name
+  end
+
+  local binary = "jest"
+  if vim.fn.filereadable "node_modules/.bin/jest" then
+    binary = "node_modules/.bin/jest"
+  end
 
   local command = vim.tbl_flatten {
-    "node_modules/.bin/jest",
+    binary,
     "--no-coverage",
-    "--",
+    "--testLocationInResults",
+    "--verbose",
+    "--json",
+    "--outputFile=" .. results_path,
+    "--testNamePattern=" .. testNamePattern,
+    "--runTestsByPath",
     pos.path,
   }
   return {
@@ -78,12 +88,98 @@ function adapter.build_spec(args)
   }
 end
 
+local function cleanAnsi(s)
+  return s
+      :gsub("\x1b%[%d+;%d+;%d+;%d+;%d+m", "")
+      :gsub("\x1b%[%d+;%d+;%d+;%d+m", "")
+      :gsub("\x1b%[%d+;%d+;%d+m", "")
+      :gsub("\x1b%[%d+;%d+m", "")
+      :gsub("\x1b%[%d+m", "")
+end
+
+local function findErrorLine(line, errStr)
+  local _, _, errLine = string.find(errStr, "(%d+)%:%d+")
+  if errLine then
+    return errLine - 1
+  end
+  return line
+end
+
 ---@async
 ---@param spec neotest.RunSpec
----@param _ neotest.StrategyResult
+---@param result neotest.StrategyResult
 ---@param tree neotest.Tree
 ---@return neotest.Result[]
-function adapter.results(spec, _, tree) end
+function adapter.results(spec, _, tree)
+  vim.pretty_print(spec)
+  local output_file = spec.context.results_path
+  local success, data = pcall(lib.files.read, output_file)
+  if not success then
+    vim.schedule(function() -- FIXME: Report global errors correctly
+      vim.notify "no file"
+    end)
+    return {}
+  end
+  local ok, parsed = pcall(vim.json.decode, data, { luanil = { object = true } })
+  if not ok then
+    vim.schedule(function() -- FIXME: Report global errors correctly
+      vim.notify("Failed to parse json: " .. parsed)
+    end)
+    return {}
+  end
+
+  local tests = {}
+
+  local testFn = parsed.testResults[1].name
+  for _, result in pairs(parsed.testResults[1].assertionResults) do
+    vim.pretty_print(result)
+    local status, name = result.status, result.title
+    if name == nil then
+      vim.schedule(function() -- FIXME: Report global errors correctly
+        vim.notify("Failed to get test result: " .. parsed)
+      end)
+      return {}
+    end
+    local keyid = testFn
+    for _, value in ipairs(result.ancestorTitles) do
+      keyid = keyid .. "::" .. '"' .. value .. '"'
+    end
+    keyid = keyid .. "::" .. '"' .. name .. '"'
+    tests[keyid] = {
+      status = status,
+      short = name .. ": " .. status,
+      output = output_file,
+      location = result.location,
+    }
+    if result.failureMessages then
+      local errors = {}
+      for i, failMessage in ipairs(result.failureMessages) do
+        local msg = cleanAnsi(failMessage)
+        errors[i] = {
+          line = findErrorLine(result.location.line - 1, msg),
+          message = msg,
+        }
+        tests[keyid].short = tests[keyid].short .. "\n" .. msg
+      end
+      tests[keyid].errors = errors
+    end
+  end
+
+  local results = {}
+  for _, value in tree:iter() do
+    local test_output = tests[value.id]
+    if test_output == nil then
+      if value.type ~= "file" or value.type ~= "namespace" then
+        vim.notify("unable to find test result: " .. value.id)
+        vim.pretty_print(value)
+        return results
+      end
+    end
+    results[value.id] = test_output
+  end
+  vim.pretty_print(results)
+  return results
+end
 
 setmetatable(adapter, {
   __call = function()
@@ -92,56 +188,3 @@ setmetatable(adapter, {
 })
 
 return adapter
--- TODO vim-test
--- if !exists('g:test#javascript#jest#file_pattern')
---   let g:test#javascript#jest#file_pattern = '\v(__tests__/.*|(spec|test))\.(js|jsx|coffee|ts|tsx)$'
--- endif
---
--- function! test#javascript#jest#test_file(file) abort
---   if a:file =~# g:test#javascript#jest#file_pattern
---       if exists('g:test#javascript#runner')
---           return g:test#javascript#runner ==# 'jest'
---       else
---         return test#javascript#has_package('jest')
---       endif
---   endif
--- endfunction
---
--- function! test#javascript#jest#build_position(type, position) abort
---   if a:type ==# 'nearest'
---     let name = s:nearest_test(a:position)
---     if !empty(name)
---       let name = '-t '.shellescape(name, 1)
---     endif
---     return ['--no-coverage', name, '--', a:position['file']]
---   elseif a:type ==# 'file'
---     return ['--no-coverage', '--', a:position['file']]
---   else
---     return []
---   endif
--- endfunction
---
--- let s:yarn_command = '\<yarn\>'
--- function! test#javascript#jest#build_args(args) abort
---   if exists('g:test#javascript#jest#executable')
---     \ && g:test#javascript#jest#executable =~# s:yarn_command
---     return filter(a:args, 'v:val != "--"')
---   else
---     return a:args
---   endif
--- endfunction
---
--- function! test#javascript#jest#executable() abort
---   if filereadable('node_modules/.bin/jest')
---     return 'node_modules/.bin/jest'
---   else
---     return 'jest'
---   endif
--- endfunction
---
--- function! s:nearest_test(position) abort
---   let name = test#base#nearest_test(a:position, g:test#javascript#patterns)
---   return (len(name['namespace']) ? '^' : '') .
---        \ test#base#escape_regex(join(name['namespace'] + name['test'])) .
---        \ (len(name['test']) ? '$' : '')
--- endfunction
