@@ -46,7 +46,7 @@ vim.api.nvim_exec(
         augroup auto_term
             autocmd!
             autocmd TermOpen * setlocal nonumber norelativenumber
-            autocmd TermOpen * startinsert
+            " autocmd TermOpen * startinsert
         augroup END
     ]],
   false
