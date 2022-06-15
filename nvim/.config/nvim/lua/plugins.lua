@@ -136,16 +136,16 @@ function M.setup()
       },
     }
     use {
-      "TimUntersberger/neogit",
-      cmd = "Neogit",
-      config = function()
-        require("config.neogit").setup()
-      end,
-    }
-    use {
       "akinsho/git-conflict.nvim",
       config = function()
-        require("git-conflict").setup()
+        require("git-conflict").setup {
+          default_mappings = true, -- disable buffer local mapping created by this plugin
+          disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+          highlights = { -- They must have background color, otherwise the default color will be used
+            incoming = "DiffText",
+            current = "DiffAdd",
+          },
+        }
       end,
     }
 
@@ -176,16 +176,6 @@ function M.setup()
         }
       end,
     }
-
-    -- terminal
-    -- use {
-    --   "akinsho/toggleterm.nvim",
-    --   keys = { [[<c-\>]] },
-    --   cmd = { "ToggleTerm", "TermExec" },
-    --   config = function()
-    --     require("config.toggleterm").setup()
-    --   end,
-    -- }
 
     --LSP
     use {
@@ -286,14 +276,6 @@ function M.setup()
     }
     use "nvim-treesitter/nvim-treesitter-context"
 
-    -- markdown
-    use {
-      "iamcco/markdown-preview.nvim",
-      opt = true,
-      ft = "markdown",
-      run = { "cd app && yarn install" },
-    }
-
     use {
       "ThePrimeagen/refactoring.nvim",
       requires = {
@@ -351,10 +333,11 @@ function M.setup()
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
         "rcarriga/neotest-vim-test",
+        "akinsho/neotest-go",
+        "haydenmeade/neotest-jest",
       },
     }
 
-    -- Stuff
     use {
       "folke/which-key.nvim",
       event = "VimEnter",
@@ -371,6 +354,13 @@ function M.setup()
         require("config.lualine").setup()
       end,
     }
+
+    use {
+      "luukvbaal/nnn.nvim",
+      config = function()
+        require("nnn").setup()
+      end,
+    }
     use {
       "kyazdani42/nvim-tree.lua",
       requires = {
@@ -378,6 +368,7 @@ function M.setup()
       },
       config = function()
         require("nvim-tree").setup {
+          disable_netrw = true,
           update_focused_file = {
             enable = true,
           },
@@ -386,23 +377,6 @@ function M.setup()
           },
         }
       end,
-    }
-
-    -- use {
-    --   "akinsho/nvim-bufferline.lua",
-    --   config = function()
-    --     require("config.bufferline").setup()
-    --   end,
-    --   event = "BufReadPre",
-    -- }
-
-    use {
-      "SmiteshP/nvim-gps",
-      as = "nvim-gps",
-      config = function()
-        require("nvim-gps").setup()
-      end,
-      after = "nvim-treesitter",
     }
 
     use {
@@ -418,13 +392,6 @@ function M.setup()
       keys = { "<C-u>", "<C-d>", "gg", "G" },
       config = function()
         require "config.scroll"
-      end,
-    }
-    use {
-      "edluffy/specs.nvim",
-      after = "neoscroll.nvim",
-      config = function()
-        require "config.specs"
       end,
     }
 
@@ -487,7 +454,7 @@ function M.setup()
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init { log = { level = "debug" }, max_jobs = 20 }
+  require("packer").init { max_jobs = 50 }
   require("packer").startup(plugins)
 end
 

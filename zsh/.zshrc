@@ -17,6 +17,7 @@ function precmd () {
 # Path changes
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH=$HOME/Library/Python/3.9/bin:$PATH
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"

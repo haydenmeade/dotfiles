@@ -12,10 +12,6 @@ function M.setup()
   if not ok then
     return
   end
-  local ok, gps = h.safe_require "nvim-gps"
-  if not ok then
-    return
-  end
 
   -- Color table for highlights
   local colors = {
@@ -100,11 +96,6 @@ function M.setup()
       color_error = colors.red,
       color_warn = colors.yellow,
       color_info = colors.cyan,
-    },
-
-    gps = {
-      gps.get_location,
-      cond = gps.is_available,
     },
 
     percent = {
@@ -224,7 +215,7 @@ function M.setup()
     sections = {
       lualine_a = { components.mode },
       lualine_b = { components.filename },
-      lualine_c = { components.gps },
+      lualine_c = {},
       lualine_x = { components.diagnostics, components.lsp },
       lualine_y = { components.diff },
       lualine_z = { components.location, components.scrollbar },

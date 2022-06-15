@@ -141,17 +141,13 @@ local mappings = {
   -- Testing
   t = {
     name = "Test",
-    n = { "<Cmd>w<CR><cmd>TestNearest<CR>", "Test nearest" },
-    N = { "<Cmd>w<CR><cmd>UltestNearest<CR>", "Test nearest" },
-    f = { "<Cmd>w<CR><cmd>TestFile<CR>", "Test file" },
-    F = { "<Cmd>w<CR><cmd>Ultest<CR>", "Test file" },
-    o = { "<Cmd>w<CR><cmd>UltestOutput<CR>", "Test output" },
-    l = { "<Cmd>w<CR><cmd>UltestLast<CR>", "Test last" },
+    n = { "<Cmd>w<CR><cmd>lua require('neotest').run.run()<CR>", "Test nearest" },
+    N = { "<Cmd>w<CR><cmd>TestNearest<CR>", "Test nearest" },
+    f = { "<Cmd>w<CR><cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Test file" },
+    F = { "<Cmd>w<CR><cmd>TestFile<CR>", "Test file" },
+    o = { "<cmd>lua require('neotest').output.open({ enter = true })<CR>", "Test output" },
     v = { "<Cmd>w<CR><cmd>TestVisit<CR>", "Test visit" },
-    d = { "<Cmd>w<CR><cmd>UltestDebug<CR>", "Test debug" },
-    g = { "<Cmd>w<CR><cmd>UltestDebugNearest<CR>", "Test debug nearest" },
-    t = { "<Cmd>w<CR><cmd>UltestSummary<CR>", "Test summary" },
-    s = { "<Cmd>w<CR><cmd>UltestStop<CR>", "Test stop" },
+    t = { "<cmd>lua require('neotest').summary.toggle()<CR>", "Test summary" },
     c = { "<cmd>Coverage<CR>", "Coverage" },
     y = { "<cmd>CoverageSummary<CR>", "Coverage Summary" },
   },
@@ -283,7 +279,7 @@ function M.setup()
         },
         spelling = { enabled = true, suggestions = 20 }, -- use which-key for spelling hints
       },
-      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^<cmd>", "^ " }, -- hide mapping boilerplate
+      hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
       show_help = true, -- show help message on the command line when the popup is visible
     },
   }
