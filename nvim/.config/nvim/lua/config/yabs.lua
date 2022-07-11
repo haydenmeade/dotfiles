@@ -1,12 +1,12 @@
 local M = {}
 
 function M.setup()
-  local ok, yabs = h.safe_require "yabs"
+  local ok, yabs = h.safe_require("yabs")
   if not ok then
     return
   end
 
-  yabs:setup {
+  yabs:setup({
     languages = {
       go = {
         default_task = "run",
@@ -21,7 +21,7 @@ function M.setup()
         tasks = { run = { command = "make", output = "terminal" } },
       },
     },
-  }
+  })
 end
 
 return M

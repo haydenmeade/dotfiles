@@ -1,5 +1,5 @@
 local M = {}
-local Log = require "core.log"
+local Log = require("core.log")
 
 ---Join path segments that were passed as input
 ---@return string
@@ -13,23 +13,23 @@ end
 ---@return string
 function _G.get_runtime_dir()
   -- when nvim is used directly
-  return vim.fn.stdpath "data"
+  return vim.fn.stdpath("data")
 end
 
 ---Get the full path to `$VIM_CONFIG_DIR`
 ---@return string
 function _G.get_config_dir()
-  return vim.fn.stdpath "config"
+  return vim.fn.stdpath("config")
 end
 
 ---Get the full path to `$VIM_CACHE_DIR`
 ---@return string
 function _G.get_cache_dir()
-  return vim.fn.stdpath "cache"
+  return vim.fn.stdpath("cache")
 end
 
 function M.get_os_command_output(cmd, cwd)
-  local Job = require "plenary.job"
+  local Job = require("plenary.job")
   if type(cmd) ~= "table" then
     Log:error("get_os_command_output", {
       msg = "cmd has to be a table",
@@ -39,25 +39,23 @@ function M.get_os_command_output(cmd, cwd)
   end
   local command = table.remove(cmd, 1)
   local stderr = {}
-  local stdout, ret = Job
-    :new({
-      command = command,
-      args = cmd,
-      cwd = cwd,
-      on_stderr = function(_, data)
-        table.insert(stderr, data)
-      end,
-    })
-    :sync()
+  local stdout, ret = Job:new({
+    command = command,
+    args = cmd,
+    cwd = cwd,
+    on_stderr = function(_, data)
+      table.insert(stderr, data)
+    end,
+  }):sync()
   return stdout, ret, stderr
 end
 
 _G.packer_snapshot = "packer_snapshot.json"
-_G.packer_snapshot_path = join_paths(vim.fn.stdpath "config", "lua")
+_G.packer_snapshot_path = join_paths(vim.fn.stdpath("config"), "lua")
 
 M.update_packer = function()
-  local packer = require "packer"
-  Log:debug "Updating plugins with packer"
+  local packer = require("packer")
+  Log:debug("Updating plugins with packer")
   packer.sync()
   -- local snap_full_path = join_paths(packer_snapshot_path, packer_snapshot)
   -- os.remove(snap_full_path)
@@ -124,7 +122,7 @@ function M.reset_cache()
   end
   local modules = {}
   for module, _ in pairs(package.loaded) do
-    if module:match "core" or module:match "lsp" then
+    if module:match("core") or module:match("lsp") then
       package.loaded[module] = nil
       table.insert(modules, module)
     end

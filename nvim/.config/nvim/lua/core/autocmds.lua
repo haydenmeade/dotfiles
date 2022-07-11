@@ -2,18 +2,18 @@ local M = {}
 local M = {}
 local M = {}
 
-local Log = require "core.log"
+local Log = require("core.log")
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Highlight on yank
 -- autocmd("TextYankPost", { callback = vim.highlight.on_yank })
-vim.cmd [[au TextYankPost * silent! lua vim.highlight.on_yank()]]
+vim.cmd([[au TextYankPost * silent! lua vim.highlight.on_yank()]])
 
 -- cursorline only in normal mode
 -- autocmd("InsertLeave,WinEnter", { command = "set cursorline" })
 -- autocmd("InsertEnter,WinLeave", { command = "set nocursorline" })
 
-vim.cmd [[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]]
+vim.cmd([[ command! BufferKill lua require('config.bufferline').buf_kill('bd') ]])
 
 -- don't auto comment new lines
 autocmd("BufEnter", { command = "set fo-=c fo-=r fo-=o" })
@@ -59,18 +59,18 @@ function M.configure_format_on_save()
   if format_on_save then
     vim.api.nvim_create_autocmd("BufWritePre", {
       callback = function()
-        vim.lsp.buf.format {
+        vim.lsp.buf.format({
           timeout_ms = 1000,
           filter = function(client)
             return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
           end,
-        }
+        })
       end,
       group = augid,
     })
-    Log:debug "enabled format-on-save"
+    Log:debug("enabled format-on-save")
   else
-    Log:debug "disabled format-on-save"
+    Log:debug("disabled format-on-save")
   end
 end
 

@@ -1,6 +1,6 @@
 local M = {}
-local Log = require "core.log"
-local config = require "lsp.config"
+local Log = require("core.log")
+local config = require("lsp.config")
 
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -40,10 +40,10 @@ function M.common_on_exit(_, _) end
 function M.common_on_init(_, _) end
 
 function M.common_on_attach(_, bufnr)
-  require("lsp_signature").on_attach {
+  require("lsp_signature").on_attach({
     bind = true,
     handler_opts = { border = "single" },
-  }
+  })
 
   require("config.whichkey").register_lsp(bufnr)
 end
@@ -73,7 +73,7 @@ local function resolve_config(name)
 end
 
 function M.setup()
-  local ok, lspconfig = h.safe_require "lspconfig"
+  local ok, lspconfig = h.safe_require("lspconfig")
   if not ok then
     return
   end
@@ -90,8 +90,8 @@ function M.setup()
 
   require("core.autocmds").configure_format_on_save()
 
-  local lspinstaller = require "nvim-lsp-installer"
-  lspinstaller.setup {
+  local lspinstaller = require("nvim-lsp-installer")
+  lspinstaller.setup({
     ensure_installed = {
       "gopls",
       "golangci_lint_ls",
@@ -108,18 +108,18 @@ function M.setup()
     -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
     -- debugging issues with server installations.
     log_level = vim.log.levels.INFO,
-  }
+  })
 
   require("lsp.tsserver").config()
-  lspconfig.eslint.setup(resolve_config "eslint")
-  lspconfig.gopls.setup(resolve_config "gopls")
+  lspconfig.eslint.setup(resolve_config("eslint"))
+  lspconfig.gopls.setup(resolve_config("gopls"))
   -- lspconfig.golangci_lint_ls.setup(resolve_config "golangci_lint_ls")
-  lspconfig.jsonls.setup(resolve_config "jsonls")
-  lspconfig.solargraph.setup(resolve_config "solargraph")
-  lspconfig.sumneko_lua.setup(resolve_config "sumneko_lua")
-  lspconfig.yamlls.setup(resolve_config "yamlls")
-  lspconfig.bashls.setup(resolve_config "bashls")
-  lspconfig.ccls.setup(resolve_config "ccls")
+  lspconfig.jsonls.setup(resolve_config("jsonls"))
+  lspconfig.solargraph.setup(resolve_config("solargraph"))
+  lspconfig.sumneko_lua.setup(resolve_config("sumneko_lua"))
+  lspconfig.yamlls.setup(resolve_config("yamlls"))
+  lspconfig.bashls.setup(resolve_config("bashls"))
+  lspconfig.ccls.setup(resolve_config("ccls"))
 end
 
 return M

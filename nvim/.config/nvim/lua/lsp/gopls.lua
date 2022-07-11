@@ -5,7 +5,7 @@ function M.config()
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.go" },
     callback = function()
-      vim.cmd "GoImport"
+      vim.cmd("GoImport")
     end,
   })
   return {

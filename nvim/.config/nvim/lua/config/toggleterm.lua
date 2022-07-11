@@ -1,11 +1,11 @@
 local M = {}
 
 function M.setup()
-  local ok, term = h.safe_require "toggleterm"
+  local ok, term = h.safe_require("toggleterm")
   if not ok then
     return
   end
-  term.setup {
+  term.setup({
     size = 20,
     hide_numbers = true,
     -- open_mapping = [[<c-\>]],
@@ -16,15 +16,15 @@ function M.setup()
     start_in_insert = true,
     persist_size = true,
     direction = "horizontal", --'vertical' | 'horizontal' | 'window' | 'float'
-  }
+  })
 end
 
 local terminal = require("toggleterm.terminal").Terminal
-M.lazygit_term = terminal:new {
+M.lazygit_term = terminal:new({
   cmd = "lazygit",
   direction = "tab",
   hidden = true,
-}
+})
 
 function M.lazygit_toggle()
   M.lazygit_term:toggle()

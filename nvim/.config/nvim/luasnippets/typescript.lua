@@ -1,15 +1,15 @@
-local ls = require "luasnip"
+local ls = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
-local util = require "config.luasnip.util"
+local util = require("config.luasnip.util")
 
 return {
-  ls.s(-- logger.log {{{
+  ls.s( -- logger.log {{{
     { trig = "ll", dsce = "logger.log something" },
     fmt([[ logger.{}({}) ]], {
       ls.c(1, {
-        ls.t "info",
-        ls.t "warn",
-        ls.t "error",
+        ls.t("info"),
+        ls.t("warn"),
+        ls.t("error"),
       }),
       ls.i(0),
     })

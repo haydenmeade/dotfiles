@@ -1,11 +1,11 @@
 local M = {}
 
 function M.setup()
-  local ok, octo = h.safe_require "octo"
+  local ok, octo = h.safe_require("octo")
   if not ok then
     return
   end
-  octo.setup {
+  octo.setup({
     pull_request = {
       checkout_pr = "<space>po", -- checkout PR
       merge_pr = "<space>pm", -- merge commit PR
@@ -89,7 +89,7 @@ function M.setup()
       close_review_tab = "<C-c>", -- close review tab
       toggle_viewed = "<leader><space>", -- toggle viewer viewed state
     },
-  }
+  })
 end
 
 return M

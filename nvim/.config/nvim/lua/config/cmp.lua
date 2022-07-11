@@ -1,19 +1,19 @@
 local M = {}
 
 function M.setup()
-  local ok, cmp = h.safe_require "cmp"
+  local ok, cmp = h.safe_require("cmp")
   if not ok then
     return
   end
-  local ok, ls = h.safe_require "luasnip"
+  local ok, ls = h.safe_require("luasnip")
   if not ok then
     return
   end
-  local compare = require "cmp.config.compare"
+  local compare = require("cmp.config.compare")
 
   local function has_words_before()
     local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
   end
 
   local press = function(key)
@@ -24,9 +24,9 @@ function M.setup()
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
 
-  cmp.setup {
+  cmp.setup({
     formatting = {
-      format = require("lspkind").cmp_format {
+      format = require("lspkind").cmp_format({
         with_text = true,
         menu = {
           nvim_lsp = "[LSP]",
@@ -38,7 +38,7 @@ function M.setup()
           path = "[Path]",
           emoji = "[Emoji]",
         },
-      },
+      }),
     },
     sorting = {
       priority_weight = 1.0,
@@ -51,19 +51,19 @@ function M.setup()
       },
     },
     mapping = {
-      ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-      ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
+      ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+      ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
       ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping.close(),
-      ["<C-y>"] = cmp.mapping.confirm {
+      ["<C-y>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
-      ["<CR>"] = cmp.mapping.confirm {
+      }),
+      ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
+      }),
       ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if ls.expand_or_locally_jumpable() then
@@ -111,11 +111,11 @@ function M.setup()
     experimental = {
       ghost_text = true,
     },
-  }
+  })
 
   -- If you want insert `(` after select function or method item
-  local cmp_autopairs = require "nvim-autopairs.completion.cmp"
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done { map_char = { tex = "" } })
+  local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
 
   -- Use cmdline & path source for ':'.
   cmp.setup.cmdline(":", {
@@ -123,14 +123,14 @@ function M.setup()
       ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping.close(),
-      ["<C-y>"] = cmp.mapping.confirm {
+      ["<C-y>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
-      ["<C-Space>"] = cmp.mapping.confirm {
+      }),
+      ["<C-Space>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
+      }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()
@@ -161,14 +161,14 @@ function M.setup()
       ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
       ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping.close(),
-      ["<C-y>"] = cmp.mapping.confirm {
+      ["<C-y>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
-      ["<C-Space>"] = cmp.mapping.confirm {
+      }),
+      ["<C-Space>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
-      },
+      }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if cmp.visible() then
           cmp.select_next_item()

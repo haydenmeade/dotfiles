@@ -1,7 +1,7 @@
 local M = {}
 
 function M.coverage()
-  local ok, coverage = h.safe_require "coverage"
+  local ok, coverage = h.safe_require("coverage")
   if not ok then
     return
   end
@@ -11,7 +11,7 @@ function M.coverage()
     red = "#ec5f67",
   }
 
-  coverage.setup {
+  coverage.setup({
     commands = true,
     lang = {
       typescript = {
@@ -28,7 +28,7 @@ function M.coverage()
       covered = { fg = colors.green },
       uncovered = { fg = colors.red },
     },
-  }
+  })
 end
 
 function M.setup()
@@ -47,18 +47,18 @@ function M.setup()
     false
   )
 
-  require("neotest").setup {
+  require("neotest").setup({
     adapters = {
-      require "neotest-jest" {
+      require("neotest-jest")({
         -- jestConfigFile = function(p)
         --   return ""
         -- end,
-      },
-      require "neotest-go",
-      require "neotest-plenary",
+      }),
+      require("neotest-go"),
+      require("neotest-plenary"),
       -- require "neotest-vim-test" {},
     },
-  }
+  })
 end
 
 return M

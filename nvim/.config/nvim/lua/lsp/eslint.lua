@@ -6,7 +6,7 @@ function M.config()
   vim.api.nvim_create_autocmd("BufWritePre", {
     pattern = { "*.ts" },
     callback = function()
-      vim.cmd "EslintFixAll"
+      vim.cmd("EslintFixAll")
     end,
   })
   return {

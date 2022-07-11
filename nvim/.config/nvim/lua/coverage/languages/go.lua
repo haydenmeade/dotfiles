@@ -1,8 +1,8 @@
 local M = {}
 
-local config = require "coverage.config"
-local local_util = require "coverage.local_util"
-local python = require "coverage.languages.python"
+local config = require("coverage.config")
+local local_util = require("coverage.local_util")
+local python = require("coverage.languages.python")
 
 --- Loads a coverage report.
 -- This method should perform whatever steps are necessary to generate a coverage report.

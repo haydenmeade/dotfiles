@@ -244,7 +244,7 @@ function M.register_dap()
 end
 
 function M.register_lsp(client)
-  local wk = require "which-key"
+  local wk = require("which-key")
   wk.register(lsp_mappings, opts)
   wk.register(M.lsp_buffer_keymappings, {
     mode = "n",
@@ -256,11 +256,11 @@ function M.register_lsp(client)
 end
 
 function M.setup()
-  local ok, wk = h.safe_require "which-key"
+  local ok, wk = h.safe_require("which-key")
   if not ok then
     return
   end
-  wk.setup {
+  wk.setup({
     setup = {
       plugins = {
         marks = true, -- shows a list of your marks on ' and `
@@ -281,7 +281,7 @@ function M.setup()
       hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
       show_help = true, -- show help message on the command line when the popup is visible
     },
-  }
+  })
   wk.register(mappings, opts)
   wk.register(no_leader_mappings, no_leader_opts)
 end

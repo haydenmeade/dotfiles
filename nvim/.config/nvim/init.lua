@@ -15,6 +15,6 @@ for _, module in ipairs(core_modules) do
   end
 end
 
-require "impatient"
+require("impatient")
 
 require("plugins").setup()

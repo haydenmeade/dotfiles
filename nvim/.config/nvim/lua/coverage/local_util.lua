@@ -1,8 +1,8 @@
 local M = {}
-local Path = require "plenary.path"
-local config = require "coverage.config"
-local signs = require "coverage.signs"
-local util = require "coverage.util"
+local Path = require("plenary.path")
+local config = require("coverage.config")
+local signs = require("coverage.signs")
+local util = require("coverage.util")
 
 --- Loads a coverage report.
 -- This method should perform whatever steps are necessary to generate a coverage report.
@@ -37,7 +37,7 @@ M.lcov_to_table = function(path)
   local cmeta = nil -- Current metadata
 
   for _, line in ipairs(path:readlines()) do
-    if line:match "end_of_record" then
+    if line:match("end_of_record") then
       -- Commit the current file
       cmeta.summary["excluded_lines"] = 0
       cmeta.summary["percent_covered"] = cmeta.summary.covered_lines / cmeta.summary.num_statements * 100
@@ -45,13 +45,13 @@ M.lcov_to_table = function(path)
       -- Reset variables
       cfile = nil
       cmeta = nil
-    elseif line:match "SF:.+" then
+    elseif line:match("SF:.+") then
       -- SF:<absolute path to the source file>
       cfile = line:gsub("SF:", "")
       cmeta = new_file_meta()
-    elseif line:match "DA:%d+,%d+,?.*" then
+    elseif line:match("DA:%d+,%d+,?.*") then
       -- DA:<line number>,<execution count>[,<checksum>]
-      for ls, ns in line:gmatch "DA:(%d+),(%d+),?.*" do
+      for ls, ns in line:gmatch("DA:(%d+),(%d+),?.*") do
         local l, n = tonumber(ls), tonumber(ns)
         if n > 0 then
           table.insert(cmeta.executed_lines, l)
@@ -59,11 +59,11 @@ M.lcov_to_table = function(path)
           table.insert(cmeta.missing_lines, l)
         end
       end
-    elseif line:match "LH:%d+" then
+    elseif line:match("LH:%d+") then
       -- LH:<number of lines with a non-zero execution count>
       local lh = tonumber((line:gsub("LH:", "")))
       cmeta.summary["covered_lines"] = lh
-    elseif line:match "LF:%d+" then
+    elseif line:match("LF:%d+") then
       -- LF:<number of instrumented lines>
       local lf = tonumber((line:gsub("LF:", "")))
       cmeta.summary["num_statements"] = lf

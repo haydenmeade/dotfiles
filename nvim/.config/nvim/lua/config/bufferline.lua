@@ -18,11 +18,11 @@ local function diagnostics_indicator(total_count, _, diagnostics, _)
 end
 
 M.setup = function()
-  local ok, bufferline = h.safe_require "bufferline"
+  local ok, bufferline = h.safe_require("bufferline")
   if not ok then
     return
   end
-  bufferline.setup {
+  bufferline.setup({
     active = true,
     on_config_done = nil,
     highlights = {
@@ -54,7 +54,7 @@ M.setup = function()
       --- some limitations that will *NOT* be fixed.
       name_formatter = function(buf) -- buf contains a "name", "path" and "bufnr"
         -- remove extension from markdown files for example
-        if buf.name:match "%.md" then
+        if buf.name:match("%.md") then
           return vim.fn.fnamemodify(buf.name, ":t:r")
         end
       end,
@@ -102,7 +102,7 @@ M.setup = function()
       always_show_bufferline = false,
       sort_by = "id",
     },
-  }
+  })
 end
 
 -- Common kill function for bdelete and bwipeout
@@ -170,7 +170,7 @@ end
 
 function M.close_others()
   local bufnr = vim.api.nvim_get_current_buf()
-  local last_buffer = vim.fn.bufnr "$"
+  local last_buffer = vim.fn.bufnr("$")
   local deleted = 0
   local n = 1
   while n <= last_buffer do
@@ -190,7 +190,7 @@ function M.close_others()
     n = n + 1
   end
 
-  vim.cmd [[silent only]]
+  vim.cmd([[silent only]])
 end
 
 return M

@@ -2,7 +2,7 @@ local M = {}
 
 function M.RenameWithQuickfix()
   local position_params = vim.lsp.util.make_position_params()
-  local new_name = vim.fn.input "New Name > "
+  local new_name = vim.fn.input("New Name > ")
 
   position_params.newName = new_name
 
@@ -34,7 +34,7 @@ function M.RenameWithQuickfix()
 
     vim.fn.setqflist(entries, "r")
     if next(entries) ~= nil then
-      require("trouble").open "quickfix"
+      require("trouble").open("quickfix")
     end
   end)
 end

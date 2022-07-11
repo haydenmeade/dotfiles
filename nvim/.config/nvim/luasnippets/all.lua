@@ -1,5 +1,5 @@
-local ls = require "luasnip"
-local util = require "config.luasnip.util"
+local ls = require("luasnip")
+local util = require("config.luasnip.util")
 local partial = require("luasnip.extras").partial
 
 return {

@@ -3,7 +3,7 @@ local M = {}
 function M.setup()
   local status_ok, null_ls = pcall(require, "null-ls")
   if not status_ok then
-    require "notify" "Missing null-ls dependency"
+    require("notify")("Missing null-ls dependency")
     return
   end
 
@@ -24,7 +24,7 @@ function M.setup()
 
   for _, source in ipairs(sources) do
     if not exist(source.name) then
-      require "notify" ("unable to find shell tool - " .. source.name)
+      require("notify")("unable to find shell tool - " .. source.name)
     end
   end
 

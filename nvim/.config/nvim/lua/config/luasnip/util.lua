@@ -1,10 +1,10 @@
-local ls = require "luasnip"
+local ls = require("luasnip")
 local fmt = require("luasnip.extras.fmt").fmt
-local ts_utils = require "nvim-treesitter.ts_utils"
-local ts_locals = require "nvim-treesitter.locals"
+local ts_utils = require("nvim-treesitter.ts_utils")
+local ts_locals = require("nvim-treesitter.locals")
 local rep = require("luasnip.extras").rep
-local ai = require "luasnip.nodes.absolute_indexer"
-local Log = require "core.log"
+local ai = require("luasnip.nodes.absolute_indexer")
+local Log = require("core.log")
 
 local M = {}
 
@@ -46,29 +46,29 @@ local function transform(text, info) --{{{
   end
 
   -- cutting the name if exists.
-  if text:find [[^[^\[]*string$]] then
+  if text:find([[^[^\[]*string$]]) then
     text = "string"
-  elseif text:find "^[^%[]*map%[[^%]]+" then
+  elseif text:find("^[^%[]*map%[[^%]]+") then
     text = "map"
-  elseif text:find "%[%]" then
+  elseif text:find("%[%]") then
     text = "slice"
-  elseif text:find [[ ?chan +[%a%d]+]] then
-    return ls.t "nil"
+  elseif text:find([[ ?chan +[%a%d]+]]) then
+    return ls.t("nil")
   end
 
   -- separating the type from the name if exists.
-  local type = text:match [[^[%a%d]+ ([%a%d]+)$]]
+  local type = text:match([[^[%a%d]+ ([%a%d]+)$]])
   if type then
     text = type
   end
 
   if text == "int" or text == "int64" or text == "int32" then
-    return new_sn "0"
+    return new_sn("0")
   elseif text == "float32" or text == "float64" then
-    return new_sn "0"
+    return new_sn("0")
   elseif text == "error" then
     if not info then
-      return ls.t "err"
+      return ls.t("err")
     end
 
     info.index = info.index + 1
@@ -79,12 +79,12 @@ local function transform(text, info) --{{{
   elseif text == "string" then
     return string_sn('"{}"', "")
   elseif text == "map" or text == "slice" then
-    return ls.t "nil"
+    return ls.t("nil")
   elseif string.find(text, "*", 1, true) then
-    return new_sn "nil"
+    return new_sn("nil")
   end
 
-  text = text:match "[^ ]+$"
+  text = text:match("[^ ]+$")
   if text == "context.Context" then
     text = "context.Background()"
   else
@@ -104,7 +104,7 @@ local handlers = { --{{{
     for idx = 0, count - 1 do
       table.insert(result, transform(get_node_text(node:named_child(idx), 0), info))
       if idx ~= count - 1 then
-        table.insert(result, ls.t { ", " })
+        table.insert(result, ls.t({ ", " }))
       end
     end
 
@@ -149,7 +149,7 @@ local function return_value_nodes(info) --{{{
   end
 
   if not function_node then
-    Log:debug "No function node found"
+    Log:debug("No function node found")
     return
   end
 
@@ -166,7 +166,7 @@ M.make_return_nodes = function(args) --{{{
   local info = { index = 0, err_name = args[1][1] }
   local return_nodes = return_value_nodes(info)
   if return_nodes == nil then
-    Log:debug "Could not find node, returning err"
+    Log:debug("Could not find node, returning err")
     return_nodes = "err"
   end
   return ls.sn(nil, return_nodes)
@@ -220,7 +220,7 @@ end --}}}
 ---Returns true if the cursor in a test file.
 -- @return boolean
 function M.is_in_test_file() --{{{
-  local filename = vim.fn.expand "%:p"
+  local filename = vim.fn.expand("%:p")
   return vim.endswith(filename, "_test.go")
 end --}}}
 
@@ -284,7 +284,7 @@ end --}}}
 M.mirror_t_run_funcs = function(args) --{{{
   local strs = {}
   for _, v in ipairs(args[1]) do
-    local name = v:match '^%s*t%.Run%s*%(%s*".*", (.*)%)'
+    local name = v:match('^%s*t%.Run%s*%(%s*".*", (.*)%)')
     if name then
       local node = string.format("func %s(t *testing.T) {{\n\tt.Parallel()\n}}\n\n", name)
       table.insert(strs, node)
@@ -292,7 +292,7 @@ M.mirror_t_run_funcs = function(args) --{{{
   end
   local str = table.concat(strs, "")
   if #str == 0 then
-    return ls.t ""
+    return ls.t("")
   end
   return ls.sn(nil, fmt(str, {}))
 end --}}}

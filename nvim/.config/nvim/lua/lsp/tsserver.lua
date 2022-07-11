@@ -6,7 +6,7 @@ function M.config()
     pattern = { "*.ts" },
     callback = function()
       -- local typescript = require "typescript"
-      vim.cmd "TypescriptRemoveUnused"
+      vim.cmd("TypescriptRemoveUnused")
       -- vim.cmd "TypescriptAddMissingImports"
       -- vim.cmd "TypescriptOrganizeImports"
       -- vim.cmd "TypescriptFixAll"
@@ -21,7 +21,7 @@ function M.config()
   capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
 
   return {
-    require("typescript").setup {
+    require("typescript").setup({
       disable_commands = false, -- prevent the plugin from creating Vim commands
       disable_formatting = true, -- disable tsserver's formatting capabilities
       debug = false, -- enable debug logging for commands
@@ -32,7 +32,7 @@ function M.config()
         on_attach = require("lsp").common_on_attach,
         flags = { debounce_text_changes = 150 },
       },
-    },
+    }),
   }
 end
 

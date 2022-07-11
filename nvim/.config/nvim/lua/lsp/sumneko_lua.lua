@@ -1,5 +1,5 @@
 local M = {}
-local Log = require "core.log"
+local Log = require("core.log")
 
 function M.luaconfig()
   return {
@@ -12,8 +12,8 @@ function M.luaconfig()
         },
         workspace = {
           library = {
-            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-            [vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
           },
           maxPreload = 100000,
           preloadFileSize = 10000,
@@ -26,7 +26,7 @@ end
 function M.config()
   local lua_dev_loaded, lua_dev = pcall(require, "lua-dev")
   if not lua_dev_loaded then
-    Log:debug "Lua-dev not loaded"
+    Log:debug("Lua-dev not loaded")
     return {}
   end
 

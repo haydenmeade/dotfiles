@@ -52,7 +52,7 @@ if has("win64") || has("win32")
   set shellcmdflag=-NoLogo\ -NoProfile\ -ExecutionPolicy\ RemoteSigned\ -Command
   set shellredir=\|\ Out-File\ -Encoding\ UTF8
 endif
-]] ,
+]],
   true
 )
 
@@ -64,7 +64,7 @@ g.loaded_perl_provider = 0
 
 opt.sessionoptions = "buffers,curdir,folds,help,winsize,winpos,terminal"
 opt.lazyredraw = true --When running macros and regexes on a large file, lazy redraw tells neovim/vim not to draw the screen, which greatly speeds it up, upto 6-7x faster
-opt.shortmess:append "sI" -- disable nvim intro
+opt.shortmess:append("sI") -- disable nvim intro
 opt.completeopt = {
   "menu",
   "menuone",

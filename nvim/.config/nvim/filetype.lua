@@ -1,4 +1,4 @@
-vim.filetype.add {
+vim.filetype.add({
   filename = {
     ["~/dotfiles/zsh/.zshrc"] = "sh",
     ["~/dotfiles/yabai/**"] = "sh",
@@ -7,4 +7,4 @@ vim.filetype.add {
     [".envrc"] = "sh",
     envrc = "sh",
   },
-}
+})

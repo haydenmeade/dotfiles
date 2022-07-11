@@ -1,14 +1,14 @@
 local M = {}
 
 function M.setup()
-  local ok, telescope = h.safe_require "telescope"
+  local ok, telescope = h.safe_require("telescope")
   if not ok then
     return
   end
-  local builtin = require "telescope.builtin"
-  local utils = require "telescope.utils"
-  local actions = require "telescope.actions"
-  local previewers = require "telescope.previewers"
+  local builtin = require("telescope.builtin")
+  local utils = require("telescope.utils")
+  local actions = require("telescope.actions")
+  local previewers = require("telescope.previewers")
 
   local largeFilesIgnoringPreviewer = function(filepath, bufnr, opts)
     opts = opts or {}
@@ -28,10 +28,10 @@ function M.setup()
 
   local function openqf(arg)
     actions.send_to_qflist(arg)
-    require("trouble").open "quickfix"
+    require("trouble").open("quickfix")
   end
 
-  telescope.setup {
+  telescope.setup({
     extensions = {
       fzf = {
         override_generic_sorter = false,
@@ -66,35 +66,35 @@ function M.setup()
         },
       },
     },
-  }
+  })
 
-  telescope.load_extension "session-lens"
-  telescope.load_extension "fzf"
-  telescope.load_extension "luasnip"
-  telescope.load_extension "repo"
-  telescope.load_extension "file_browser"
-  telescope.load_extension "file_create"
-  telescope.load_extension "ui-select"
+  telescope.load_extension("session-lens")
+  telescope.load_extension("fzf")
+  telescope.load_extension("luasnip")
+  telescope.load_extension("repo")
+  telescope.load_extension("file_browser")
+  telescope.load_extension("file_create")
+  telescope.load_extension("ui-select")
 
   M.search_dotfiles = function()
-    builtin.git_files {
+    builtin.git_files({
       prompt_title = "< Nvim Config >",
       cwd = "$HOME/dotfiles/",
       use_git_root = false,
-    }
+    })
   end
 
   M.search_gopath = function()
-    builtin.find_files {
+    builtin.find_files({
       prompt_title = "< Go projects >",
       cwd = "$GOPATH/src",
-    }
+    })
   end
 
   -- Smartly opens either git_files or find_files, depending on whether the working directory is
   -- contained in a Git repo.
   function M.find_project_files()
-    local _, ret, _ = utils.get_os_command_output { "git", "rev-parse", "--is-inside-work-tree" }
+    local _, ret, _ = utils.get_os_command_output({ "git", "rev-parse", "--is-inside-work-tree" })
     local opts = {
       sort_last_used = true,
     }
@@ -106,7 +106,7 @@ function M.setup()
   end
 
   local live_grep_in_glob = function(glob_pattern)
-    require("telescope.builtin").live_grep {
+    require("telescope.builtin").live_grep({
       vimgrep_arguments = {
         "rg",
         "--color=never",
@@ -118,7 +118,7 @@ function M.setup()
         "--hidden",
         "--glob=" .. (glob_pattern or ""),
       },
-    }
+    })
   end
 
   M.live_grep_in_glob = function()
@@ -126,13 +126,13 @@ function M.setup()
   end
 
   M.git_branches = function()
-    builtin.git_branches {
+    builtin.git_branches({
       attach_mappings = function(prompt_bufnr, map)
         map("i", "<c-d>", actions.git_delete_branch)
         map("n", "<c-d>", actions.git_delete_branch)
         return true
       end,
-    }
+    })
   end
 end
 

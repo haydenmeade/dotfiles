@@ -1,12 +1,12 @@
 local M = {}
 
 function M.setup()
-  local ok, _ = h.safe_require "nvim-treesitter"
+  local ok, _ = h.safe_require("nvim-treesitter")
   if not ok then
     return
   end
 
-  require("nvim-treesitter.configs").setup {
+  require("nvim-treesitter.configs").setup({
     ensure_installed = "all",
     -- List of parsers to ignore installing (for "all")
     ignore_install = { "php", "phpdoc" },
@@ -75,11 +75,11 @@ function M.setup()
     },
     context_commentstring = { enable = true, enable_autocmd = false },
     matchup = { enable = true },
-  }
-  require("treesitter-context").setup {
+  })
+  require("treesitter-context").setup({
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)
     max_lines = 3, -- How many lines the window should span. Values <= 0 mean no limit.
-  }
+  })
 end
 
 return M

@@ -14,7 +14,7 @@ M.toggle_term = function()
 end
 
 function M.setup()
-  local ok, term = h.safe_require "tmux"
+  local ok, term = h.safe_require("tmux")
   if not ok then
     return
   end
@@ -23,7 +23,7 @@ function M.setup()
   vim.g.VimuxHeight = "40"
   -- vim.g.VimuxRunnerIndex = "1"
 
-  term.setup {
+  term.setup({
     -- overwrite default configuration
     -- here, e.g. to enable default bindings
     copy_sync = {
@@ -77,7 +77,7 @@ function M.setup()
       -- sets resize steps for y axis
       resize_step_y = 5,
     },
-  }
+  })
 end
 
 return M

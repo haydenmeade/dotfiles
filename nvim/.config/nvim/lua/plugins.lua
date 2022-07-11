@@ -4,17 +4,17 @@ local packer_bootstrap = false
 
 local function packer_init()
   local fn = vim.fn
-  local install_path = fn.stdpath "data" .. "/site/pack/packer/start/packer.nvim"
+  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
   if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system {
+    packer_bootstrap = fn.system({
       "git",
       "clone",
       "--depth",
       "1",
       "https://github.com/wbthomason/packer.nvim",
       install_path,
-    }
-    vim.cmd [[packadd packer.nvim]]
+    })
+    vim.cmd([[packadd packer.nvim]])
   end
 end
 
@@ -22,55 +22,55 @@ packer_init()
 
 function M.setup()
   local function plugins(use)
-    use "lewis6991/impatient.nvim"
+    use("lewis6991/impatient.nvim")
 
-    use "nvim-lua/plenary.nvim"
-    use "wbthomason/packer.nvim"
+    use("nvim-lua/plenary.nvim")
+    use("wbthomason/packer.nvim")
 
-    use { "antoinemadec/FixCursorHold.nvim" } -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+    use({ "antoinemadec/FixCursorHold.nvim" }) -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
 
     -- notify override
     -- use "rcarriga/nvim-notify"
 
     -- Development
-    use "tpope/vim-repeat"
-    use { "tpope/vim-surround", event = "BufRead" }
-    use { "tpope/vim-sleuth" }
-    use "tpope/vim-abolish"
-    use {
+    use("tpope/vim-repeat")
+    use({ "tpope/vim-surround", event = "BufRead" })
+    use({ "tpope/vim-sleuth" })
+    use("tpope/vim-abolish")
+    use({
       "smjonas/inc-rename.nvim",
       config = function()
         require("inc_rename").setup()
       end,
-    }
+    })
 
-    use {
+    use({
       "numToStr/Comment.nvim",
       event = "VimEnter",
       config = function()
         require("config.comment").setup()
       end,
-    }
-    use {
+    })
+    use({
       "folke/trouble.nvim",
       event = "VimEnter",
       cmd = { "TroubleToggle", "Trouble" },
       config = function()
-        require("trouble").setup { auto_open = false }
+        require("trouble").setup({ auto_open = false })
       end,
-    }
-    use {
+    })
+    use({
       "ThePrimeagen/harpoon",
       requires = { "nvim-lua/plenary.nvim" },
-    }
+    })
 
     -- Go development
     -- use "fatih/vim-go"
     -- use { "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" }
-    use {
+    use({
       "ray-x/go.nvim",
       config = function()
-        require("go").setup {
+        require("go").setup({
           test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
           run_in_floaterm = false, -- set to true to run in float window.
           --float term recommand if you use richgo/ginkgo with terminal color
@@ -83,14 +83,14 @@ function M.setup()
           lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
           lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
           gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
-        }
+        })
       end,
-    }
+    })
     -- Lua development
-    use {
+    use({
       "folke/lua-dev.nvim",
       config = function() end,
-    }
+    })
 
     -- Debug adapter protocol
     -- use "mfussenegger/nvim-dap"
@@ -98,61 +98,61 @@ function M.setup()
     -- use "theHamsta/nvim-dap-virtual-text"
     -- use "nvim-telescope/telescope-dap.nvim"
 
-    use {
+    use({
       "pianocomposer321/yabs.nvim", -- Build and run your code
       module = "yabs",
       config = function()
         require("config.yabs").setup()
       end,
-    }
+    })
 
     -- Jumps
     -- Maybe use this another time
     -- use "ggandor/lightspeed.nvim"
 
     --Splits
-    use "mrjones2014/smart-splits.nvim"
+    use("mrjones2014/smart-splits.nvim")
 
     -- kitty
-    use {
+    use({
       "knubie/vim-kitty-navigator",
       config = function()
         require("config.kitty").setup()
       end,
       run = { "cp ./*.py ~/.config/kitty/" },
-    }
+    })
 
     -- Git
-    use {
+    use({
       "lewis6991/gitsigns.nvim",
       event = "BufReadPre",
       requires = { "nvim-lua/plenary.nvim" },
       config = function()
         require("gitsigns").setup()
       end,
-    }
-    use {
+    })
+    use({
       "sindrets/diffview.nvim",
       requires = {
         "kyazdani42/nvim-web-devicons",
         "nvim-lua/plenary.nvim",
       },
-    }
-    use {
+    })
+    use({
       "akinsho/git-conflict.nvim",
       config = function()
-        require("git-conflict").setup {
+        require("git-conflict").setup({
           default_mappings = true, -- disable buffer local mapping created by this plugin
           disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
           highlights = { -- They must have background color, otherwise the default color will be used
             incoming = "DiffText",
             current = "DiffAdd",
           },
-        }
+        })
       end,
-    }
+    })
 
-    use {
+    use({
       "haydenmeade/octo.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
@@ -162,65 +162,65 @@ function M.setup()
       config = function()
         require("config.octo").setup()
       end,
-    }
+    })
 
     -- Logging
-    use { "Tastyep/structlog.nvim" }
+    use({ "Tastyep/structlog.nvim" })
 
     -- Sessions
-    use {
+    use({
       "rmagatti/session-lens",
       requires = { "rmagatti/auto-session" },
       config = function()
         require("config.auto-session").setup()
-        require("session-lens").setup {
+        require("session-lens").setup({
           path_display = { "shorten" },
           previewer = true,
-        }
+        })
       end,
-    }
+    })
 
     --LSP
-    use {
+    use({
       "j-hui/fidget.nvim", -- loading progress
       event = "BufReadPre",
       config = function()
-        require("fidget").setup {}
+        require("fidget").setup({})
       end,
-    }
-    use "williamboman/nvim-lsp-installer"
-    use "jose-elias-alvarez/typescript.nvim"
-    use "ray-x/lsp_signature.nvim"
-    use "b0o/schemastore.nvim"
-    use "jose-elias-alvarez/null-ls.nvim"
-    use {
+    })
+    use("williamboman/nvim-lsp-installer")
+    use("jose-elias-alvarez/typescript.nvim")
+    use("ray-x/lsp_signature.nvim")
+    use("b0o/schemastore.nvim")
+    use("jose-elias-alvarez/null-ls.nvim")
+    use({
       "onsails/lspkind-nvim",
       config = function()
         require("lspkind").init()
       end,
-    }
-    use {
+    })
+    use({
       "neovim/nvim-lspconfig",
       config = function()
         require("lsp").setup()
       end,
-    }
+    })
 
-    use {
+    use({
       "rafamadriz/friendly-snippets",
-    }
+    })
 
-    use {
+    use({
       "L3MON4D3/LuaSnip",
       requires = "rafamadriz/friendly-snippets",
       config = function()
         require("config.luasnip").setup()
       end,
       after = { "nvim-cmp", "nvim-treesitter" },
-    }
+    })
 
     -- Autocomplete
-    use {
+    use({
       "hrsh7th/nvim-cmp",
       event = { "BufRead", "BufNewFile", "InsertEnter" },
       opt = true,
@@ -242,10 +242,10 @@ function M.setup()
       config = function()
         require("config.cmp").setup()
       end,
-    }
+    })
 
     -- Better syntax
-    use {
+    use({
       "nvim-treesitter/nvim-treesitter",
       run = ":TSUpdate",
       config = function()
@@ -268,26 +268,26 @@ function M.setup()
           "windwp/nvim-autopairs",
           run = "make",
           config = function()
-            require("nvim-autopairs").setup {}
+            require("nvim-autopairs").setup({})
           end,
         },
       },
-    }
-    use "nvim-treesitter/nvim-treesitter-context"
+    })
+    use("nvim-treesitter/nvim-treesitter-context")
 
-    use {
+    use({
       "ThePrimeagen/refactoring.nvim",
       requires = {
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
       },
       config = function()
-        require("refactoring").setup {}
+        require("refactoring").setup({})
       end,
-    }
+    })
 
     -- Telescope
-    use {
+    use({
       "nvim-telescope/telescope.nvim",
       module = "telescope",
       as = "telescope",
@@ -305,14 +305,14 @@ function M.setup()
       config = function()
         require("config.telescope").setup()
       end,
-    }
+    })
 
     -- Testing
-    use {
+    use({
       "vim-test/vim-test",
       config = "require('config.test').setup()",
-    }
-    use {
+    })
+    use({
       "andythigpen/nvim-coverage", -- Display test coverage information
       cmd = {
         "Coverage",
@@ -327,44 +327,44 @@ function M.setup()
       config = function()
         require("config.test").coverage()
       end,
-    }
-    use "rcarriga/neotest-vim-test"
-    use "akinsho/neotest-go"
-    use "nvim-neotest/neotest-plenary"
-    use "haydenmeade/neotest-jest"
-    use {
+    })
+    use("rcarriga/neotest-vim-test")
+    use("akinsho/neotest-go")
+    use("nvim-neotest/neotest-plenary")
+    use("haydenmeade/neotest-jest")
+    use({
       "rcarriga/neotest",
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
       },
-    }
+    })
 
-    use {
+    use({
       "folke/which-key.nvim",
       event = "VimEnter",
       config = function()
         require("config.whichkey").setup()
       end,
-    }
+    })
 
-    use {
+    use({
       "nvim-lualine/lualine.nvim",
       requires = { "kyazdani42/nvim-web-devicons" },
       after = "nvim-treesitter",
       config = function()
         require("config.lualine").setup()
       end,
-    }
+    })
 
-    use {
+    use({
       "kyazdani42/nvim-tree.lua",
       requires = {
         "kyazdani42/nvim-web-devicons",
       },
       config = function()
-        require("nvim-tree").setup {
+        require("nvim-tree").setup({
           disable_netrw = true,
           update_focused_file = {
             enable = true,
@@ -372,49 +372,49 @@ function M.setup()
           filters = {
             custom = { ".git", "node_modules", ".cargo" },
           },
-        }
+        })
       end,
-    }
+    })
 
-    use {
+    use({
       "kyazdani42/nvim-web-devicons",
       config = function()
-        require("nvim-web-devicons").setup { default = true }
+        require("nvim-web-devicons").setup({ default = true })
       end,
-    }
+    })
 
     -- Smooth Scrolling
-    use {
+    use({
       "karb94/neoscroll.nvim",
       keys = { "<C-u>", "<C-d>", "gg", "G" },
       config = function()
-        require "config.scroll"
+        require("config.scroll")
       end,
-    }
+    })
 
     -- ZenMode
-    use {
+    use({
       "folke/zen-mode.nvim",
       cmd = "ZenMode",
       opt = true,
       wants = "twilight.nvim",
       requires = { "folke/twilight.nvim" },
       config = function()
-        require("zen-mode").setup {
+        require("zen-mode").setup({
           plugins = { gitsigns = true, kitty = { enabled = false, font = "+2" } },
           options = { number = true },
-        }
+        })
       end,
-    }
+    })
 
     -- colorschemes
     -- use "olimorris/onedarkpro.nvim"
     -- use "rebelot/kanagawa.nvim"
     -- use "luisiacc/gruvbox-baby"
     -- use "eddyekofo94/gruvbox-flat.nvim"
-    use "EdenEast/nightfox.nvim"
-    use "Shatur/neovim-ayu"
-    use "folke/tokyonight.nvim"
+    use("EdenEast/nightfox.nvim")
+    use("Shatur/neovim-ayu")
+    use("folke/tokyonight.nvim")
     -- use "Mofiqul/dracula.nvim"
     -- use {
     --   "lukas-reineke/indent-blankline.nvim",
@@ -423,16 +423,16 @@ function M.setup()
     --     require("config.indent-blankline").setup()
     --   end,
     -- }
-    use {
+    use({
       "f-person/auto-dark-mode.nvim",
       config = function()
         require("config.theme").setup()
       end,
-    }
-    use {
+    })
+    use({
       "mcchrish/zenbones.nvim",
       requires = "rktjmp/lush.nvim",
-    }
+    })
     -- use {
     --   "rose-pine/neovim",
     --   as = "rose-pine",
@@ -443,14 +443,14 @@ function M.setup()
     -- }
 
     if packer_bootstrap then
-      print "Setting up Neovim. Restart required after installation!"
+      print("Setting up Neovim. Restart required after installation!")
       require("packer").sync()
     end
   end
 
   pcall(require, "impatient")
   pcall(require, "packer_compiled")
-  require("packer").init { max_jobs = 50 }
+  require("packer").init({ max_jobs = 50 })
   require("packer").startup(plugins)
 end
 

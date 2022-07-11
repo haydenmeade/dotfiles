@@ -3,12 +3,12 @@ local M = {}
 function M.setup()
   -- avoid running in headless mode since it's harder to detect failures
   if #vim.api.nvim_list_uis() == 0 then
-    local Log = require "core.log"
-    Log:debug "headless mode detected, skipping running setup for lualine"
+    local Log = require("core.log")
+    Log:debug("headless mode detected, skipping running setup for lualine")
     return
   end
 
-  local ok, lualine = h.safe_require "lualine"
+  local ok, lualine = h.safe_require("lualine")
   if not ok then
     return
   end
@@ -30,13 +30,13 @@ function M.setup()
 
   local conditions = {
     buffer_not_empty = function()
-      return vim.fn.empty(vim.fn.expand "%:t") ~= 1
+      return vim.fn.empty(vim.fn.expand("%:t")) ~= 1
     end,
     hide_in_width = function()
       return vim.fn.winwidth(0) > 80
     end,
     check_git_workspace = function()
-      local filepath = vim.fn.expand "%:p:h"
+      local filepath = vim.fn.expand("%:p:h")
       local gitdir = vim.fn.finddir(".git", filepath .. ";")
       return gitdir and #gitdir > 0 and #gitdir < #filepath
     end,
@@ -154,7 +154,7 @@ function M.setup()
           return string.format("%.1f%s", size, sufixes[i])
         end
 
-        local file = vim.fn.expand "%:p"
+        local file = vim.fn.expand("%:p")
         if string.len(file) == 0 then
           return ""
         end
@@ -190,8 +190,8 @@ function M.setup()
 
     scrollbar = {
       function()
-        local current_line = vim.fn.line "."
-        local total_lines = vim.fn.line "$"
+        local current_line = vim.fn.line(".")
+        local total_lines = vim.fn.line("$")
         local chars = { "__", "▁▁", "▂▂", "▃▃", "▄▄", "▅▅", "▆▆", "▇▇", "██" }
         local line_ratio = current_line / total_lines
         local index = math.ceil(line_ratio * #chars)
