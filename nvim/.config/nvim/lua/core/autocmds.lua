@@ -62,7 +62,7 @@ function M.configure_format_on_save()
         vim.lsp.buf.format {
           timeout_ms = 1000,
           filter = function(client)
-            return client.name ~= "tsserver" --and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
+            return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
           end,
         }
       end,

@@ -30,7 +30,7 @@ function M.setup()
     use { "antoinemadec/FixCursorHold.nvim" } -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
 
     -- notify override
-    use "rcarriga/nvim-notify"
+    -- use "rcarriga/nvim-notify"
 
     -- Development
     use "tpope/vim-repeat"
@@ -87,7 +87,10 @@ function M.setup()
       end,
     }
     -- Lua development
-    use "folke/lua-dev.nvim"
+    use {
+      "folke/lua-dev.nvim",
+      config = function() end,
+    }
 
     -- Debug adapter protocol
     -- use "mfussenegger/nvim-dap"
@@ -198,8 +201,6 @@ function M.setup()
     }
     use {
       "neovim/nvim-lspconfig",
-      as = "nvim-lspconfig",
-      after = { "nvim-treesitter" },
       config = function()
         require("lsp").setup()
       end,
@@ -246,8 +247,6 @@ function M.setup()
     -- Better syntax
     use {
       "nvim-treesitter/nvim-treesitter",
-      event = { "VimEnter" },
-      as = "nvim-treesitter",
       run = ":TSUpdate",
       config = function()
         require("config.treesitter").setup()
@@ -282,6 +281,9 @@ function M.setup()
         { "nvim-lua/plenary.nvim" },
         { "nvim-treesitter/nvim-treesitter" },
       },
+      config = function()
+        require("refactoring").setup {}
+      end,
     }
 
     -- Telescope
@@ -326,15 +328,16 @@ function M.setup()
         require("config.test").coverage()
       end,
     }
+    use "rcarriga/neotest-vim-test"
+    use "akinsho/neotest-go"
+    use "nvim-neotest/neotest-plenary"
+    use "haydenmeade/neotest-jest"
     use {
       "rcarriga/neotest",
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-treesitter/nvim-treesitter",
         "antoinemadec/FixCursorHold.nvim",
-        "rcarriga/neotest-vim-test",
-        "akinsho/neotest-go",
-        "haydenmeade/neotest-jest",
       },
     }
 
@@ -355,12 +358,6 @@ function M.setup()
       end,
     }
 
-    use {
-      "luukvbaal/nnn.nvim",
-      config = function()
-        require("nnn").setup()
-      end,
-    }
     use {
       "kyazdani42/nvim-tree.lua",
       requires = {
@@ -395,13 +392,6 @@ function M.setup()
       end,
     }
 
-    use {
-      "lukas-reineke/indent-blankline.nvim",
-      config = function()
-        require("config.indent-blankline").setup()
-      end,
-    }
-
     -- ZenMode
     use {
       "folke/zen-mode.nvim",
@@ -424,10 +414,17 @@ function M.setup()
     -- use "eddyekofo94/gruvbox-flat.nvim"
     use "EdenEast/nightfox.nvim"
     use "Shatur/neovim-ayu"
+    use "folke/tokyonight.nvim"
     -- use "Mofiqul/dracula.nvim"
+    -- use {
+    --   "lukas-reineke/indent-blankline.nvim",
+    --   as = "indent_blankline",
+    --   config = function()
+    --     require("config.indent-blankline").setup()
+    --   end,
+    -- }
     use {
       "f-person/auto-dark-mode.nvim",
-      event = "VimEnter",
       config = function()
         require("config.theme").setup()
       end,
@@ -444,7 +441,6 @@ function M.setup()
     --   "catppuccin/nvim",
     --   as = "catppuccin",
     -- }
-    -- use "folke/tokyonight.nvim"
 
     if packer_bootstrap then
       print "Setting up Neovim. Restart required after installation!"

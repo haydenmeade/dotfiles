@@ -29,7 +29,7 @@ vim.api.nvim_exec(
 
   xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
   xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
-]] ,
+]],
   false
 )
 
@@ -70,6 +70,7 @@ local mappings = {
     h = { "<Cmd>lua require('harpoon.ui').nav_file(2)<CR>", "2" },
     e = { "<Cmd>lua require('harpoon.ui').nav_file(3)<CR>", "3" },
     a = { "<Cmd>lua require('harpoon.ui').nav_file(4)<CR>", "4" },
+    ["."] = { "<Cmd>lua require('harpoon.ui').nav_file(5)<CR>", "5" },
   },
 
   -- GitHub
@@ -100,7 +101,7 @@ local mappings = {
     k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
     C = { "<cmd>Telescope commands<cr>", "Commands" },
     p = {
-      "<cmd>lua require('telescope.builtin.internal').colorscheme({enable_preview = true})<cr>",
+      "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
       "Colorscheme with Preview",
     },
     T = {
@@ -116,7 +117,7 @@ local mappings = {
     g = { "<Cmd>lua require('config.toggleterm').lazygit_toggle()<Cr>", "Lazy git" },
     d = { "<Cmd>DiffviewOpen<Cr>", "Diffview open" },
     q = { "<Cmd>DiffviewClose<Cr>", "Diffview close" },
-    h = { "<Cmd>DiffviewFileHistory<Cr>", "File history" },
+    h = { "<Cmd>DiffviewFileHistory %<Cr>", "File history" },
     n = { "<Cmd>Neogit<Cr>", "Neogit" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
@@ -145,7 +146,10 @@ local mappings = {
     N = { "<Cmd>w<CR><cmd>TestNearest<CR>", "Test nearest" },
     f = { "<Cmd>w<CR><cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", "Test file" },
     F = { "<Cmd>w<CR><cmd>TestFile<CR>", "Test file" },
-    o = { "<cmd>lua require('neotest').output.open({ enter = true })<CR>", "Test output" },
+    o = {
+      "<cmd>lua require('neotest').output.open({ open_win = function() vim.cmd('vsplit') end })<CR>",
+      "Test output",
+    },
     v = { "<Cmd>w<CR><cmd>TestVisit<CR>", "Test visit" },
     t = { "<cmd>lua require('neotest').summary.toggle()<CR>", "Test summary" },
     c = { "<cmd>Coverage<CR>", "Coverage" },
@@ -183,7 +187,6 @@ local no_leader_mappings = {
 local lsp_mappings = {
   l = {
     name = "LSP",
-    r = { "<Cmd>IncRename<CR>", "Rename" },
     R = { "<Cmd>lua require('lsp.utils').RenameWithQuickfix()<CR>", "Rename with quickfix" },
     -- R = { "<Cmd>lua vim.lsp.buf.rename()<CR>", "Rename" },
     u = { "<Cmd>Telescope lsp_references<CR>", "References" },
@@ -233,10 +236,6 @@ local dap_nvim_dap_mappings = {
     r = { '<Cmd>lua require"telescope".extensions.dap.list_breakpoints{}<CR>', "List breakpoints" },
     v = { '<Cmd>lua require"telescope".extensions.dap.variables{}<CR>', "Variables" },
     m = { '<Cmd>lua require"telescope".extensions.dap.frames{}<CR>', "Frames" },
-
-    -- Refactoring print
-    P = { '<cmd>lua require("refactoring").debug.printf({below = false})<CR>', "Print" },
-    C = { '<cmd>lua require("refactoring").debug.cleanup({})<CR>', "Clear print" },
   },
 }
 

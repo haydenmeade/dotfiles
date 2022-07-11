@@ -49,8 +49,13 @@ function M.setup()
 
   require("neotest").setup {
     adapters = {
-      require "neotest-jest" {},
-      require "neotest-go" {},
+      require "neotest-jest" {
+        -- jestConfigFile = function(p)
+        --   return ""
+        -- end,
+      },
+      require "neotest-go",
+      require "neotest-plenary",
       -- require "neotest-vim-test" {},
     },
   }
