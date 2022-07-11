@@ -29,6 +29,7 @@ export HOMEBREW_NO_ENV_HINTS=true
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 DISABLE_AUTO_TITLE=true
+SAVEHIST=99999
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
