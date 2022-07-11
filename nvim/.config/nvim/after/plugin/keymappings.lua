@@ -6,9 +6,19 @@ local keymappings = {
     j = "gj",
     k = "gk",
     ["<c-\\>"] = "<cmd>lua require('config.tmux').toggle_term()<cr>",
+    ["<leader>rc"] = '<cmd>lua require("refactoring").debug.cleanup({})<CR>',
+    ["<leader>ri"] = [[ <Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
   },
   v = {
     ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
+
+    ["<leader>ra"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
+    ["<leader>re"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
+    ["<leader>rh"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>]],
+    ["<leader>rk"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Block')<CR>]],
+    ["<leader>rj"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Block To File')<CR>]],
+    -- Refactoring print
+    ["<leader>rp"] = '<cmd>lua require("refactoring").debug.print_var({})<CR>',
   },
   t = {
     ["<esc>"] = [[<C-\><C-n>]],
@@ -38,7 +48,7 @@ local keymappings = {
 }
 
 function M.setup()
-  local opts = { noremap = true, silent = true }
+  local opts = { noremap = true, silent = true, expr = false }
   for mode, mapping in pairs(keymappings) do
     for keys, cmd in pairs(mapping) do
       vim.api.nvim_set_keymap(mode, keys, cmd, opts)
