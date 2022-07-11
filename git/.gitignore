@@ -13,3 +13,4 @@ tmp/**/*
 coverage.*
 coverage.*
 **/lazygit/state.yml
+cdk.context.json
