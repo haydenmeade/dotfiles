@@ -89,7 +89,6 @@ function M.setup()
     -- Lua development
     use({
       "folke/lua-dev.nvim",
-      config = function() end,
     })
 
     -- Debug adapter protocol
