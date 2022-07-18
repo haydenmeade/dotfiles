@@ -36,7 +36,7 @@ function M.setup()
     use("tpope/vim-repeat")
     use({ "tpope/vim-surround", event = "BufRead" })
     use({ "tpope/vim-sleuth" })
-    use("tpope/vim-abolish")
+    use("tpope/vim-abolish") -- :%S/abc/bac/
     use({
       "smjonas/inc-rename.nvim",
       config = function()
@@ -46,14 +46,12 @@ function M.setup()
 
     use({
       "numToStr/Comment.nvim",
-      event = "VimEnter",
       config = function()
         require("config.comment").setup()
       end,
     })
     use({
       "folke/trouble.nvim",
-      event = "VimEnter",
       cmd = { "TroubleToggle", "Trouble" },
       config = function()
         require("trouble").setup({ auto_open = false })
@@ -65,8 +63,6 @@ function M.setup()
     })
 
     -- Go development
-    -- use "fatih/vim-go"
-    -- use { "darrikonn/vim-gofmt", run = ":GoUpdateBinaries" }
     use({
       "ray-x/go.nvim",
       config = function()
@@ -96,14 +92,6 @@ function M.setup()
     -- use "rcarriga/nvim-dap-ui"
     -- use "theHamsta/nvim-dap-virtual-text"
     -- use "nvim-telescope/telescope-dap.nvim"
-
-    use({
-      "pianocomposer321/yabs.nvim", -- Build and run your code
-      module = "yabs",
-      config = function()
-        require("config.yabs").setup()
-      end,
-    })
 
     -- Jumps
     -- Maybe use this another time
@@ -313,16 +301,6 @@ function M.setup()
     })
     use({
       "andythigpen/nvim-coverage", -- Display test coverage information
-      cmd = {
-        "Coverage",
-        "CoverageLoad",
-        "CoverageShow",
-        "CoverageHide",
-        "CoverageToggle",
-        "CoverageClear",
-        "CoverageSummary",
-      },
-      module = "coverage",
       config = function()
         require("config.test").coverage()
       end,
@@ -331,6 +309,7 @@ function M.setup()
     use("akinsho/neotest-go")
     use("nvim-neotest/neotest-plenary")
     use("haydenmeade/neotest-jest")
+    use("olimorris/neotest-rspec")
     use({
       "rcarriga/neotest",
       requires = {
@@ -391,21 +370,12 @@ function M.setup()
       end,
     })
 
-    -- ZenMode
     use({
-      "folke/zen-mode.nvim",
-      cmd = "ZenMode",
-      opt = true,
-      wants = "twilight.nvim",
-      requires = { "folke/twilight.nvim" },
+      "lukas-reineke/indent-blankline.nvim",
       config = function()
-        require("zen-mode").setup({
-          plugins = { gitsigns = true, kitty = { enabled = false, font = "+2" } },
-          options = { number = true },
-        })
+        require("config.indent-blankline").setup()
       end,
     })
-
     -- colorschemes
     -- use "olimorris/onedarkpro.nvim"
     -- use "rebelot/kanagawa.nvim"
@@ -414,14 +384,8 @@ function M.setup()
     use("EdenEast/nightfox.nvim")
     use("Shatur/neovim-ayu")
     use("folke/tokyonight.nvim")
+    use("sainnhe/edge")
     -- use "Mofiqul/dracula.nvim"
-    -- use {
-    --   "lukas-reineke/indent-blankline.nvim",
-    --   as = "indent_blankline",
-    --   config = function()
-    --     require("config.indent-blankline").setup()
-    --   end,
-    -- }
     use({
       "f-person/auto-dark-mode.nvim",
       config = function()

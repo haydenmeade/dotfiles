@@ -206,8 +206,11 @@ use_aws_profile(){
 }
 alias awsdev='use_aws_profile dev-admin'
 
-bindkey -v
+autoload -Uz edit-command-line
+zle -N edit-command-line
+bindkey '^e' edit-command-line
 
+# bindkey -v
 # fzf command history search
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -222,7 +225,7 @@ vzv() {
 zle -N vzv vzv
 bindkey '^v' vzv
 
-export ZVM_NORMAL_MODE_CURSOR=bbl
+# export ZVM_NORMAL_MODE_CURSOR=bbl
 
 # +-------------+
 # | zsh-vi-mode |
@@ -233,8 +236,8 @@ export ZVM_NORMAL_MODE_CURSOR=bbl
 # reinitializes the keymap. => we set it again in the
 # zvm_after_init hook.
 # check out: https://github.com/jeffreytse/zsh-vi-mode
-source "$ZSH_CUSTOM/plugins/zsh-vi-mode/zsh-vi-mode.zsh"
-zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
+# source "$ZSH_CUSTOM/plugins/zsh-vi-mode/zsh-vi-mode.zsh"
+# zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
 eval "$(zoxide init zsh)"
 

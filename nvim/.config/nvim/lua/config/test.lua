@@ -55,6 +55,7 @@ function M.setup()
         -- end,
       }),
       require("neotest-go"),
+      require("neotest-rspec"),
       require("neotest-plenary"),
       -- require "neotest-vim-test" {},
     },

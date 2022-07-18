@@ -75,6 +75,9 @@ function M.setup()
     },
     context_commentstring = { enable = true, enable_autocmd = false },
     matchup = { enable = true },
+    endwise = {
+      enable = true,
+    },
   })
   require("treesitter-context").setup({
     enable = true, -- Enable this plugin (Can be enabled/disabled later via commands)

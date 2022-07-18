@@ -45,7 +45,7 @@ function M.common_on_attach(_, bufnr)
     handler_opts = { border = "single" },
   })
 
-  require("config.whichkey").register_lsp(bufnr)
+  require("config.lsp_keymap").register_lsp(bufnr)
 end
 
 function M.get_common_opts()

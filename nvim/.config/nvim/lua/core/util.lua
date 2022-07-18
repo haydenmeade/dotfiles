@@ -130,4 +130,28 @@ function M.reset_cache()
   Log:trace(string.format("Cache invalidated for core modules: { %s }", table.concat(modules, ", ")))
 end
 
+function M.createmap(mode, mapping, prefix)
+  local mapping_prefix = prefix or ""
+  local mapping_opts = { noremap = true, silent = true, expr = false }
+  for keys, cmd in pairs(mapping) do
+    if type(cmd) == "table" then
+      M.createmap(mode, cmd, mapping_prefix .. keys)
+    else
+      vim.api.nvim_set_keymap(mode, mapping_prefix .. keys, cmd, mapping_opts)
+    end
+  end
+end
+
+function M.createmap_buffer(mode, mapping, prefix, bufnr)
+  local mapping_prefix = prefix or ""
+  local mapping_opts = { noremap = true, silent = true, expr = false }
+  for keys, cmd in pairs(mapping) do
+    if type(cmd) == "table" then
+      M.createmap_buffer(mode, cmd, mapping_prefix .. keys, bufnr)
+    else
+      vim.api.nvim_buf_set_keymap(bufnr, mode, mapping_prefix .. keys, cmd, mapping_opts)
+    end
+  end
+end
+
 return M
