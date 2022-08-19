@@ -122,8 +122,8 @@ local keymappings = {
   n = {
     j = "gj",
     k = "gk",
-    [",s"] = { "<Cmd>split<Cr>", "Horizontal spit" },
-    [",v"] = { "<Cmd>vs<Cr>", "Vertical Split" },
+    [",s"] = "<Cmd>split<Cr>",
+    [",v"] = "<Cmd>vs<Cr>",
   },
   v = {
     ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",

@@ -52,7 +52,7 @@ vim.api.nvim_exec(
   false
 )
 
-local format_on_save = true
+local format_on_save = false
 
 function M.configure_format_on_save()
   local augid = vim.api.nvim_create_augroup("user_lsp_fmt_on_save", { clear = true })

@@ -63,25 +63,25 @@ function M.setup()
     })
 
     -- Go development
-    use({
-      "ray-x/go.nvim",
-      config = function()
-        require("go").setup({
-          test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-          run_in_floaterm = false, -- set to true to run in float window.
-          --float term recommand if you use richgo/ginkgo with terminal color
-          dap_debug = true, -- set to true to enable dap
-          dap_debug_keymap = false, -- set keymaps for debugger
-          dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
-          dap_debug_vt = true, -- set to true to enable dap virtual text
-          -- Disable everything for LSP
-          lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
-          lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-          lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
-          gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
-        })
-      end,
-    })
+    -- use({
+    --   "ray-x/go.nvim",
+    --   config = function()
+    --     require("go").setup({
+    --       test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
+    --       run_in_floaterm = false, -- set to true to run in float window.
+    --       --float term recommand if you use richgo/ginkgo with terminal color
+    --       dap_debug = true, -- set to true to enable dap
+    --       dap_debug_keymap = false, -- set keymaps for debugger
+    --       dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
+    --       dap_debug_vt = true, -- set to true to enable dap virtual text
+    --       -- Disable everything for LSP
+    --       lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
+    --       lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
+    --       lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
+    --       gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
+    --     })
+    --   end,
+    -- })
     -- Lua development
     use({
       "folke/lua-dev.nvim",
@@ -140,7 +140,7 @@ function M.setup()
     })
 
     use({
-      "haydenmeade/octo.nvim",
+      "pwntester/octo.nvim",
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope.nvim",
@@ -168,14 +168,18 @@ function M.setup()
     })
 
     --LSP
+    -- use({
+    --   "j-hui/fidget.nvim", -- loading progress
+    --   event = "BufReadPre",
+    --   config = function()
+    --     require("fidget").setup({})
+    --   end,
+    -- })
+
     use({
-      "j-hui/fidget.nvim", -- loading progress
-      event = "BufReadPre",
-      config = function()
-        require("fidget").setup({})
-      end,
+      "williamboman/mason.nvim",
+      "williamboman/mason-lspconfig.nvim",
     })
-    use("williamboman/nvim-lsp-installer")
     use("jose-elias-alvarez/typescript.nvim")
     use("ray-x/lsp_signature.nvim")
     use("b0o/schemastore.nvim")
@@ -319,13 +323,13 @@ function M.setup()
       },
     })
 
-    use({
-      "folke/which-key.nvim",
-      event = "VimEnter",
-      config = function()
-        require("config.whichkey").setup()
-      end,
-    })
+    -- use({
+    --   "folke/which-key.nvim",
+    --   event = "VimEnter",
+    --   config = function()
+    --     require("config.whichkey").setup()
+    --   end,
+    -- })
 
     use({
       "nvim-lualine/lualine.nvim",
@@ -370,12 +374,12 @@ function M.setup()
       end,
     })
 
-    use({
-      "lukas-reineke/indent-blankline.nvim",
-      config = function()
-        require("config.indent-blankline").setup()
-      end,
-    })
+    -- use({
+    --   "lukas-reineke/indent-blankline.nvim",
+    --   config = function()
+    --     require("config.indent-blankline").setup()
+    --   end,
+    -- })
     -- colorschemes
     -- use "olimorris/onedarkpro.nvim"
     -- use "rebelot/kanagawa.nvim"
@@ -391,10 +395,6 @@ function M.setup()
       config = function()
         require("config.theme").setup()
       end,
-    })
-    use({
-      "mcchrish/zenbones.nvim",
-      requires = "rktjmp/lush.nvim",
     })
     -- use {
     --   "rose-pine/neovim",

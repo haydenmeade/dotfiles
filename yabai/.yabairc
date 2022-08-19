@@ -22,6 +22,9 @@ yabai -m config left_padding 0
 yabai -m config right_padding 0
 yabai -m config window_gap 0
 
+# debug logging
+yabai -m config debug_output on
+
 # float preferences
 yabai -m rule --add app="^System Preferences$" sticky=on layer=above manage=off
 yabai -m rule --add app="^OpenVPN Connect$" sticky=on layer=above manage=off

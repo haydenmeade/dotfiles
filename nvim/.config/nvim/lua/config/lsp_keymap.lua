@@ -27,7 +27,31 @@ local lsp_buffer_keymappings = {
   ["<C-k>"] = "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
   ["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>",
   ["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>",
+  ["<leader><leader>"] = "<Cmd>FormatDocumentH<CR>",
 }
+local function has_value(tab, val)
+  for _, value in ipairs(tab) do
+    if value == val then
+      return true
+    end
+  end
+
+  return false
+end
+
+vim.api.nvim_create_user_command("FormatDocumentH", function()
+  local ft = vim.bo.filetype
+  if has_value({ "typescript", "javascript", "typescriptreact", "javascriptreact" }, ft) then
+    vim.cmd("EslintFixAll")
+  end
+  vim.lsp.buf.format({
+    timeout_ms = 1000,
+    filter = function(client)
+      return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
+    end,
+  })
+end, {})
+
 function M.register_lsp(buffer)
   util.createmap_buffer("n", lsp_leader_mappings, "<leader>", buffer)
   util.createmap_buffer("n", lsp_buffer_keymappings, nil, buffer)

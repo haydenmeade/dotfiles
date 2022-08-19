@@ -90,8 +90,9 @@ function M.setup()
 
   require("core.autocmds").configure_format_on_save()
 
-  local lspinstaller = require("nvim-lsp-installer")
-  lspinstaller.setup({
+  require("mason").setup()
+  local mason = require("mason-lspconfig")
+  mason.setup({
     ensure_installed = {
       "gopls",
       "golangci_lint_ls",
@@ -103,6 +104,7 @@ function M.setup()
       "yamlls",
       "bashls",
       "ccls",
+      "cssls",
     },
     automatic_installation = true,
     -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
@@ -120,6 +122,7 @@ function M.setup()
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.ccls.setup(resolve_config("ccls"))
+  lspconfig.cssls.setup(resolve_config("cssls"))
 end
 
 return M

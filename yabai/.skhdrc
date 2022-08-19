@@ -67,7 +67,7 @@ cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
 cmd + shift - 1 : /Applications/kitty.app/Contents/MacOS/kitty --override allow_remote_control=yes --single-instance --listen-on unix:/tmp/mykitty --directory ~
 
 cmd - 1 : switchTo "kitty"
-cmd - 2 : switchTo "Google Chrome"
+cmd - 2 : switchTo "Brave Browser Beta"
 cmd - 3 : switchTo "Slack"
 cmd - 4 : switchTo "Spotify"
 cmd - 5 : switchTo "Postman"
