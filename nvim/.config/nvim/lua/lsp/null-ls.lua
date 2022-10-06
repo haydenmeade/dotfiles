@@ -3,7 +3,7 @@ local M = {}
 function M.setup()
   local status_ok, null_ls = pcall(require, "null-ls")
   if not status_ok then
-    require("notify")("Missing null-ls dependency")
+    vim.notify("Missing null-ls dependency")
     return
   end
 
@@ -12,7 +12,8 @@ function M.setup()
   local sources = {
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.formatting.gofumpt,
-    null_ls.builtins.formatting.rubocop,
+    null_ls.builtins.diagnostics.standardrb,
+    null_ls.builtins.formatting.standardrb,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.stylua,
@@ -24,7 +25,7 @@ function M.setup()
 
   for _, source in ipairs(sources) do
     if not exist(source.name) then
-      require("notify")("unable to find shell tool - " .. source.name)
+      vim.notify("unable to find shell tool - " .. source.name)
     end
   end
 

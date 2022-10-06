@@ -77,7 +77,6 @@ function M.setup()
   if not ok then
     return
   end
-  -- require "notify" "load me please"
 
   for _, sign in ipairs(config.diagnostics.signs.values) do
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
@@ -115,7 +114,7 @@ function M.setup()
   require("lsp.tsserver").config()
   lspconfig.eslint.setup(resolve_config("eslint"))
   lspconfig.gopls.setup(resolve_config("gopls"))
-  -- lspconfig.golangci_lint_ls.setup(resolve_config "golangci_lint_ls")
+  lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
   lspconfig.solargraph.setup(resolve_config("solargraph"))
   lspconfig.sumneko_lua.setup(resolve_config("sumneko_lua"))

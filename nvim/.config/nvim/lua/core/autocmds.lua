@@ -52,20 +52,13 @@ vim.api.nvim_exec(
   false
 )
 
-local format_on_save = false
+local format_on_save = true
 
 function M.configure_format_on_save()
   local augid = vim.api.nvim_create_augroup("user_lsp_fmt_on_save", { clear = true })
   if format_on_save then
     vim.api.nvim_create_autocmd("BufWritePre", {
-      callback = function()
-        vim.lsp.buf.format({
-          timeout_ms = 1000,
-          filter = function(client)
-            return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
-          end,
-        })
-      end,
+      command = "FormatDocumentH",
       group = augid,
     })
     Log:debug("enabled format-on-save")
