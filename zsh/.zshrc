@@ -18,6 +18,8 @@ function precmd () {
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
+export PATH="/opt/homebrew/opt/mongodb-community@4.4/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -36,7 +38,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=( 
   git
   npm
-  ruby
   brew
   asdf
   direnv
@@ -45,7 +46,6 @@ plugins=(
   fd
   ripgrep
   fzf
-  gem
   gh
   golang
 )
@@ -78,9 +78,6 @@ culture_amp (){
     local dir="$CA_ROOT_DIR"
     if [[ -d "$CA_ROOT_DIR/src" ]]; then
         dir="$CA_ROOT_DIR/src"
-    fi
-    if [[ -d "$CA_ROOT_DIR/v2_src" ]]; then
-        dir="$CA_ROOT_DIR/v2_src"
     fi
 
     z $dir
@@ -250,4 +247,3 @@ eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
