@@ -20,6 +20,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
 export PATH="/opt/homebrew/opt/mongodb-community@4.4/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
+export PATH="$HOME/bin_scrips:$PATH"
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -90,8 +91,6 @@ can (){
 
 ca (){
     culture_amp
-    exa -la
-    asdf current
 }
 
 # jira-cli https://github.com/ankitpokhrel/jira-cli

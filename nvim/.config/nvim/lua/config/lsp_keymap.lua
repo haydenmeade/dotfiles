@@ -41,15 +41,18 @@ end
 
 vim.api.nvim_create_user_command("FormatDocumentH", function()
   local ft = vim.bo.filetype
-  if has_value({ "typescript", "javascript", "typescriptreact", "javascriptreact" }, ft) then
-    vim.cmd("EslintFixAll")
+  local clients = vim.lsp.get_active_clients()
+  if next(clients) ~= nil then
+    if has_value({ "typescript", "javascript", "typescriptreact", "javascriptreact" }, ft) then
+      vim.cmd("EslintFixAll")
+    end
+    vim.lsp.buf.format({
+      timeout_ms = 1000,
+      filter = function(client)
+        return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
+      end,
+    })
   end
-  vim.lsp.buf.format({
-    timeout_ms = 1000,
-    filter = function(client)
-      return client.name ~= "tsserver" and client.name ~= "sumneko_lua" and client.name ~= "solargraph"
-    end,
-  })
 end, {})
 
 function M.register_lsp(buffer)

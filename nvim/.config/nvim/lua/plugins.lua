@@ -386,9 +386,9 @@ function M.setup()
     -- use "luisiacc/gruvbox-baby"
     -- use "eddyekofo94/gruvbox-flat.nvim"
     use("EdenEast/nightfox.nvim")
-    use("Shatur/neovim-ayu")
+    -- use("Shatur/neovim-ayu")
     use("folke/tokyonight.nvim")
-    use("sainnhe/edge")
+    -- use("sainnhe/edge")
     -- use "Mofiqul/dracula.nvim"
     use({
       "f-person/auto-dark-mode.nvim",
@@ -400,10 +400,10 @@ function M.setup()
     --   "rose-pine/neovim",
     --   as = "rose-pine",
     -- }
-    -- use {
-    --   "catppuccin/nvim",
-    --   as = "catppuccin",
-    -- }
+    use({
+      "catppuccin/nvim",
+      as = "catppuccin",
+    })
 
     if packer_bootstrap then
       print("Setting up Neovim. Restart required after installation!")

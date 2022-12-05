@@ -4,34 +4,10 @@ local config = require("lsp.config")
 
 function M.common_capabilities()
   local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = {
-      "documentation",
-      "detail",
-      "additionalTextEdits",
-    },
-  }
-
-  -- Code actions
-  capabilities.textDocument.codeAction = {
-    dynamicRegistration = true,
-    codeActionLiteralSupport = {
-      codeActionKind = {
-        valueSet = (function()
-          local res = vim.tbl_values(vim.lsp.protocol.CodeActionKind)
-          table.sort(res)
-          return res
-        end)(),
-      },
-    },
-  }
-
   local status_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
   if status_ok then
-    capabilities = cmp_nvim_lsp.update_capabilities(capabilities)
+    capabilities = cmp_nvim_lsp.default_capabilities()
   end
-
   return capabilities
 end
 
@@ -102,7 +78,6 @@ function M.setup()
       "sumneko_lua",
       "yamlls",
       "bashls",
-      "ccls",
       "cssls",
     },
     automatic_installation = true,
@@ -120,7 +95,6 @@ function M.setup()
   lspconfig.sumneko_lua.setup(resolve_config("sumneko_lua"))
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
-  lspconfig.ccls.setup(resolve_config("ccls"))
   lspconfig.cssls.setup(resolve_config("cssls"))
 end
 

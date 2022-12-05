@@ -9,7 +9,7 @@
   ap = add --patch
   co = checkout
 [core]
-  excludesfile = ~/.gitignore
+  excludesFile = ~/.gitignore
   autocrlf = input
 [commit]
   template = ~/.gitmessage
