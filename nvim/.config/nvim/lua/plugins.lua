@@ -330,6 +330,7 @@ function M.setup()
     --     require("config.whichkey").setup()
     --   end,
     -- })
+    use({ "shortcuts/no-neck-pain.nvim" })
 
     use({
       "nvim-lualine/lualine.nvim",

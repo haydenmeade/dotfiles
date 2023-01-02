@@ -191,6 +191,13 @@ alias c='pbcopy'
 # alias 8='cd -8'
 # alias 9='cd -9'
 # alias _='sudo '
+find-rename-regex() (
+  set -eu
+  find_and_replace="$1"
+  PATH="$(echo "$PATH" | sed -E 's/(^|:)[^\/][^:]*//g')" \
+    find . -depth -execdir rename "${2:--n}" "s/${find_and_replace}" '{}' \;
+)
+
 if [[ -f ~/.zshprv ]]; then
     source $HOME/.zshprv
 fi
