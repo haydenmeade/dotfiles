@@ -2,6 +2,7 @@
 
 ```
 git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./ubuntu
+git clone https://github.com/haydenmeade/dotfiles && cd dotfiles && ./macos
 ```
 
 ## Neovim
