@@ -76,15 +76,7 @@ https://github.com/canha/golang-tools-install-script
 _go doesn't seem to work on windows from scoop?_
 
 ```
-go install mvdan.cc/gofumpt@latest github.com/mgechev/revive@latest mvdan.cc/sh/v3/cmd/shfmt@latest
-```
-
-> ruby
-
-https://gorails.com/setup/windows/10
-
-```
-gem install solargraph
+go install mvdan.cc/gofumpt@latest mvdan.cc/sh/v3/cmd/shfmt@latest
 ```
 
 > Node.js
@@ -92,7 +84,7 @@ gem install solargraph
 ```
 nvm install latest
 nvm use latest
-npm install --global neovim tree-sitter-cli eslint_d eslint typescript typescript-language-server @fsouza/prettierd pure-prompt tldr jsonls bash-language-server
+npm install --global neovim tree-sitter-cli eslint_d eslint typescript typescript-language-server @fsouza/prettierd jsonls bash-language-server
 ```
 
 > python
