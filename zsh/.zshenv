@@ -1,7 +1,15 @@
 . "$HOME/.cargo/env"
 
+export {http,https,all}_proxy=http://localhost:3128
+export {HTTP,HTTPS,ALL}_PROXY=$http_proxy
+
+# osascript
+switchToOsa () {
+    osascript -e 'activate application "'"$1"'"'
+}
+
 # yabai
-switchTo () {
+switchToYabai () {
     id="$(yabai -m query --windows | jq --arg app "$1" -c '(map(select(.app == $app)) | first)')" 
     space_id="$(echo "$id" | jq '.space' )" 
     win_id="$(echo "$id" | jq '.id' )" 

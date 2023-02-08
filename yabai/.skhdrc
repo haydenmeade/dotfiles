@@ -3,74 +3,75 @@
 # Yabai
 #
 # Navigation
-cmd + ctrl - left  : yabai -m window --focus west
-cmd + ctrl - down  : yabai -m window --focus south
-cmd + ctrl - up    : yabai -m window --focus north
-cmd + ctrl - right : yabai -m window --focus east
-# spaces
-cmd + shift - 6: yabai -m space --focus recent
-
-# move to next display
-ctrl + cmd - n  : yabai -m window --display next; yabai -m display --focus next
-ctrl + cmd + shift - 1  : yabai -m window --display 1; yabai -m display --focus 1
-ctrl + cmd + shift - 2  : yabai -m window --display 2; yabai -m display --focus 2
-ctrl + cmd + shift - 3  : yabai -m window --display 3; yabai -m display --focus 3
-
-
-# Moving windows
-cmd + shift + ctrl - left  : yabai -m window --warp west
-cmd + shift + ctrl - down  : yabai -m window --warp south
-cmd + shift + ctrl - up    : yabai -m window --warp north
-cmd + shift + ctrl - right : yabai -m window --warp east
-
-# Equalize size of windows
-cmd + ctrl - e : yabai -m space --balance
-
-# Rotate windows clockwise and anticlockwise
-cmd + ctrl - r         : yabai -m space --rotate 270
-
-# Rotate on X and Y Axis
-cmd + ctrl - x : yabai -m space --mirror x-axis
-cmd + ctrl - y : yabai -m space --mirror y-axis
-
-# resize
-cmd + ctrl + shift + alt - right : yabai -m window --resize left:0:-20
-cmd + ctrl + shift + alt - left : yabai -m window --resize left:-20:0
-
-# Float / Unfloat window
-cmd + shift + ctrl - space : \
-    yabai -m window --toggle float; \
-
-# focus display
-cmd + ctrl - 1 : yabai -m display --focus 1
-cmd + ctrl - 2 : yabai -m display --focus 2
-cmd + ctrl - 3 : yabai -m display --focus 3
-cmd + ctrl - s : yabai -m display --focus next || yabai -m display --focus first; yabai -m space --focus next
-
-# Restart Yabai
-cmd + ctrl + alt - r : \
-    /usr/bin/env osascript <<< \
-        "display notification \"Restarting Yabai\" with title \"Yabai\""; \
-    launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
-
-# create desktop, move window and follow focus
-shift + cmd - n : yabai -m space --create;\
-                  id="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')";\
-                  yabai -m window --space "$id";\
-                  yabai -m space --focus "$id"
-
-# Close active application
-cmd + ctrl - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
-
-# Make window native fullscreen
-cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
+# cmd + ctrl - left  : yabai -m window --focus west
+# cmd + ctrl - down  : yabai -m window --focus south
+# cmd + ctrl - up    : yabai -m window --focus north
+# cmd + ctrl - right : yabai -m window --focus east
+# # spaces
+# cmd + shift - 6: yabai -m space --focus recent
+#
+# # move to next display
+# ctrl + cmd - n  : yabai -m window --display next; yabai -m display --focus next
+# ctrl + cmd + shift - 1  : yabai -m window --display 1; yabai -m display --focus 1
+# ctrl + cmd + shift - 2  : yabai -m window --display 2; yabai -m display --focus 2
+# ctrl + cmd + shift - 3  : yabai -m window --display 3; yabai -m display --focus 3
+#
+#
+# # Moving windows
+# cmd + shift + ctrl - left  : yabai -m window --warp west
+# cmd + shift + ctrl - down  : yabai -m window --warp south
+# cmd + shift + ctrl - up    : yabai -m window --warp north
+# cmd + shift + ctrl - right : yabai -m window --warp east
+#
+# # Equalize size of windows
+# cmd + ctrl - e : yabai -m space --balance
+#
+# # Rotate windows clockwise and anticlockwise
+# cmd + ctrl - r         : yabai -m space --rotate 270
+#
+# # Rotate on X and Y Axis
+# cmd + ctrl - x : yabai -m space --mirror x-axis
+# cmd + ctrl - y : yabai -m space --mirror y-axis
+#
+# # resize
+# cmd + ctrl + shift + alt - right : yabai -m window --resize left:0:-20
+# cmd + ctrl + shift + alt - left : yabai -m window --resize left:-20:0
+#
+# # Float / Unfloat window
+# cmd + shift + ctrl - space : \
+#     yabai -m window --toggle float; \
+#
+# # focus display
+# cmd + ctrl - 1 : yabai -m display --focus 1
+# cmd + ctrl - 2 : yabai -m display --focus 2
+# cmd + ctrl - 3 : yabai -m display --focus 3
+# cmd + ctrl - s : yabai -m display --focus next || yabai -m display --focus first; yabai -m space --focus next
+#
+# # Restart Yabai
+# cmd + ctrl + alt - r : \
+#     /usr/bin/env osascript <<< \
+#         "display notification \"Restarting Yabai\" with title \"Yabai\""; \
+#     launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+#
+# # create desktop, move window and follow focus
+# shift + cmd - n : yabai -m space --create;\
+#                   id="$(yabai -m query --spaces --display | jq 'map(select(."is-native-fullscreen" == false))[-1].index')";\
+#                   yabai -m window --space "$id";\
+#                   yabai -m space --focus "$id"
+#
+# # Close active application
+# cmd + ctrl - backspace : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+#
+# # Make window native fullscreen
+# cmd + shift + ctrl - return : yabai -m window --toggle native-fullscreen
 cmd + shift - 1 : /Applications/kitty.app/Contents/MacOS/kitty --override allow_remote_control=yes --single-instance --listen-on unix:/tmp/mykitty --directory ~
 
-cmd - 1 : switchTo "kitty"
-cmd - 2 : switchTo "Brave Browser Beta"
-cmd - 3 : switchTo "Slack"
-cmd - 4 : switchTo "Spotify"
-cmd - 5 : switchTo "Postman"
-cmd - 6 : switchTo "Authy Desktop"
-cmd - 7 : switchTo "zoom.us"
-cmd - 8 : switchTo "Miro"
+f1 : switchToOsa "kitty"
+f2 : switchToOsa "Google Chrome"
+f3 : switchToOsa "Slack"
+f4 : switchToOsa "Microsoft Teams"
+f5 : switchToOsa "Outlook"
+# cmd - 6 : switchTo "Authy Desktop"
+# cmd - 8 : switchTo "Miro"
+# cmd - 5 : switchTo "Postman"
+# cmd - 4 : switchTo "Spotify"

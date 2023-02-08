@@ -68,22 +68,19 @@ function M.setup()
   require("mason").setup()
   local mason = require("mason-lspconfig")
   mason.setup({
-    ensure_installed = {
-      "gopls",
-      "golangci_lint_ls",
-      "eslint",
-      "tsserver",
-      "jsonls",
-      "solargraph",
-      "sumneko_lua",
-      "yamlls",
-      "bashls",
-      "cssls",
-    },
-    automatic_installation = true,
-    -- Controls to which degree logs are written to the log file. It's useful to set this to vim.log.levels.DEBUG when
-    -- debugging issues with server installations.
-    log_level = vim.log.levels.INFO,
+    -- ensure_installed = {
+    --   "gopls",
+    --   "golangci_lint_ls",
+    --   "eslint",
+    --   "tsserver",
+    --   "jsonls",
+    --   "sumneko_lua",
+    --   "yamlls",
+    --   "bashls",
+    --   "cssls",
+    -- },
+    -- automatic_installation = true,
+    -- log_level = vim.log.levels.INFO,
   })
 
   require("lsp.tsserver").config()
@@ -91,7 +88,6 @@ function M.setup()
   lspconfig.gopls.setup(resolve_config("gopls"))
   lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
-  lspconfig.solargraph.setup(resolve_config("solargraph"))
   lspconfig.sumneko_lua.setup(resolve_config("sumneko_lua"))
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))

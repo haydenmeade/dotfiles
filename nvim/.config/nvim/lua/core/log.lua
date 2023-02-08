@@ -14,63 +14,55 @@ vim.tbl_add_reverse_lookup(Log.levels)
 local notify_opts = {}
 
 function Log:init()
-  local status_ok, structlog = pcall(require, "structlog")
+  local status_ok, log = pcall(require, "structlog")
   if not status_ok then
     return nil
   end
 
   local log_level = Log.levels[(vim.g.loglevel):upper() or "WARN"]
-  local nvim_log = {
+
+  log.configure({
     nvim = {
-      sinks = {
-        structlog.sinks.Console(log_level, {
-          async = false,
-          processors = {
-            structlog.processors.Namer(),
-            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 2 }),
-            structlog.processors.Timestamper("%H:%M:%S"),
-          },
-          formatter = structlog.formatters.FormatColorizer( --
-            "%s [%-5s] %s: %-30s",
-            { "timestamp", "level", "logger_name", "msg" },
-            { level = structlog.formatters.FormatColorizer.color_level() }
+      pipelines = {
+        -- {
+        --   level = log.level.INFO,
+        --   processors = {
+        --     log.processors.StackWriter({ "line", "file" }, { max_parents = 0, stack_level = 0 }),
+        --     log.processors.Timestamper("%H:%M:%S"),
+        --   },
+        --   formatter = log.formatters.FormatColorizer( --
+        --     "%s [%s] %s: %-30s",
+        --     { "timestamp", "level", "logger_name", "msg" },
+        --     { level = log.formatters.FormatColorizer.color_level() }
+        --   ),
+        --   sink = log.sinks.File("./info-log.log"),
+        -- },
+        {
+          level = log.level.WARN,
+          processors = {},
+          formatter = log.formatters.Format( --
+            "%s",
+            { "msg" },
+            { blacklist = { "level", "logger_name" } }
           ),
-        }),
-        structlog.sinks.File(log_level, logfile, {
-          processors = {
-            structlog.processors.Namer(),
-            structlog.processors.StackWriter({ "line", "file" }, { max_parents = 3, stack_level = 2 }),
-            structlog.processors.Timestamper("%H:%M:%S"),
-          },
-          formatter = structlog.formatters.Format( --
-            "%s [%-5s] %s: %-30s",
-            { "timestamp", "level", "logger_name", "msg" }
-          ),
-        }),
+          sink = log.sinks.Console(),
+        },
+        -- {
+        --   level = log.level.TRACE,
+        --   processors = {
+        --     log.processors.StackWriter({ "line", "file" }, { max_parents = 3 }),
+        --     log.processors.Timestamper("%H:%M:%S"),
+        --   },
+        --   formatter = log.formatters.Format( --
+        --     "%s [%s] %s: %-30s",
+        --     { "timestamp", "level", "logger_name", "msg" }
+        --   ),
+        --   sink = log.sinks.File("./trace-log.log"),
+        -- },
       },
     },
-  }
-
-  structlog.configure(nvim_log)
-  local logger = structlog.get_logger("nvim")
-
-  -- Overwrite `vim.notify` to use the logger
-  vim.notify = function(msg, vim_log_level, opts)
-    notify_opts = opts or {}
-
-    -- vim_log_level can be omitted
-    if vim_log_level == nil then
-      vim_log_level = Log.levels["INFO"]
-    elseif type(vim_log_level) == "string" then
-      vim_log_level = Log.levels[(vim_log_level):upper()] or Log.levels["INFO"]
-    else
-      -- https://github.com/neovim/neovim/blob/685cf398130c61c158401b992a1893c2405cd7d2/runtime/lua/vim/lsp/log.lua#L5
-      vim_log_level = vim_log_level + 1
-    end
-
-    logger:log(vim_log_level, msg)
-  end
-
+  })
+  local logger = log.get_logger("nvim")
   return logger
 end
 

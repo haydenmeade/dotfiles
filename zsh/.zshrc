@@ -18,9 +18,7 @@ function precmd () {
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
-export PATH="/opt/homebrew/opt/mongodb-community@4.4/bin:$PATH"
-export PATH="/opt/homebrew/opt/postgresql@13/bin:$PATH"
-export PATH="$HOME/bin_scrips:$PATH"
+export PATH=$HOME/go/bin:$PATH
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -49,6 +47,7 @@ plugins=(
   fzf
   gh
   golang
+  docker
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -56,6 +55,11 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 export EDITOR='nvim'
+
+export http_proxy=http://localhost:3128
+export https_proxy=http://localhost:3128
+export HTTP_PROXY=http://localhost:3128
+export HTTPS_PROXY=http://localhost:3128
 
 cdls () { 
     if [[ -z "$PS1" ]]; then
@@ -72,25 +76,25 @@ notes () {
     z ~/notes/ && nvim
 }
 
-culture_amp (){
-    local CA_ROOT_DIR=$(fd --type directory . ~/ca --max-depth 1 | fzf --header "CHOOSE PROJECT TO WORK IN")
-    echo $CA_ROOT_DIR
+anz_repo (){
+    local ROOT_DIR=$(fd --type directory . ~/anz --max-depth 1 | fzf --header "CHOOSE PROJECT TO WORK IN")
+    echo "$ROOT_DIR"
 
-    local dir="$CA_ROOT_DIR"
-    if [[ -d "$CA_ROOT_DIR/src" ]]; then
-        dir="$CA_ROOT_DIR/src"
+    local dir="$ROOT_DIR"
+    if [[ -d "$ROOT_DIR/src" ]]; then
+        dir="$ROOT_DIR/src"
     fi
 
-    z $dir
+    z "$dir"
 }
 
-can (){
-    culture_amp
+an (){
+    anz_repo
     nvim
 }
 
-ca (){
-    culture_amp
+a (){
+    anz_repo
 }
 
 # jira-cli https://github.com/ankitpokhrel/jira-cli
@@ -171,8 +175,14 @@ alias de='direnv allow .'
 alias gs='git status'
 alias ga='git add .'
 alias gc='git commit'
+alias gp='git pull'
+alias gcl='git clone'
 alias ji='jira issue list -a$(jira me)'
 alias c='pbcopy'
+alias reauth='gcloud auth login --update-adc && gcloud auth configure-docker'
+alias gomodtidy_all='for f in $(find . -name go.mod)
+do (cd $(dirname $f); go mod tidy)
+done'
 
 # useful defaults:
 # alias ~/cd=cd ~
@@ -253,3 +263,9 @@ eval "$(zoxide init zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi

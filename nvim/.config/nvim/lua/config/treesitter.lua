@@ -9,7 +9,7 @@ function M.setup()
   require("nvim-treesitter.configs").setup({
     ensure_installed = "all",
     -- List of parsers to ignore installing (for "all")
-    ignore_install = { "php", "phpdoc" },
+    ignore_install = { "php", "phpdoc", "t32" },
     highlight = {
       enable = true,
       disable = {},

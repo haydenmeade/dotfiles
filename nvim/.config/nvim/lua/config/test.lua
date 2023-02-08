@@ -13,6 +13,11 @@ function M.coverage()
 
   coverage.setup({
     commands = true,
+    lang = {
+      go = {
+        coverage_file = "tmp/coverage.out",
+      },
+    },
     highlights = {
       covered = { fg = colors.green },
       uncovered = { fg = colors.red },

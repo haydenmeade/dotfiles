@@ -84,7 +84,12 @@ function M.setup()
     -- })
     -- Lua development
     use({
-      "folke/lua-dev.nvim",
+      "folke/neodev.nvim",
+      config = function()
+        require("neodev").setup({
+          -- add any options here, or leave empty to use the default settings
+        })
+      end,
     })
 
     -- Debug adapter protocol
@@ -136,6 +141,15 @@ function M.setup()
             current = "DiffAdd",
           },
         })
+      end,
+    })
+
+    use({
+      "ldelossa/gh.nvim",
+      requires = { { "ldelossa/litee.nvim" } },
+      config = function()
+        require("litee.lib").setup({})
+        require("litee.gh").setup({})
       end,
     })
 
@@ -367,13 +381,13 @@ function M.setup()
     })
 
     -- Smooth Scrolling
-    use({
-      "karb94/neoscroll.nvim",
-      keys = { "<C-u>", "<C-d>", "gg", "G" },
-      config = function()
-        require("config.scroll")
-      end,
-    })
+    -- use({
+    --   "karb94/neoscroll.nvim",
+    --   keys = { "<C-u>", "<C-d>", "gg", "G" },
+    --   config = function()
+    --     require("config.scroll")
+    --   end,
+    -- })
 
     -- use({
     --   "lukas-reineke/indent-blankline.nvim",

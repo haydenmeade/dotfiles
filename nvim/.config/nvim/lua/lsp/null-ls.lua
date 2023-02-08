@@ -12,12 +12,9 @@ function M.setup()
   local sources = {
     null_ls.builtins.formatting.prettierd,
     null_ls.builtins.formatting.gofumpt,
-    null_ls.builtins.diagnostics.standardrb,
-    null_ls.builtins.formatting.standardrb,
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.stylua,
-    null_ls.builtins.diagnostics.hadolint,
   }
   local function exist(bin)
     return vim.fn.exepath(bin) ~= ""
