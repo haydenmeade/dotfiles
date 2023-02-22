@@ -68,19 +68,11 @@ function M.setup()
   require("mason").setup()
   local mason = require("mason-lspconfig")
   mason.setup({
-    -- ensure_installed = {
-    --   "gopls",
-    --   "golangci_lint_ls",
-    --   "eslint",
-    --   "tsserver",
-    --   "jsonls",
-    --   "sumneko_lua",
-    --   "yamlls",
-    --   "bashls",
-    --   "cssls",
-    -- },
-    -- automatic_installation = true,
-    -- log_level = vim.log.levels.INFO,
+    ensure_installed = {
+      "lua_ls",
+    },
+    automatic_installation = true,
+    log_level = vim.log.levels.INFO,
   })
 
   require("lsp.tsserver").config()
@@ -88,7 +80,7 @@ function M.setup()
   lspconfig.gopls.setup(resolve_config("gopls"))
   lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
-  lspconfig.sumneko_lua.setup(resolve_config("sumneko_lua"))
+  lspconfig.lua_ls.setup(resolve_config("lua_ls"))
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.cssls.setup(resolve_config("cssls"))
