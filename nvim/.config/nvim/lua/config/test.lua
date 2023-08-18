@@ -43,9 +43,7 @@ function M.setup()
 
   neotest.setup({
     adapters = {
-      require("neotest-jest"),
       require("neotest-go"),
-      require("neotest-rspec"),
       require("neotest-plenary"),
       -- require "neotest-vim-test" {},
     },

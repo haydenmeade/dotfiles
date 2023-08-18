@@ -194,7 +194,6 @@ function M.setup()
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
     })
-    use("jose-elias-alvarez/typescript.nvim")
     use("ray-x/lsp_signature.nvim")
     use("b0o/schemastore.nvim")
     use("jose-elias-alvarez/null-ls.nvim")
@@ -326,8 +325,7 @@ function M.setup()
     use("rcarriga/neotest-vim-test")
     use("akinsho/neotest-go")
     use("nvim-neotest/neotest-plenary")
-    use("haydenmeade/neotest-jest")
-    use("olimorris/neotest-rspec")
+    -- use("haydenmeade/neotest-jest")
     use({
       "rcarriga/neotest",
       requires = {

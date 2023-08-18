@@ -117,7 +117,7 @@ local handlers = { --{{{
   end,
 } --}}}
 
-vim.treesitter.set_query( --{{{
+vim.treesitter.query.set( --{{{
   "go",
   "LuaSnip_Result",
   [[

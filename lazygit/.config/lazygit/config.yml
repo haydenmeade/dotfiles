@@ -1,7 +1,7 @@
 gui:
   showIcons: true # NErd Font
   theme:
-    lightTheme: false # For terminals with a light background
+    lightTheme: true # For terminals with a light background
 git:
   paging:
     colorArg: always

@@ -27,6 +27,7 @@ local lsp_buffer_keymappings = {
   ["<C-k>"] = "<Cmd>lua vim.lsp.buf.signature_help()<CR>",
   ["[d"] = "<Cmd>lua vim.diagnostic.goto_prev()<CR>",
   ["]d"] = "<Cmd>lua vim.diagnostic.goto_next()<CR>",
+  ["<leader>r"] = "<Cmd>lua vim.lsp.buf.rename()<CR>",
   ["<leader><leader>"] = "<Cmd>FormatDocumentH<CR>",
 }
 local function has_value(tab, val)
@@ -59,12 +60,12 @@ function M.register_lsp(buffer)
   util.createmap_buffer("n", lsp_leader_mappings, "<leader>", buffer)
   util.createmap_buffer("n", lsp_buffer_keymappings, nil, buffer)
 
-  vim.api.nvim_buf_set_keymap(buffer, "n", "<leader>r", "", {
-    expr = true,
-    callback = function()
-      return ":IncRename " .. vim.fn.expand("<cword>")
-    end,
-  })
+  -- vim.api.nvim_buf_set_keymap(buffer, "n", "<leader>r", "", {
+  --   expr = true,
+  --   callback = function()
+  --     return ":IncRename " .. vim.fn.expand("<cword>")
+  --   end,
+  -- })
 end
 
 return M

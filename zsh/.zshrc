@@ -35,6 +35,7 @@ SAVEHIST=99999
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=( 
+    z
   git
   npm
   brew
@@ -269,3 +270,5 @@ if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zs
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
+
+source /Users/meadeh/.docker/init-zsh.sh || true # Added by Docker Desktop
