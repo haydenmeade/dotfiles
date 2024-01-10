@@ -94,12 +94,12 @@ local leader_mappings = {
 
   -- Testing
   t = {
-    n = "<Cmd>w<CR><cmd>lua require('neotest').run.run()<CR>",
-    N = "<Cmd>w<CR><cmd>TestNearest<CR>",
-    f = "<Cmd>w<CR><cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
-    F = "<Cmd>w<CR><cmd>TestFile<CR>",
-    o = "<cmd>lua require('neotest').output.open({ open_win = function() vim.cmd('vsplit') end })<CR>",
-    t = "<cmd>lua require('neotest').summary.toggle()<CR>",
+    -- n = "<Cmd>w<CR><cmd>lua require('neotest').run.run()<CR>",
+    n = "<Cmd>w<CR><cmd>TestNearest<CR>",
+    --f = "<Cmd>w<CR><cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
+    f = "<Cmd>w<CR><cmd>TestFile<CR>",
+    --o = "<cmd>lua require('neotest').output.open({ open_win = function() vim.cmd('vsplit') end })<CR>",
+    --t = "<cmd>lua require('neotest').summary.toggle()<CR>",
     c = "<cmd>Coverage<CR>",
     y = "<cmd>CoverageSummary<CR>",
   },
@@ -117,16 +117,23 @@ local leader_mappings = {
   },
 }
 
+-- vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 local keymappings = {
   i = {},
   n = {
     j = "gj",
     k = "gk",
+    n = "nzzzv",
+    N = "Nzzzv",
+    ["C-d"] = "<C-d>zz",
+    ["C-u"] = "<C-u>zz",
     [",s"] = "<Cmd>split<Cr>",
     [",v"] = "<Cmd>vs<Cr>",
   },
   v = {
     ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
+    ["J"] = "<esc><cmd>m  '>+1<CR>gv=gv",
+    ["K"] = "<esc><cmd>m  '>-2<CR>gv=gv",
 
     ["<leader>ra"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>]],
     ["<leader>re"] = [[ <Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>]],
@@ -143,6 +150,9 @@ local keymappings = {
     ["<C-S-down>"] = "<C-W>J",
     ["<C-S-up>"] = "<C-W>K",
     ["<C-S-right>"] = "<C-W>L",
+  },
+  x = {
+    ["<leader>p"] = [["_dP]],
   },
   [""] = {
     -- moving splits
