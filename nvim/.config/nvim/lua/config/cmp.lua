@@ -24,12 +24,14 @@ function M.setup()
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
 
+  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
   cmp.setup({
     formatting = {
       format = require("lspkind").cmp_format({
         with_text = true,
         menu = {
           nvim_lsp = "[LSP]",
+          Copilot = "[co]",
           buffer = "[Buffer]",
           nvim_lua = "[Lua]",
           luasnip = "[Snippet]",
@@ -41,13 +43,22 @@ function M.setup()
       }),
     },
     sorting = {
-      priority_weight = 1.0,
-      comparators = {
-        compare.locality,
-        compare.recently_used,
-        compare.score, -- based on :  score = score + ((#sources - (source_index - 1)) * sorting.priority_weight)
-        compare.offset,
-        compare.order,
+      sorting = {
+        priority_weight = 2,
+        comparators = {
+
+          -- Below is the default comparitor list and order for nvim-cmp
+          cmp.config.compare.offset,
+          -- cmp.config.compare.scopes, --this is commented in nvim-cmp too
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.locality,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
       },
     },
     mapping = {
@@ -100,12 +111,14 @@ function M.setup()
       end,
     },
     sources = {
-      { name = "nvim_lsp", max_item_count = 10 },
-      { name = "nvim_lua", max_item_count = 5 },
-      { name = "luasnip", priority = 3 },
-      { name = "treesitter", max_item_count = 10 },
-      { name = "buffer", keyword_length = 5, max_item_count = 5 },
-      { name = "path" },
+      { name = "nvim_lsp", group_index = 2, max_item_count = 10 },
+      -- Copilot Source
+      { name = "copilot", group_index = 2 },
+      { name = "nvim_lua", group_index = 2, max_item_count = 5 },
+      { name = "luasnip", group_index = 2, priority = 3 },
+      { name = "treesitter", group_index = 2, max_item_count = 10 },
+      { name = "buffer", group_index = 2, keyword_length = 5, max_item_count = 5 },
+      { name = "path", group_index = 2 },
     },
     completion = { completeopt = "menu,menuone,noinsert", keyword_length = 1 },
     experimental = {

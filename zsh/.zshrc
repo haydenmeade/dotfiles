@@ -35,20 +35,8 @@ SAVEHIST=99999
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=( 
-    z
   git
-  npm
-  brew
-  asdf
-  direnv
-  extract
   zsh-autosuggestions
-  fd
-  ripgrep
-  fzf
-  gh
-  golang
-  docker
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -61,20 +49,26 @@ export http_proxy=http://localhost:3128
 export https_proxy=http://localhost:3128
 export HTTP_PROXY=http://localhost:3128
 export HTTPS_PROXY=http://localhost:3128
+export no_proxy=*.a.run.app
+export NO_PROXY=*.a.run.app
+# export http_proxy=
+# export https_proxy=
+# export HTTP_PROXY=
+# export HTTPS_PROXY=
 
 cdls () { 
     if [[ -z "$PS1" ]]; then
-        z "$@"
+        cd "$@"
     else
-        z "$@" && exa -la; 
+        cd "$@" && exa -la; 
     fi
 }
 
 dot () {
-    z ~/dotfiles/ && nvim
+    cd ~/dotfiles/ && nvim
 }
 notes () {
-    z ~/notes/ && nvim
+    cd ~/notes/ && nvim
 }
 
 anz_repo (){
@@ -86,7 +80,7 @@ anz_repo (){
         dir="$ROOT_DIR/src"
     fi
 
-    z "$dir"
+    cd "$dir"
 }
 
 an (){
@@ -96,71 +90,6 @@ an (){
 
 a (){
     anz_repo
-}
-
-# jira-cli https://github.com/ankitpokhrel/jira-cli
-function work-on-issue() {
-    issue=$(jira issue list --columns key,summary,assignee,status --plain | fzf --header "PLEASE SELECT AN ISSUE TO WORK ON" )
-    echo ""
-    echo $issue
-    issue=${issue// /-}
-    issue=$(echo $issue )
-    read issueKey issueSummary issueAssignee issueStatus <<< "$issue"
-    issueSummary=$(echo $issueSummary | sed -e 's|\([A-Z][^A-Z]\)| \1|g' -e 's|\([a-z]\)\([A-Z]\)|\1 \2|g' | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -s '-')
-    
-    branchname=$(echo $issueKey-$issueSummary | tr -s '-')
-    shortname=$(echo $branchname | head -c 60)
-    # echo $branchname
-
-    # Mark as in progress
-    issueStatus=$(echo $issueStatus | tr '[:upper:]' '[:lower:]' | tr ' ' '-' | tr -s '-')
-    echo $issueStatus
-
-    # Assign 
-    if [[ $issueAssignee != "Hayden-Meade" ]]; then
-        echo "Do you want to assign to self? (Y/n)? " 
-        read -n 1 assign
-        [ -z "$assign" ] && assign="y"  # if 'yes' have to be default choice
-        if [[ $assign == "y" ]]; then
-            jira issue assign $issueKey $(jira me)
-        fi
-    fi
-
-    # mark as in progress
-    if [[ $issueStatus == "to-do" || $issueStatus == "" ]]; then
-        echo "Do you want to mark as in progress? (Y/n)? " 
-        read -n 1 mark
-        [ -z "$mark" ] && mark="y"  # if 'yes' have to be default choice
-        if [[ $mark == "y" ]]; then
-            jira issue move $issueKey "In Progress"
-        fi
-    fi
-
-    # Git Branch:
-    echo "Do you want to create git branch? (Y/n)? " 
-    read -n 1 gitb
-    [ -z "$gitb" ] && gitb="y"  # if 'yes' have to be default choice
-    if [[ $gitb != "y" ]]; then
-        return
-    fi
-    if [[ ! -z "$shortname" ]]; then
-        git fetch
-        existing=$(git branch -a | grep -v remotes | grep $shortname | head -n 1)
-        if [[ ! -z "$existing" ]]; then
-            echo "Using existing git branch"
-            sh -c "git switch $existing"
-        else
-            bold=$(tput bold)
-            normal=$(tput sgr0)
-            echo "${bold}Please confirm new branch name:${normal}"
-            vared branchname
-            base=$(git branch --show-current)
-            echo "${bold}Please confirm the base branch:${normal}"
-            vared base
-            git checkout -b $branchname origin/$base
-            # git push --set-upstream origin $branchname
-        fi
-    fi
 }
 
 alias py='python3'
@@ -187,7 +116,7 @@ done'
 
 # useful defaults:
 # alias ~/cd=cd ~
-# alias -='cd -'
+alias -- -="cd -"
 # alias ...=../..
 # alias ....=../../..
 # alias .....=../../../..
@@ -272,3 +201,6 @@ if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zs
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
 
 source /Users/meadeh/.docker/init-zsh.sh || true # Added by Docker Desktop
+export PATH="/opt/homebrew/sbin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"

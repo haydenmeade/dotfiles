@@ -37,12 +37,6 @@ function M.setup()
     use({ "tpope/vim-surround", event = "BufRead" })
     use({ "tpope/vim-sleuth" })
     use("tpope/vim-abolish") -- :%S/abc/bac/
-    use({
-      "smjonas/inc-rename.nvim",
-      config = function()
-        require("inc_rename").setup()
-      end,
-    })
 
     use({
       "numToStr/Comment.nvim",
@@ -105,6 +99,25 @@ function M.setup()
     --Splits
     use("mrjones2014/smart-splits.nvim")
 
+    use({
+      "zbirenbaum/copilot.lua",
+      cmd = "Copilot",
+      event = "InsertEnter",
+      config = function()
+        require("copilot").setup({
+          suggestion = { enabled = false },
+          panel = { enabled = false },
+        })
+      end,
+    })
+    use({
+      "zbirenbaum/copilot-cmp",
+      after = { "copilot.lua" },
+      config = function()
+        require("copilot_cmp").setup()
+      end,
+    })
+
     -- kitty
     use({
       "knubie/vim-kitty-navigator",
@@ -144,26 +157,26 @@ function M.setup()
       end,
     })
 
-    use({
-      "ldelossa/gh.nvim",
-      requires = { { "ldelossa/litee.nvim" } },
-      config = function()
-        require("litee.lib").setup({})
-        require("litee.gh").setup({})
-      end,
-    })
+    -- use({
+    --   "ldelossa/gh.nvim",
+    --   requires = { { "ldelossa/litee.nvim" } },
+    --   config = function()
+    --     require("litee.lib").setup({})
+    --     require("litee.gh").setup({})
+    --   end,
+    -- })
 
-    use({
-      "pwntester/octo.nvim",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope.nvim",
-        "kyazdani42/nvim-web-devicons",
-      },
-      config = function()
-        require("config.octo").setup()
-      end,
-    })
+    -- use({
+    --   "pwntester/octo.nvim",
+    --   requires = {
+    --     "nvim-lua/plenary.nvim",
+    --     "nvim-telescope/telescope.nvim",
+    --     "kyazdani42/nvim-web-devicons",
+    --   },
+    --   config = function()
+    --     require("config.octo").setup()
+    --   end,
+    -- })
 
     -- Logging
     use({ "Tastyep/structlog.nvim" })
@@ -294,7 +307,6 @@ function M.setup()
     use({
       "nvim-telescope/telescope.nvim",
       module = "telescope",
-      as = "telescope",
       requires = {
         "nvim-lua/plenary.nvim",
         "nvim-telescope/telescope-symbols.nvim",
@@ -322,18 +334,18 @@ function M.setup()
         require("config.test").coverage()
       end,
     })
-    use("rcarriga/neotest-vim-test")
-    use("akinsho/neotest-go")
-    use("nvim-neotest/neotest-plenary")
+    -- use("rcarriga/neotest-vim-test")
+    -- use("akinsho/neotest-go")
+    -- use("nvim-neotest/neotest-plenary")
     -- use("haydenmeade/neotest-jest")
-    use({
-      "rcarriga/neotest",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-treesitter/nvim-treesitter",
-        "antoinemadec/FixCursorHold.nvim",
-      },
-    })
+    -- use({
+    --   "rcarriga/neotest",
+    --   requires = {
+    --     "nvim-lua/plenary.nvim",
+    --     "nvim-treesitter/nvim-treesitter",
+    --     "antoinemadec/FixCursorHold.nvim",
+    --   },
+    -- })
 
     -- use({
     --   "folke/which-key.nvim",
@@ -342,7 +354,6 @@ function M.setup()
     --     require("config.whichkey").setup()
     --   end,
     -- })
-    use({ "shortcuts/no-neck-pain.nvim" })
 
     use({
       "nvim-lualine/lualine.nvim",
@@ -398,9 +409,9 @@ function M.setup()
     -- use "rebelot/kanagawa.nvim"
     -- use "luisiacc/gruvbox-baby"
     -- use "eddyekofo94/gruvbox-flat.nvim"
-    use("EdenEast/nightfox.nvim")
+    -- use("EdenEast/nightfox.nvim")
     -- use("Shatur/neovim-ayu")
-    use("folke/tokyonight.nvim")
+    -- use("folke/tokyonight.nvim")
     -- use("sainnhe/edge")
     -- use "Mofiqul/dracula.nvim"
     use({

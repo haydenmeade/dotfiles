@@ -26,10 +26,10 @@ function M.coverage()
 end
 
 function M.setup()
-  local ok, neotest = h.safe_require("neotest")
-  if not ok then
-    return
-  end
+  -- local ok, neotest = h.safe_require("neotest")
+  -- if not ok then
+  --   return
+  -- end
 
   -- vim.g.ultest_use_pty = 1
   vim.g.preserve_screen = 1
@@ -41,13 +41,13 @@ function M.setup()
     false
   )
 
-  neotest.setup({
-    adapters = {
-      require("neotest-go"),
-      require("neotest-plenary"),
-      -- require "neotest-vim-test" {},
-    },
-  })
+  -- neotest.setup({
+  --   adapters = {
+  --     require("neotest-go"),
+  --     require("neotest-plenary"),
+  --     -- require "neotest-vim-test" {},
+  --   },
+  -- })
 end
 
 return M
