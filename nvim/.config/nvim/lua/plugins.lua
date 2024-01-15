@@ -229,6 +229,8 @@ function M.setup()
 
     use({
       "L3MON4D3/LuaSnip",
+      tag = "v2.*",
+      run = "make install_jsregexp",
       requires = "rafamadriz/friendly-snippets",
       config = function()
         require("config.luasnip").setup()
