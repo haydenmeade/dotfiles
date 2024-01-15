@@ -73,7 +73,6 @@ function M.setup()
         peek_definition_code = {},
       },
     },
-    context_commentstring = { enable = true, enable_autocmd = false },
     matchup = { enable = true },
     endwise = {
       enable = true,

@@ -270,7 +270,6 @@ function M.setup()
       end,
       requires = {
         "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
-        "JoosepAlviste/nvim-ts-context-commentstring",
         "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
         "nvim-treesitter/nvim-treesitter-refactor",
         "RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages

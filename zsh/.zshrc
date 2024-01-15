@@ -131,6 +131,31 @@ alias -- -="cd -"
 # alias 8='cd -8'
 # alias 9='cd -9'
 # alias _='sudo '
+function killv() {
+    killall AppSSOAgent
+    kill `ps augx | awk '/Microsoft Teams/ ''{print $2}'`  
+    kill `ps augx | awk '/Microsoft Outlook/ ''{print $2}'`  
+    kill `ps augx | awk '/Spotify/ ''{print $2}'`  
+}
+function killvv() {
+    killv
+    kill `ps augx | awk '/Slack/ ''{print $2}'`  
+
+    osascript -e 'open application "Microsoft Outlook"'
+    osascript -e 'open application "Microsoft Teams classic"'
+    osascript -e 'open application "Slack"'
+}
+function watchcomponentlogs(){
+    while true ; do
+        if [[ "$(docker inspect -f '{{.State.Running}}' commandcentre_component)" == "true" ]]; then
+            docker logs -f commandcentre_component
+            sleep 0.1;
+        fi
+        until [[ "$(docker inspect -f '{{.State.Running}}' commandcentre_component)" == "true" ]]; do
+            sleep 0.1;
+        done;
+    done
+}
 find-rename-regex() (
   set -eu
   find_and_replace="$1"

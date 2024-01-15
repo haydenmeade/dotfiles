@@ -69,7 +69,7 @@ cmd + shift - 1 : /Applications/kitty.app/Contents/MacOS/kitty --override allow_
 f1 : switchToOsa "kitty"
 f2 : switchToOsa "Google Chrome"
 f3 : switchToOsa "Slack"
-f4 : switchToOsa "Microsoft Teams"
+f4 : switchToOsa "Microsoft Teams classic"
 f5 : switchToOsa "Outlook"
 # cmd - 6 : switchTo "Authy Desktop"
 # cmd - 8 : switchTo "Miro"
