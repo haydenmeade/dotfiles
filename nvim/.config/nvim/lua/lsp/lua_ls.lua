@@ -7,12 +7,12 @@ function M.config()
         diagnostics = { globals = { "vim" } },
         runtime = {
           version = "LuaJIT",
-          path = vim.split(package.path, ";"),
         },
         workspace = {
+          checkThirdParty = false,
           library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+            vim.env.VIMRUNTIME,
+            "${3rd}/luv/library",
           },
           maxPreload = 100000,
           preloadFileSize = 10000,

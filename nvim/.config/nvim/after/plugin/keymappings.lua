@@ -11,8 +11,8 @@ local leader_mappings = {
   C = "<cmd>Telescope file_create<CR>",
   f = "<cmd>lua require('config.telescope').find_project_files()<CR>",
   F = "<cmd>lua require('config.telescope').live_grep_in_glob()<CR>",
-  E = "<cmd>Telescope file_browser<CR>",
-  e = "<Cmd>NvimTreeToggle<CR>",
+  e = "<cmd>lua require('oil').open(vim.fn.expand('%:p:h'))<CR>",
+  E = "<Cmd>NvimTreeToggle<CR>",
   h = "<cmd>nohlsearch<CR>",
 
   -- System
@@ -70,6 +70,10 @@ local leader_mappings = {
     p = "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
   },
 
+  -- Buffers
+  b = {
+    q = "<cmd>bd<cr>",
+  },
   -- Git
   g = {
     a = "<Cmd>Telescope repo list<Cr>",
