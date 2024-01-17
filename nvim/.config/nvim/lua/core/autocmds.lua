@@ -54,6 +54,8 @@ vim.api.nvim_exec(
 
 local format_on_save = true
 
+vim.api.nvim_create_user_command("FormatDocumentH", function() end, {})
+
 function M.configure_format_on_save()
   local augid = vim.api.nvim_create_augroup("user_lsp_fmt_on_save", { clear = true })
   if format_on_save then
