@@ -1,7 +1,6 @@
 [user]
-	email = hayden.meade@anz.com
-	name = Hayden Meade
-	signingkey = 6DAD1916981CB4F7
+  email = haydenmeade@gmail.com
+  name = Hayden Meade
 [push]
   default = current
 [color]
@@ -15,24 +14,13 @@
   pager = delta
 [commit]
   template = ~/.gitmessage
-	gpgsign = true
 [fetch]
   prune = true
 [pull]
   rebase = false
-[gpg]
-	program = gpg
-[interactive]
-    diffFilter = delta --color-only
-
-[delta]
-    navigate = true    # use n and N to move between diff sections
-    light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
-
 [merge]
-    conflictstyle = diff3
-
+  conflictstyle = diff3
 [diff]
-    colorMoved = default
-[url "git@github.com:"]
-	insteadOf = https://github.com
+  colorMoved = default
+[credential "https://github.com"]
+  helper = !/usr/bin/gh auth git-credential
