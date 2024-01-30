@@ -18,41 +18,40 @@ end
 lazy_init()
 
 require("lazy").setup({
-  { "nvim-lua/plenary.nvim", lazy = true },
-  { "kyazdani42/nvim-web-devicons", lazy = true },
+  { "nvim-lua/plenary.nvim" },
+  { "kyazdani42/nvim-web-devicons" },
 
   -- Development
-  { "tpope/vim-repeat", lazy = true },
-  { "tpope/vim-surround", lazy = true, event = "BufRead" },
-  { "tpope/vim-sleuth", lazy = true },
-  { "tpope/vim-abolish", lazy = true },
+  { "tpope/vim-repeat", event = "BufReadPre" },
+  { "tpope/vim-surround", event = "BufReadPre" },
+  { "tpope/vim-sleuth", event = "BufReadPre" },
+  { "tpope/vim-abolish", event = "BufReadPre" },
+
   {
     "numToStr/Comment.nvim",
-    lazy = true,
+    event = "BufReadPre",
     config = function()
       require("config.comment").setup()
     end,
   },
   {
     "folke/trouble.nvim",
-    lazy = true,
     cmd = { "TroubleToggle", "Trouble" },
     config = function()
       require("trouble").setup({ auto_open = false })
     end,
   },
+
   { "ThePrimeagen/harpoon" },
 
-  { "folke/neodev.nvim", lazy = true },
+  { "folke/neodev.nvim" },
 
   --Splits
-  { "mrjones2014/smart-splits.nvim", lazy = true },
+  { "mrjones2014/smart-splits.nvim" },
 
   {
     "zbirenbaum/copilot.lua",
     cmd = "Copilot",
-    event = "InsertEnter",
-    lazy = true,
     opts = {
       suggestion = { enabled = false },
       panel = { enabled = false },
@@ -60,11 +59,11 @@ require("lazy").setup({
   },
   {
     "zbirenbaum/copilot-cmp",
-    lazy = true,
   },
 
   {
     "knubie/vim-kitty-navigator",
+    event = "BufReadPre",
     config = function()
       require("config.kitty").setup()
     end,
@@ -75,15 +74,15 @@ require("lazy").setup({
   {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
-    lazy = true,
   },
   {
     "sindrets/diffview.nvim",
-    lazy = true,
+    cmd = "DiffviewOpen",
   },
   {
     "akinsho/git-conflict.nvim",
-    lazy = true,
+    event = "BufReadPre",
+    version = "*",
     opts = {
       default_mappings = true, -- disable buffer local mapping created by this plugin
       disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
@@ -100,6 +99,7 @@ require("lazy").setup({
   -- Sessions
   {
     "rmagatti/auto-session",
+    lazy = false,
     config = function()
       require("auto-session").setup({
         log_level = "error",
@@ -110,9 +110,9 @@ require("lazy").setup({
 
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
-  { "ray-x/lsp_signature.nvim", lazy = true },
-  { "b0o/schemastore.nvim", lazy = true },
-  { "jose-elias-alvarez/null-ls.nvim", lazy = true },
+  { "ray-x/lsp_signature.nvim" },
+  { "b0o/schemastore.nvim" },
+  { "jose-elias-alvarez/null-ls.nvim" },
   {
     "onsails/lspkind-nvim",
     config = function()
@@ -124,6 +124,7 @@ require("lazy").setup({
     config = function()
       require("lsp").setup()
     end,
+    event = { "BufReadPre", "BufNewFile" },
   },
 
   {
@@ -137,25 +138,22 @@ require("lazy").setup({
     config = function()
       require("config.luasnip").setup()
     end,
-    lazy = true,
   },
 
-  { "hrsh7th/cmp-buffer", lazy = true },
-  { "hrsh7th/cmp-nvim-lsp", lazy = true },
-  { "hrsh7th/cmp-nvim-lua", lazy = true },
-  { "hrsh7th/cmp-path", lazy = true },
-  { "hrsh7th/cmp-calc", lazy = true },
-  { "hrsh7th/cmp-cmdline", lazy = true },
-  { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
-  { "octaltree/cmp-look", lazy = true },
-  { "f3fora/cmp-spell", lazy = true },
-  { "ray-x/cmp-treesitter", lazy = true },
-  { "saadparwaiz1/cmp_luasnip", lazy = true },
+  { "hrsh7th/cmp-buffer" },
+  { "hrsh7th/cmp-nvim-lsp" },
+  { "hrsh7th/cmp-nvim-lua" },
+  { "hrsh7th/cmp-path" },
+  { "hrsh7th/cmp-cmdline" },
+  { "hrsh7th/cmp-nvim-lsp-document-symbol" },
+  { "octaltree/cmp-look" },
+  { "f3fora/cmp-spell" },
+  { "ray-x/cmp-treesitter" },
+  { "saadparwaiz1/cmp_luasnip" },
 
   {
     "hrsh7th/nvim-cmp",
-    event = { "InsertEnter" },
-    lazy = true,
+    event = "BufReadPre",
     config = function()
       require("config.cmp").setup()
     end,
@@ -168,6 +166,7 @@ require("lazy").setup({
   {
     "windwp/nvim-autopairs",
     build = "make",
+    event = "BufReadPre",
   },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
@@ -180,7 +179,6 @@ require("lazy").setup({
 
   {
     "ThePrimeagen/refactoring.nvim",
-    lazy = true,
   },
 
   { "nvim-telescope/telescope-symbols.nvim" },
@@ -201,21 +199,16 @@ require("lazy").setup({
   -- Testing
   {
     "vim-test/vim-test",
+    cmd = { "TestNearest", "TestFile" },
     config = function()
       require("config.test").setup()
     end,
   },
   {
     "andythigpen/nvim-coverage",
+    cmd = { "Coverage" },
     config = function()
       require("config.test").coverage()
-    end,
-  },
-
-  {
-    "nvim-lualine/lualine.nvim",
-    config = function()
-      require("config.lualine").setup()
     end,
   },
 
@@ -226,38 +219,22 @@ require("lazy").setup({
       view_options = {
         show_hidden = true,
       },
-      keymaps = {
-        ["g?"] = "actions.show_help",
-        ["<CR>"] = "actions.select",
-        ["<C-s>"] = "actions.select_vsplit",
-        ["<C-h>"] = "actions.select_split",
-        ["<C-t>"] = "actions.select_tab",
-        ["<C-p>"] = "actions.preview",
-        ["<C-c>"] = "actions.close",
-        ["<C-l>"] = "actions.refresh",
-        ["-"] = "actions.parent",
-        ["_"] = "actions.open_cwd",
-        ["`"] = "actions.cd",
-        ["~"] = "actions.tcd",
-        ["gs"] = "actions.change_sort",
-        ["gx"] = "actions.open_external",
-        ["g."] = "actions.toggle_hidden",
-        ["g\\"] = "actions.toggle_trash",
-      },
-      -- Set to false to disable all of the above keymaps
       _default_keymaps = true,
     },
-    lazy = true,
-  },
-  {
-    "f-person/auto-dark-mode.nvim",
-    config = function()
-      require("config.theme").setup()
-    end,
   },
   {
     "catppuccin/nvim",
     name = "catppuccin",
+    config = function()
+      vim.cmd([[colorscheme catppuccin]])
+    end,
+    priority = 1000,
+    lazy = false,
+  },
+}, {
+  defaults = {
+    lazy = true,
+    event = "VeryLazy",
   },
 })
 
