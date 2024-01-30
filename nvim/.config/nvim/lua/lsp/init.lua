@@ -59,8 +59,6 @@ function M.setup()
   end
 
   -- custom handlers
-  require("lsp.handlers").setup()
-
   require("lsp.null-ls").setup()
 
   require("core.autocmds").configure_format_on_save()
