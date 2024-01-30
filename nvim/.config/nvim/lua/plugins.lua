@@ -98,7 +98,15 @@ require("lazy").setup({
   { "Tastyep/structlog.nvim" },
 
   -- Sessions
-  { "rmagatti/auto-session" },
+  {
+    "rmagatti/auto-session",
+    config = function()
+      require("auto-session").setup({
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/" },
+      })
+    end,
+  },
 
   { "williamboman/mason.nvim" },
   { "williamboman/mason-lspconfig.nvim" },
