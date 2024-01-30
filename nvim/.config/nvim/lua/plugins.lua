@@ -1,511 +1,256 @@
 local M = {}
 
-local packer_bootstrap = false
-
-local function packer_init()
-  local fn = vim.fn
-  local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-  if fn.empty(fn.glob(install_path)) > 0 then
-    packer_bootstrap = fn.system({
+local function lazy_init()
+  local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+  if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
       "git",
       "clone",
-      "--depth",
-      "1",
-      "https://github.com/wbthomason/packer.nvim",
-      install_path,
+      "--filter=blob:none",
+      "https://github.com/folke/lazy.nvim.git",
+      "--branch=stable", -- latest stable release
+      lazypath,
     })
-    vim.cmd([[packadd packer.nvim]])
   end
+  vim.opt.rtp:prepend(lazypath)
 end
 
-packer_init()
+lazy_init()
 
-function M.setup()
-  local function plugins(use)
-    use("lewis6991/impatient.nvim")
+require("lazy").setup({
+  { "nvim-lua/plenary.nvim", lazy = true },
+  { "kyazdani42/nvim-web-devicons", lazy = true },
 
-    use("nvim-lua/plenary.nvim")
-    use("wbthomason/packer.nvim")
+  -- Development
+  { "tpope/vim-repeat", lazy = true },
+  { "tpope/vim-surround", lazy = true, event = "BufRead" },
+  { "tpope/vim-sleuth", lazy = true },
+  { "tpope/vim-abolish", lazy = true },
+  {
+    "numToStr/Comment.nvim",
+    lazy = true,
+    config = function()
+      require("config.comment").setup()
+    end,
+  },
+  {
+    "folke/trouble.nvim",
+    lazy = true,
+    cmd = { "TroubleToggle", "Trouble" },
+    config = function()
+      require("trouble").setup({ auto_open = false })
+    end,
+  },
+  { "ThePrimeagen/harpoon" },
 
-    use({ "antoinemadec/FixCursorHold.nvim" }) -- Needed while issue https://github.com/neovim/neovim/issues/12587 is still open
+  { "folke/neodev.nvim", lazy = true },
 
-    -- notify override
-    -- use "rcarriga/nvim-notify"
+  --Splits
+  { "mrjones2014/smart-splits.nvim", lazy = true },
 
-    -- Development
-    use("tpope/vim-repeat")
-    use({ "tpope/vim-surround", event = "BufRead" })
-    use({ "tpope/vim-sleuth" })
-    use("tpope/vim-abolish") -- :%S/abc/bac/
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    lazy = true,
+    opts = {
+      suggestion = { enabled = false },
+      panel = { enabled = false },
+    },
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    lazy = true,
+  },
 
-    use({
-      "numToStr/Comment.nvim",
-      config = function()
-        require("config.comment").setup()
-      end,
-    })
-    use({
-      "folke/trouble.nvim",
-      cmd = { "TroubleToggle", "Trouble" },
-      config = function()
-        require("trouble").setup({ auto_open = false })
-      end,
-    })
-    use({
-      "ThePrimeagen/harpoon",
-      requires = { "nvim-lua/plenary.nvim" },
-    })
+  {
+    "knubie/vim-kitty-navigator",
+    config = function()
+      require("config.kitty").setup()
+    end,
+    build = { "cp ./*.py ~/.config/kitty/" },
+  },
 
-    -- Go development
-    -- use({
-    --   "ray-x/go.nvim",
-    --   config = function()
-    --     require("go").setup({
-    --       test_runner = "go", -- richgo, go test, richgo, dlv, ginkgo
-    --       run_in_floaterm = false, -- set to true to run in float window.
-    --       --float term recommand if you use richgo/ginkgo with terminal color
-    --       dap_debug = true, -- set to true to enable dap
-    --       dap_debug_keymap = false, -- set keymaps for debugger
-    --       dap_debug_gui = true, -- set to true to enable dap gui, highly recommand
-    --       dap_debug_vt = true, -- set to true to enable dap virtual text
-    --       -- Disable everything for LSP
-    --       lsp_cfg = false, -- true: apply go.nvim non-default gopls setup
-    --       lsp_gofumpt = false, -- true: set default gofmt in gopls format to gofumpt
-    --       lsp_on_attach = false, -- if a on_attach function provided:  attach on_attach function to gopls
-    --       gopls_cmd = nil, -- if you need to specify gopls path and cmd, e.g {"/home/user/lsp/gopls", "-logfile", "/var/log/gopls.log" }
-    --     })
-    --   end,
-    -- })
-    -- Lua development
-    use({
-      "folke/neodev.nvim",
-      config = function()
-        require("neodev").setup({
-          -- add any options here, or leave empty to use the default settings
-        })
-      end,
-    })
-
-    -- Debug adapter protocol
-    -- use "mfussenegger/nvim-dap"
-    -- use "rcarriga/nvim-dap-ui"
-    -- use "theHamsta/nvim-dap-virtual-text"
-    -- use "nvim-telescope/telescope-dap.nvim"
-
-    -- Jumps
-    -- Maybe use this another time
-    -- use "ggandor/lightspeed.nvim"
-
-    --Splits
-    use("mrjones2014/smart-splits.nvim")
-
-    use({
-      "zbirenbaum/copilot.lua",
-      cmd = "Copilot",
-      event = "InsertEnter",
-      config = function()
-        require("copilot").setup({
-          suggestion = { enabled = false },
-          panel = { enabled = false },
-        })
-      end,
-    })
-    use({
-      "zbirenbaum/copilot-cmp",
-      after = { "copilot.lua" },
-      config = function()
-        require("copilot_cmp").setup()
-      end,
-    })
-
-    -- kitty
-    use({
-      "knubie/vim-kitty-navigator",
-      config = function()
-        require("config.kitty").setup()
-      end,
-      run = { "cp ./*.py ~/.config/kitty/" },
-    })
-
-    -- Git
-    use({
-      "lewis6991/gitsigns.nvim",
-      event = "BufReadPre",
-      requires = { "nvim-lua/plenary.nvim" },
-      config = function()
-        require("gitsigns").setup()
-      end,
-    })
-    use({
-      "sindrets/diffview.nvim",
-      requires = {
-        "kyazdani42/nvim-web-devicons",
-        "nvim-lua/plenary.nvim",
+  -- Git
+  {
+    "lewis6991/gitsigns.nvim",
+    event = "BufReadPre",
+    lazy = true,
+  },
+  {
+    "sindrets/diffview.nvim",
+    lazy = true,
+  },
+  {
+    "akinsho/git-conflict.nvim",
+    lazy = true,
+    opts = {
+      default_mappings = true, -- disable buffer local mapping created by this plugin
+      disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
+      highlights = { -- They must have background color, otherwise the default color will be d
+        incoming = "DiffText",
+        current = "DiffAdd",
       },
-    })
-    use({
-      "akinsho/git-conflict.nvim",
-      config = function()
-        require("git-conflict").setup({
-          default_mappings = true, -- disable buffer local mapping created by this plugin
-          disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
-          highlights = { -- They must have background color, otherwise the default color will be used
-            incoming = "DiffText",
-            current = "DiffAdd",
-          },
-        })
-      end,
-    })
+    },
+  },
 
-    -- use({
-    --   "ldelossa/gh.nvim",
-    --   requires = { { "ldelossa/litee.nvim" } },
-    --   config = function()
-    --     require("litee.lib").setup({})
-    --     require("litee.gh").setup({})
-    --   end,
-    -- })
+  -- Logging
+  { "Tastyep/structlog.nvim" },
 
-    -- use({
-    --   "pwntester/octo.nvim",
-    --   requires = {
-    --     "nvim-lua/plenary.nvim",
-    --     "nvim-telescope/telescope.nvim",
-    --     "kyazdani42/nvim-web-devicons",
-    --   },
-    --   config = function()
-    --     require("config.octo").setup()
-    --   end,
-    -- })
+  -- Sessions
+  { "rmagatti/auto-session" },
 
-    -- Logging
-    use({ "Tastyep/structlog.nvim" })
+  { "williamboman/mason.nvim" },
+  { "williamboman/mason-lspconfig.nvim" },
+  { "ray-x/lsp_signature.nvim", lazy = true },
+  { "b0o/schemastore.nvim", lazy = true },
+  { "jose-elias-alvarez/null-ls.nvim", lazy = true },
+  {
+    "onsails/lspkind-nvim",
+    config = function()
+      require("lspkind").init()
+    end,
+  },
+  {
+    "neovim/nvim-lspconfig",
+    config = function()
+      require("lsp").setup()
+    end,
+  },
 
-    -- Sessions
-    use({
-      "rmagatti/session-lens",
-      requires = { "rmagatti/auto-session" },
-      config = function()
-        require("config.auto-session").setup()
-        require("session-lens").setup({
-          path_display = { "shorten" },
-          previewer = true,
-        })
-      end,
-    })
+  {
+    "rafamadriz/friendly-snippets",
+  },
 
-    --LSP
-    -- use({
-    --   "j-hui/fidget.nvim", -- loading progress
-    --   event = "BufReadPre",
-    --   config = function()
-    --     require("fidget").setup({})
-    --   end,
-    -- })
+  {
+    "L3MON4D3/LuaSnip",
+    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+    build = "make install_jsregexp",
+    config = function()
+      require("config.luasnip").setup()
+    end,
+    lazy = true,
+  },
 
-    use({
-      "williamboman/mason.nvim",
-      "williamboman/mason-lspconfig.nvim",
-    })
-    use("ray-x/lsp_signature.nvim")
-    use("b0o/schemastore.nvim")
-    use("jose-elias-alvarez/null-ls.nvim")
-    use({
-      "onsails/lspkind-nvim",
-      config = function()
-        require("lspkind").init()
-      end,
-    })
-    use({
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("lsp").setup()
-      end,
-    })
+  { "hrsh7th/cmp-buffer", lazy = true },
+  { "hrsh7th/cmp-nvim-lsp", lazy = true },
+  { "hrsh7th/cmp-nvim-lua", lazy = true },
+  { "hrsh7th/cmp-path", lazy = true },
+  { "hrsh7th/cmp-calc", lazy = true },
+  { "hrsh7th/cmp-cmdline", lazy = true },
+  { "hrsh7th/cmp-nvim-lsp-document-symbol", lazy = true },
+  { "octaltree/cmp-look", lazy = true },
+  { "f3fora/cmp-spell", lazy = true },
+  { "ray-x/cmp-treesitter", lazy = true },
+  { "saadparwaiz1/cmp_luasnip", lazy = true },
 
-    use({
-      "rafamadriz/friendly-snippets",
-    })
+  {
+    "hrsh7th/nvim-cmp",
+    event = { "InsertEnter" },
+    lazy = true,
+    config = function()
+      require("config.cmp").setup()
+    end,
+  },
 
-    use({
-      "L3MON4D3/LuaSnip",
-      tag = "v2.*",
-      run = "make install_jsregexp",
-      requires = "rafamadriz/friendly-snippets",
-      config = function()
-        require("config.luasnip").setup()
-      end,
-      after = { "nvim-cmp", "nvim-treesitter" },
-    })
+  { "nvim-treesitter/nvim-treesitter-textobjects" }, -- Syntax aware text-objects, select, move, swap, and peek support.
+  { "David-Kunz/treesitter-unit" }, -- Better selection of Treesitter code
+  { "nvim-treesitter/nvim-treesitter-refactor" },
+  { "RRethy/nvim-treesitter-endwise" }, -- add "end" in Ruby and other languages
+  {
+    "windwp/nvim-autopairs",
+    build = "make",
+  },
+  { "nvim-treesitter/nvim-treesitter-context" },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    build = ":TSUpdate",
+    config = function()
+      require("config.treesitter").setup()
+    end,
+  },
 
-    -- Autocomplete
-    use({
-      "hrsh7th/nvim-cmp",
-      event = { "BufRead", "BufNewFile", "InsertEnter" },
-      opt = true,
-      requires = {
-        "hrsh7th/cmp-buffer",
-        "hrsh7th/cmp-nvim-lsp",
-        "hrsh7th/cmp-nvim-lua",
-        "hrsh7th/cmp-path",
-        "hrsh7th/cmp-calc",
-        "hrsh7th/cmp-emoji",
-        "hrsh7th/cmp-cmdline",
-        "hrsh7th/cmp-nvim-lsp-document-symbol",
-        "octaltree/cmp-look",
-        "f3fora/cmp-spell",
-        "ray-x/cmp-treesitter",
-        "saadparwaiz1/cmp_luasnip",
+  {
+    "ThePrimeagen/refactoring.nvim",
+    lazy = true,
+  },
+
+  { "nvim-telescope/telescope-symbols.nvim" },
+  { "nvim-telescope/telescope-file-browser.nvim" },
+  { "nvim-telescope/telescope-live-grep-raw.nvim" },
+  { "benfowler/telescope-luasnip.nvim" },
+  { "nvim-telescope/telescope-ui-select.nvim" },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+  {
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    config = function()
+      require("config.telescope").setup()
+    end,
+  },
+
+  -- Testing
+  {
+    "vim-test/vim-test",
+    config = function()
+      require("config.test").setup()
+    end,
+  },
+  {
+    "andythigpen/nvim-coverage",
+    config = function()
+      require("config.test").coverage()
+    end,
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    config = function()
+      require("config.lualine").setup()
+    end,
+  },
+
+  {
+    "stevearc/oil.nvim",
+    opts = {
+      default_file_explorer = true,
+      view_options = {
+        show_hidden = true,
       },
-      after = { "friendly-snippets", "nvim-treesitter" },
-      config = function()
-        require("config.cmp").setup()
-      end,
-    })
-
-    -- Better syntax
-    use({
-      "nvim-treesitter/nvim-treesitter",
-      run = ":TSUpdate",
-      config = function()
-        require("config.treesitter").setup()
-      end,
-      requires = {
-        "nvim-treesitter/nvim-treesitter-textobjects", -- Syntax aware text-objects, select, move, swap, and peek support.
-        "David-Kunz/treesitter-unit", -- Better selection of Treesitter code
-        "nvim-treesitter/nvim-treesitter-refactor",
-        "RRethy/nvim-treesitter-endwise", -- add "end" in Ruby and other languages
-        {
-          "nvim-treesitter/playground",
-          after = "nvim-treesitter",
-          run = ":TSInstall query",
-          opt = true,
-          cmd = { "TSPlaygroundToggle", "TSHighlightCapturesUnderCursor" },
-        },
-        {
-          "windwp/nvim-autopairs",
-          run = "make",
-          config = function()
-            require("nvim-autopairs").setup({})
-          end,
-        },
+      keymaps = {
+        ["g?"] = "actions.show_help",
+        ["<CR>"] = "actions.select",
+        ["<C-s>"] = "actions.select_vsplit",
+        ["<C-h>"] = "actions.select_split",
+        ["<C-t>"] = "actions.select_tab",
+        ["<C-p>"] = "actions.preview",
+        ["<C-c>"] = "actions.close",
+        ["<C-l>"] = "actions.refresh",
+        ["-"] = "actions.parent",
+        ["_"] = "actions.open_cwd",
+        ["`"] = "actions.cd",
+        ["~"] = "actions.tcd",
+        ["gs"] = "actions.change_sort",
+        ["gx"] = "actions.open_external",
+        ["g."] = "actions.toggle_hidden",
+        ["g\\"] = "actions.toggle_trash",
       },
-    })
-    use("nvim-treesitter/nvim-treesitter-context")
-
-    use({
-      "ThePrimeagen/refactoring.nvim",
-      requires = {
-        { "nvim-lua/plenary.nvim" },
-        { "nvim-treesitter/nvim-treesitter" },
-      },
-      config = function()
-        require("refactoring").setup({})
-      end,
-    })
-
-    -- Telescope
-    use({
-      "nvim-telescope/telescope.nvim",
-      module = "telescope",
-      requires = {
-        "nvim-lua/plenary.nvim",
-        "nvim-telescope/telescope-symbols.nvim",
-        "cljoly/telescope-repo.nvim",
-        "nvim-telescope/telescope-file-browser.nvim",
-        "nvim-telescope/telescope-live-grep-raw.nvim",
-        "benfowler/telescope-luasnip.nvim",
-        "nvim-telescope/telescope-ui-select.nvim",
-        "nvim-lua/popup.nvim",
-        { "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
-      },
-      config = function()
-        require("config.telescope").setup()
-      end,
-    })
-
-    -- Testing
-    use({
-      "vim-test/vim-test",
-      config = "require('config.test').setup()",
-    })
-    use({
-      "andythigpen/nvim-coverage", -- Display test coverage information
-      config = function()
-        require("config.test").coverage()
-      end,
-    })
-    -- use("rcarriga/neotest-vim-test")
-    -- use("akinsho/neotest-go")
-    -- use("nvim-neotest/neotest-plenary")
-    -- use("haydenmeade/neotest-jest")
-    -- use({
-    --   "rcarriga/neotest",
-    --   requires = {
-    --     "nvim-lua/plenary.nvim",
-    --     "nvim-treesitter/nvim-treesitter",
-    --     "antoinemadec/FixCursorHold.nvim",
-    --   },
-    -- })
-
-    -- use({
-    --   "folke/which-key.nvim",
-    --   event = "VimEnter",
-    --   config = function()
-    --     require("config.whichkey").setup()
-    --   end,
-    -- })
-
-    use({
-      "nvim-lualine/lualine.nvim",
-      requires = { "kyazdani42/nvim-web-devicons" },
-      after = "nvim-treesitter",
-      config = function()
-        require("config.lualine").setup()
-      end,
-    })
-
-    use({
-      "stevearc/oil.nvim",
-      config = function()
-        require("oil").setup({
-          default_file_explorer = true,
-          buf_options = {
-            buflisted = false,
-            bufhidden = "hide",
-          },
-          -- Window-local options to use for oil buffers
-          win_options = {
-            wrap = false,
-            signcolumn = "no",
-            cursorcolumn = false,
-            foldcolumn = "0",
-            spell = false,
-            list = false,
-            conceallevel = 3,
-            concealcursor = "nvic",
-          },
-          -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
-          delete_to_trash = false,
-          -- Skip the confirmation popup for simple operations
-          skip_confirm_for_simple_edits = false,
-          -- Selecting a new/moved/renamed file or directory will prompt you to save changes first
-          prompt_save_on_select_new_entry = true,
-          -- Oil will automatically delete hidden buffers after this delay
-          -- You can set the delay to false to disable cleanup entirely
-          -- Note that the cleanup process only starts when none of the oil buffers are currently displayed
-          cleanup_delay_ms = 2000,
-          -- Set to true to autosave buffers that are updated with LSP willRenameFiles
-          -- Set to "unmodified" to only save unmodified buffers
-          lsp_rename_autosave = false,
-          -- Constrain the cursor to the editable parts of the oil buffer
-          -- Set to `false` to disable, or "name" to keep it on the file names
-          constrain_cursor = "editable",
-          -- Keymaps in oil buffer. Can be any value that `vim.keymap.set` accepts OR a table of keymap
-          -- options with a `callback` (e.g. { callback = function() ... end, desc = "", mode = "n" })
-          -- Additionally, if it is a string that matches "actions.<name>",
-          -- it will use the mapping at require("oil.actions").<name>
-          -- Set to `false` to remove a keymap
-          -- See :help oil-actions for a list of all available actions
-          keymaps = {
-            ["g?"] = "actions.show_help",
-            ["<CR>"] = "actions.select",
-            ["<C-s>"] = "actions.select_vsplit",
-            ["<C-h>"] = "actions.select_split",
-            ["<C-t>"] = "actions.select_tab",
-            ["<C-p>"] = "actions.preview",
-            ["<C-c>"] = "actions.close",
-            ["<C-l>"] = "actions.refresh",
-            ["-"] = "actions.parent",
-            ["_"] = "actions.open_cwd",
-            ["`"] = "actions.cd",
-            ["~"] = "actions.tcd",
-            ["gs"] = "actions.change_sort",
-            ["gx"] = "actions.open_external",
-            ["g."] = "actions.toggle_hidden",
-            ["g\\"] = "actions.toggle_trash",
-          },
-          -- Set to false to disable all of the above keymaps
-          use_default_keymaps = true,
-        })
-      end,
-    })
-
-    use({
-      "kyazdani42/nvim-tree.lua",
-      requires = {
-        "kyazdani42/nvim-web-devicons",
-      },
-      config = function()
-        require("nvim-tree").setup({
-          disable_netrw = true,
-          update_focused_file = {
-            enable = true,
-          },
-          filters = {
-            custom = { ".git", "node_modules", ".cargo" },
-          },
-        })
-      end,
-    })
-
-    use({
-      "kyazdani42/nvim-web-devicons",
-      config = function()
-        require("nvim-web-devicons").setup({ default = true })
-      end,
-    })
-
-    -- Smooth Scrolling
-    -- use({
-    --   "karb94/neoscroll.nvim",
-    --   keys = { "<C-u>", "<C-d>", "gg", "G" },
-    --   config = function()
-    --     require("config.scroll")
-    --   end,
-    -- })
-
-    -- use({
-    --   "lukas-reineke/indent-blankline.nvim",
-    --   config = function()
-    --     require("config.indent-blankline").setup()
-    --   end,
-    -- })
-    -- colorschemes
-    -- use "olimorris/onedarkpro.nvim"
-    -- use "rebelot/kanagawa.nvim"
-    -- use "luisiacc/gruvbox-baby"
-    -- use "eddyekofo94/gruvbox-flat.nvim"
-    -- use("EdenEast/nightfox.nvim")
-    -- use("Shatur/neovim-ayu")
-    -- use("folke/tokyonight.nvim")
-    -- use("sainnhe/edge")
-    -- use "Mofiqul/dracula.nvim"
-    use({
-      "f-person/auto-dark-mode.nvim",
-      config = function()
-        require("config.theme").setup()
-      end,
-    })
-    -- use {
-    --   "rose-pine/neovim",
-    --   as = "rose-pine",
-    -- }
-    use({
-      "catppuccin/nvim",
-      as = "catppuccin",
-    })
-
-    if packer_bootstrap then
-      print("Setting up Neovim. Restart required after installation!")
-      require("packer").sync()
-    end
-  end
-
-  pcall(require, "impatient")
-  pcall(require, "packer_compiled")
-  require("packer").init({ max_jobs = 50 })
-  require("packer").startup(plugins)
-end
+      -- Set to false to disable all of the above keymaps
+      _default_keymaps = true,
+    },
+    lazy = true,
+  },
+  {
+    "f-person/auto-dark-mode.nvim",
+    config = function()
+      require("config.theme").setup()
+    end,
+  },
+  {
+    "catppuccin/nvim",
+    name = "catppuccin",
+  },
+})
 
 return M

@@ -50,45 +50,6 @@ function M.get_os_command_output(cmd, cwd)
   return stdout, ret, stderr
 end
 
-_G.packer_snapshot = "packer_snapshot.json"
-_G.packer_snapshot_path = join_paths(vim.fn.stdpath("config"), "lua")
-
-M.update_packer = function()
-  local packer = require("packer")
-  Log:debug("Updating plugins with packer")
-  packer.sync()
-  -- local snap_full_path = join_paths(packer_snapshot_path, packer_snapshot)
-  -- os.remove(snap_full_path)
-  -- packer.snapshot(packer_snapshot)
-  --
-  -- local temp_json = join_paths(get_cache_dir(), packer_snapshot)
-  -- Log:debug "Formatting Json"
-  -- local stdout, ret, stderr = M.get_os_command_output {
-  --   "jq",
-  --   "--sort-keys",
-  --   ".",
-  --   snap_full_path,
-  --   ">",
-  --   temp_json,
-  -- }
-  -- if not ret then
-  --   Log:error "Unable to format json"
-  --   return
-  -- end
-  -- Log:debug("Created " .. temp_json)
-  -- Log:debug(stdout .. ret .. stderr)
-  -- local stdout, ret, stderr = M.get_os_command_output {
-  --   "mv",
-  --   temp_json,
-  --   snap_full_path,
-  -- }
-  -- -- Log:debug(stdout .. ret .. stderr)
-  -- if not ret then
-  --   Log:error "Unable to move json"
-  --   return
-  -- end
-end
-
 -- Reload all user config lua modules
 M.Reload = function()
   local lua_dirs = vim.fn.glob("./lua/*", 0, 1)
@@ -111,24 +72,6 @@ M.nnoremap = get_mapper("n", true)
 M.inoremap = get_mapper("i", true)
 M.tnoremap = get_mapper("t", true)
 M.vnoremap = get_mapper("v", true)
-
----Reset any startup cache files used by Packer and Impatient
----It also forces regenerating any template ftplugin files
----Tip: Useful for clearing any outdated settings
-function M.reset_cache()
-  local impatient = _G.__luacache
-  if impatient then
-    impatient.clear_cache()
-  end
-  local modules = {}
-  for module, _ in pairs(package.loaded) do
-    if module:match("core") or module:match("lsp") then
-      package.loaded[module] = nil
-      table.insert(modules, module)
-    end
-  end
-  Log:trace(string.format("Cache invalidated for core modules: { %s }", table.concat(modules, ", ")))
-end
 
 function M.createmap(mode, mapping, prefix)
   local mapping_prefix = prefix or ""

@@ -108,35 +108,17 @@ function link_repo() {
 	stow zsh
 }
 
-function remove_old_cache_files() {
-	local packer_cache="$NVIM_CONFIG_DIR/plugin/packer_compiled.lua"
-	if [ -e "$packer_cache" ]; then
-		msg "Removing old packer cache file"
-		rm -f "$packer_cache"
-	fi
-
-	if [ -e "$NVIM_CACHE_DIR/luacache" ] || [ -e "$NVIM_CACHE_DIR/nvim_cache" ]; then
-		msg "Removing old startup cache file"
-		rm -f "$NVIM_CACHE_DIR/{luacache,nvim_cache}"
-	fi
-}
-
 function setup_nvim() {
 
 	remove_old_cache_files
-
-	echo "Preparing Packer setup"
-
-	"nvim" --headless \
-		-c 'autocmd User PackerComplete quitall' \
-		-c 'PackerSync'
+	nvim --headless "+Lazy! sync" +qa
 
 	if [[ "$ARGS_INSTALL_LSP" -eq 1 ]]; then
 		"nvim" --headless \
 			-c "LspInstall --sync ${__lsp_deps}" -c q
 	fi
 
-	echo "Packer setup complete"
+	echo "setup complete"
 }
 
 function print_missing_dep_msg() {

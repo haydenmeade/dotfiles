@@ -21,7 +21,7 @@ local leader_mappings = {
     l = "<cmd>SearchSession<Cr>",
     m = "<Cmd>messages<Cr>",
     M = "<Cmd>put =execute('messages')<Cr>",
-    y = "<Cmd>lua require('core.util').update_packer()<CR>",
+    y = "<Cmd>lua require('lazy').sync()<CR>",
   },
 
   -- refactor
