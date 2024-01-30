@@ -15,6 +15,12 @@ function M.setup()
     null_ls.builtins.diagnostics.shellcheck,
     null_ls.builtins.formatting.shfmt,
     null_ls.builtins.formatting.stylua,
+    null_ls.builtins.formatting.sqlfluff.with({
+      extra_args = { "--dialect", "postgres" }, -- change to your dialect
+    }),
+    null_ls.builtins.diagnostics.sqlfluff.with({
+      extra_args = { "--dialect", "postgres" }, -- change to your dialect
+    }),
   }
   local function exist(bin)
     return vim.fn.exepath(bin) ~= ""
