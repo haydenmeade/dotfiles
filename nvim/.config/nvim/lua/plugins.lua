@@ -154,6 +154,18 @@ require("lazy").setup({
   {
     "hrsh7th/nvim-cmp",
     event = "BufReadPre",
+    dependencies = {
+      { "hrsh7th/cmp-buffer" },
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "hrsh7th/cmp-nvim-lua" },
+      { "hrsh7th/cmp-path" },
+      { "hrsh7th/cmp-cmdline" },
+      { "hrsh7th/cmp-nvim-lsp-document-symbol" },
+      { "octaltree/cmp-look" },
+      { "f3fora/cmp-spell" },
+      { "ray-x/cmp-treesitter" },
+      { "saadparwaiz1/cmp_luasnip" },
+    },
     config = function()
       require("config.cmp").setup()
     end,
