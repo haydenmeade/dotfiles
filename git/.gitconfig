@@ -1,6 +1,3 @@
-[user]
-  email = haydenmeade@gmail.com
-  name = Hayden Meade
 [push]
   default = current
 [color]
@@ -12,15 +9,22 @@
   excludesFile = ~/.gitignore
   autocrlf = input
   pager = delta
-[commit]
-  template = ~/.gitmessage
 [fetch]
   prune = true
 [pull]
   rebase = false
+[interactive]
+  diffFilter = delta --color-only
+[delta]
+  navigate = true    # use n and N to move between diff sections
+  light = true      # set to true if you're in a terminal w/ a light background color (e.g. the default macOS terminal)
 [merge]
   conflictstyle = diff3
 [diff]
   colorMoved = default
-[credential "https://github.com"]
-  helper = !/usr/bin/gh auth git-credential
+[includeIf "gitdir/i:~/anz/"]
+    path = anz.gitconfig
+[includeIf "gitdir/i:~/repos/"]
+    path = me.gitconfig
+[includeIf "gitdir/i:~/dotfiles/"]
+    path = me.gitconfig

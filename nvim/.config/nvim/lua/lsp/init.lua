@@ -75,8 +75,8 @@ function M.setup()
     log_level = vim.log.levels.INFO,
   })
 
-  -- require("lsp.tsserver").config()
-  -- lspconfig.eslint.setup(resolve_config("eslint"))
+  require("lsp.tsserver").config()
+  lspconfig.eslint.setup(resolve_config("eslint"))
   lspconfig.gopls.setup(resolve_config("gopls"))
   lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
@@ -84,6 +84,7 @@ function M.setup()
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.bufls.setup(resolve_config("bufls"))
+  lspconfig.sqls.setup(resolve_config("sqls"))
 end
 
 return M
