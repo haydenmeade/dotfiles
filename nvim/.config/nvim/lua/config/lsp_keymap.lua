@@ -50,7 +50,7 @@ vim.api.nvim_create_user_command("FormatDocumentH", function()
     vim.lsp.buf.format({
       timeout_ms = 1000,
       filter = function(client)
-        return client.name ~= "tsserver" and client.name ~= "lua_ls" and client.name ~= "solargraph"
+        return client.name ~= "tsserver" and client.name ~= "lua_ls" and client.name ~= "sqls"
       end,
     })
   end
