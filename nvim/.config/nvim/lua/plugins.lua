@@ -77,7 +77,7 @@ require("lazy").setup({
   },
   {
     "sindrets/diffview.nvim",
-    cmd = "DiffviewOpen",
+    cmd = { "DiffviewOpen", "DiffviewFileHistory" },
   },
   {
     "akinsho/git-conflict.nvim",
@@ -209,6 +209,14 @@ require("lazy").setup({
     cmd = { "Coverage" },
     config = function()
       require("config.test").coverage()
+    end,
+  },
+
+  {
+    "nvim-lualine/lualine.nvim",
+    event = "BufReadPre",
+    config = function()
+      require("config.lualine").setup()
     end,
   },
 
