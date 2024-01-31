@@ -74,6 +74,8 @@ require("lazy").setup({
   {
     "lewis6991/gitsigns.nvim",
     event = "BufReadPre",
+    version = "*",
+    opts = {},
   },
   {
     "sindrets/diffview.nvim",
@@ -121,6 +123,7 @@ require("lazy").setup({
   },
   {
     "neovim/nvim-lspconfig",
+    version = "*",
     config = function()
       require("lsp").setup()
     end,
