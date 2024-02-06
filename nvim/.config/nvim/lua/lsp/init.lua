@@ -82,7 +82,7 @@ function M.setup()
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.bufls.setup(resolve_config("bufls"))
-  lspconfig.sqls.setup(resolve_config("sqls"))
+  lspconfig.sqlls.setup(resolve_config("sqlls"))
   lspconfig.pyright.setup(resolve_config("pyright"))
 end
 
