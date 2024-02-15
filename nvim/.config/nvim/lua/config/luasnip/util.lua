@@ -153,7 +153,7 @@ local function return_value_nodes(info) --{{{
     return
   end
 
-  local query = vim.treesitter.get_query("go", "LuaSnip_Result")
+  local query = vim.treesitter.query.get_query("go", "LuaSnip_Result")
   for _, node in query:iter_captures(function_node, 0) do
     if handlers[node:type()] then
       return handlers[node:type()](node, info)
