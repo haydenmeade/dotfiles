@@ -83,7 +83,7 @@ function M.setup()
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.bufls.setup(resolve_config("bufls"))
   lspconfig.sqls.setup(resolve_config("sqls"))
-  lspconfig.pyright.setup(resolve_config("pyright"))
+  lspconfig.terraformls.setup(resolve_config("terraformls"))
 end
 
 return M
