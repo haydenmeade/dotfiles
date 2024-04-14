@@ -76,7 +76,7 @@ function M.setup()
   lspconfig.eslint.setup(resolve_config("eslint"))
   lspconfig.tsserver.setup(resolve_config("tsserver"))
   lspconfig.gopls.setup(resolve_config("gopls"))
-  lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
+  -- lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
   lspconfig.lua_ls.setup(resolve_config("lua_ls"))
   lspconfig.yamlls.setup(resolve_config("yamlls"))
@@ -84,6 +84,7 @@ function M.setup()
   lspconfig.bufls.setup(resolve_config("bufls"))
   lspconfig.sqlls.setup(resolve_config("sqlls"))
   lspconfig.pyright.setup(resolve_config("pyright"))
+  lspconfig.rust_analyzer.setup(resolve_config("rust_analyzer"))
 end
 
 return M

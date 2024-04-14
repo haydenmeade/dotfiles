@@ -133,7 +133,6 @@ function M.setup()
         end
         return msg
       end,
-      icon = " LSP:",
       color = { fg = colors.violet, gui = "bold" },
     },
 
@@ -161,6 +160,12 @@ function M.setup()
         return format_file_size(file)
       end,
       condition = conditions.buffer_not_empty,
+    },
+    lspprogress = {
+      -- invoke `progress` here.
+      function()
+        return require("lsp-progress").progress()
+      end,
     },
 
     -- Add components to right sections
@@ -216,7 +221,7 @@ function M.setup()
       lualine_a = { components.mode },
       lualine_b = { components.filename },
       lualine_c = {},
-      lualine_x = { components.diagnostics, components.lsp },
+      lualine_x = { components.diagnostics, components.lspprogress, components.lsp },
       lualine_y = { components.diff },
       lualine_z = { components.location, components.scrollbar },
     },
@@ -235,6 +240,14 @@ function M.setup()
 
   -- Now don't forget to initialize lualine
   lualine.setup(config)
+
+  -- listen lsp-progress event and refresh lualine
+  vim.api.nvim_create_augroup("lualine_augroup", { clear = true })
+  vim.api.nvim_create_autocmd("User", {
+    group = "lualine_augroup",
+    pattern = "LspProgressStatusUpdated",
+    callback = require("lualine").refresh,
+  })
 end
 
 return M

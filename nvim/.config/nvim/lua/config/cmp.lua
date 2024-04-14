@@ -24,14 +24,12 @@ function M.setup()
     return vim.api.nvim_replace_termcodes(str, true, true, true)
   end
 
-  vim.api.nvim_set_hl(0, "CmpItemKindCopilot", { fg = "#6CC644" })
   cmp.setup({
     formatting = {
       format = require("lspkind").cmp_format({
         with_text = true,
         menu = {
           nvim_lsp = "[LSP]",
-          Copilot = "[co]",
           buffer = "[Buffer]",
           nvim_lua = "[Lua]",
           luasnip = "[Snippet]",
@@ -112,8 +110,6 @@ function M.setup()
     },
     sources = {
       { name = "nvim_lsp", group_index = 2, max_item_count = 10 },
-      -- Copilot Source
-      { name = "copilot", group_index = 2 },
       { name = "nvim_lua", group_index = 2, max_item_count = 5 },
       { name = "luasnip", group_index = 2, priority = 3 },
       { name = "treesitter", group_index = 2, max_item_count = 10 },
@@ -128,7 +124,7 @@ function M.setup()
 
   -- If you want insert `(` after select function or method item
   local cmp_autopairs = require("nvim-autopairs.completion.cmp")
-  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
+  cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
 
   -- Use cmdline & path source for ':'.
   cmp.setup.cmdline(":", {

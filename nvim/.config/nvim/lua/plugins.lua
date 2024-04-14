@@ -50,18 +50,6 @@ require("lazy").setup({
   { "mrjones2014/smart-splits.nvim" },
 
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    opts = {
-      suggestion = { enabled = false },
-      panel = { enabled = false },
-    },
-  },
-  {
-    "zbirenbaum/copilot-cmp",
-  },
-
-  {
     "knubie/vim-kitty-navigator",
     event = "BufReadPre",
     config = function()
@@ -129,6 +117,12 @@ require("lazy").setup({
     end,
     event = { "BufReadPre", "BufNewFile" },
   },
+  {
+    "linrongbin16/lsp-progress.nvim",
+    config = function()
+      require("lsp-progress").setup()
+    end,
+  },
 
   {
     "rafamadriz/friendly-snippets",
@@ -181,8 +175,8 @@ require("lazy").setup({
   { "RRethy/nvim-treesitter-endwise" }, -- add "end" in Ruby and other languages
   {
     "windwp/nvim-autopairs",
-    build = "make",
-    event = "BufReadPre",
+    event = "InsertEnter",
+    config = true,
   },
   { "nvim-treesitter/nvim-treesitter-context" },
   {
