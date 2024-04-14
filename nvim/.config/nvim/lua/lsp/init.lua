@@ -82,9 +82,10 @@ function M.setup()
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.bufls.setup(resolve_config("bufls"))
-  lspconfig.sqlls.setup(resolve_config("sqlls"))
-  lspconfig.pyright.setup(resolve_config("pyright"))
+ --  lspconfig.pyright.setup(resolve_config("pyright"))
   lspconfig.rust_analyzer.setup(resolve_config("rust_analyzer"))
+  lspconfig.sqls.setup(resolve_config("sqls"))
+  lspconfig.terraformls.setup(resolve_config("terraformls"))
 end
 
 return M
