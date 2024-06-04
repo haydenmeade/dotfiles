@@ -1,6 +1,4 @@
 local M = {}
-local M = {}
-local M = {}
 
 local Log = require("core.log")
 local autocmd = vim.api.nvim_create_autocmd
@@ -24,6 +22,7 @@ autocmd("VimLeave", { command = [[if has('nvim') | wshada! | else | wviminfo! | 
 -- Check if file changed when its window is focus, more eager than 'autoread'
 autocmd("FocusGained", { command = "checktime" })
 
+-- typos
 vim.api.nvim_exec(
   [[
         cnoreabbrev W! w!
@@ -40,38 +39,28 @@ vim.api.nvim_exec(
   false
 )
 
--- Terminal
-vim.api.nvim_exec(
-  [[
-        augroup auto_term
-            autocmd!
-            autocmd TermOpen * setlocal nonumber norelativenumber
-            " autocmd TermOpen * startinsert
-        augroup END
-    ]],
-  false
-)
-
-local format_on_save = true
-
-vim.api.nvim_create_user_command("FormatDocumentH", function() end, {})
-
-function M.configure_format_on_save()
-  local augid = vim.api.nvim_create_augroup("user_lsp_fmt_on_save", { clear = true })
-  if format_on_save then
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      command = "FormatDocumentH",
-      group = augid,
-    })
-    Log:debug("enabled format-on-save")
-  else
-    Log:debug("disabled format-on-save")
+vim.api.nvim_create_user_command("Format", function(args)
+  local range = nil
+  if args.count ~= -1 then
+    local end_line = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+    range = {
+      start = { args.line1, 0 },
+      ["end"] = { args.line2, end_line:len() },
+    }
   end
-end
+  require("conform").format({ async = true, lsp_fallback = true, range = range })
+end, { range = true })
 
-function M.toggle_format_on_save()
-  format_on_save = not format_on_save
-  M.configure_format_on_save()
-end
+vim.api.nvim_create_user_command("FormatToggle", function()
+  if vim.g.disable_autoformat then
+    vim.g.disable_autoformat = false
+    Log:debug("Enabled format on save")
+  else
+    vim.g.disable_autoformat = true
+    Log:debug("Disabled format on save")
+  end
+end, {
+  desc = "toggle autoformat-on-save",
+})
 
 return M

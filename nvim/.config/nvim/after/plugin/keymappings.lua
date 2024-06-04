@@ -8,11 +8,8 @@ local leader_mappings = {
   X = "<Cmd>wqall!<Cr>",
   o = "<Cmd>%bd|e#|bd#<Cr>",
   c = "<Cmd>bdelete<Cr>",
-  C = "<cmd>Telescope file_create<CR>",
-  f = "<cmd>lua require('config.telescope').find_project_files()<CR>",
-  F = "<cmd>lua require('config.telescope').live_grep_in_glob()<CR>",
+  -- f = "<cmd>lua require('fzf-lua').files()<CR>",
   e = "<cmd>lua require('oil').open(vim.fn.expand('%:p:h'))<CR>",
-  E = "<Cmd>NvimTreeToggle<CR>",
   h = "<cmd>nohlsearch<CR>",
 
   -- System
@@ -26,20 +23,46 @@ local leader_mappings = {
 
   -- refactor
   r = {
-    c = '<cmd>lua require("refactoring").debug.cleanup({})<CR>',
+    r = [[<cmd>lua require('grug-far').grug_far()<CR>]],
+    c = [[<cmd>lua require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } })<CR>]],
+    f = [[<cmd>lua require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } })<CR>]],
+    C = '<cmd>lua require("refactoring").debug.cleanup({})<CR>',
     i = [[<Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
+    g = [[<cmd>lua require('rgflow').open_blank()<cr>]],
   },
 
   m = {
-    i = "<Cmd>lua require('harpoon.mark').add_file()<Cr>",
-    m = "<Cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>",
-    n = "<Cmd>lua require('harpoon.ui').nav_next()<CR>",
-    t = "<Cmd>lua require('harpoon.ui').nav_prev()<CR>",
-    y = "<Cmd>lua require('harpoon.ui').nav_file(1)<CR>",
-    h = "<Cmd>lua require('harpoon.ui').nav_file(2)<CR>",
-    e = "<Cmd>lua require('harpoon.ui').nav_file(3)<CR>",
-    a = "<Cmd>lua require('harpoon.ui').nav_file(4)<CR>",
-    ["."] = "<Cmd>lua require('harpoon.ui').nav_file(5)<CR>",
+    i = function()
+      local harpoon = require("harpoon")
+      harpoon:list():add()
+    end,
+    m = function()
+      local harpoon = require("harpoon")
+      harpoon.ui:toggle_quick_menu(harpoon:list())
+    end,
+    y = function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(1)
+    end,
+    h = function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(2)
+    end,
+
+    e = function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(3)
+    end,
+
+    a = function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(4)
+    end,
+
+    ["."] = function()
+      local harpoon = require("harpoon")
+      harpoon:list():select(5)
+    end,
   },
 
   -- GitHub
@@ -50,24 +73,12 @@ local leader_mappings = {
 
   -- Search
   s = {
-    c = "<Cmd>Telescope current_buffer_fuzzy_find<CR>",
-    b = "<Cmd>Telescope buffers<Cr>",
-    g = "<Cmd>lua require('config.telescope').search_gopath()<CR>",
-    l = "<Cmd>Telescope luasnip<CR>",
-    t = "<Cmd>Telescope live_grep<Cr>",
-    N = "<Cmd>lua require('telescope').extensions.live_grep_raw.live_grep_raw()<Cr>",
-    n = "<Cmd>Telescope grep_string<Cr>",
-    h = "<Cmd>Telescope help_tags<Cr>",
-    m = "<Cmd>Telescope marks<Cr>",
-    y = "<Cmd>Telescope symbols<Cr>",
-    s = "<Cmd>Telescope<CR>",
-    f = "<cmd>Telescope find_files<cr>",
-    M = "<cmd>Telescope man_pages<cr>",
-    r = "<cmd>Telescope oldfiles<cr>",
-    R = "<cmd>Telescope registers<cr>",
-    k = "<cmd>Telescope keymaps<cr>",
-    C = "<cmd>Telescope commands<cr>",
-    p = "<cmd>lua require('telescope.builtin').colorscheme({enable_preview = true})<cr>",
+    b = "<Cmd>FzfLua buffers<Cr>",
+    q = "<Cmd>FzfLua quickfix<Cr>",
+    s = "<Cmd>FzfLua quickfix_stack<Cr>",
+    -- t = "<Cmd>FzfLua live_grep<Cr>",
+    -- n = "<Cmd>FzfLua grep_cword<Cr>",
+    r = "<cmd>FzfLua resume<cr>",
   },
 
   -- Buffers
@@ -76,8 +87,6 @@ local leader_mappings = {
   },
   -- Git
   g = {
-    a = "<Cmd>Telescope repo list<Cr>",
-    g = "<Cmd>lua require('config.toggleterm').lazygit_toggle()<Cr>",
     d = "<Cmd>DiffviewOpen<Cr>",
     q = "<Cmd>DiffviewClose<Cr>",
     h = "<Cmd>DiffviewFileHistory %<Cr>",
@@ -90,10 +99,6 @@ local leader_mappings = {
     R = "<cmd>lua require 'gitsigns'.reset_buffer()<cr>",
     s = "<cmd>lua require 'gitsigns'.stage_hunk()<cr>",
     u = "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",
-    o = "<cmd>Telescope git_status<cr>",
-    b = "<cmd>Telescope git_branches<cr>",
-    c = "<cmd>Telescope git_commits<cr>",
-    C = "<cmd>Telescope git_bcommits<cr>",
   },
 
   -- Testing
@@ -135,7 +140,6 @@ local keymappings = {
     [",v"] = "<Cmd>vs<Cr>",
   },
   v = {
-    ["C-s"] = "zy<Cmd>Telescope live_grep default_text=<C-r>z<cr>",
     ["J"] = "<esc><cmd>m  '>+1<CR>gv=gv",
     ["K"] = "<esc><cmd>m  '>-2<CR>gv=gv",
 
@@ -198,6 +202,9 @@ function M.setup()
   for mode, mapping in pairs(keymappings) do
     util.createmap(mode, mapping)
   end
+  vim.keymap.set({ "n" }, "<C-k>", function()
+    require("lsp_signature").toggle_float_win()
+  end, { silent = true, noremap = true, desc = "toggle signature" })
 end
 
 M.setup()

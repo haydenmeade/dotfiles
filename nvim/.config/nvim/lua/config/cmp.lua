@@ -36,7 +36,6 @@ function M.setup()
           treesitter = "[treesitter]",
           look = "[Look]",
           path = "[Path]",
-          emoji = "[Emoji]",
         },
       }),
     },
@@ -62,13 +61,7 @@ function M.setup()
     mapping = {
       ["<Down>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
       ["<Up>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-      ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
-      ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
       ["<C-e>"] = cmp.mapping.close(),
-      ["<C-y>"] = cmp.mapping.confirm({
-        behavior = cmp.ConfirmBehavior.Replace,
-        select = true,
-      }),
       ["<CR>"] = cmp.mapping.confirm({
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
@@ -109,12 +102,12 @@ function M.setup()
       end,
     },
     sources = {
-      { name = "nvim_lsp", group_index = 2, max_item_count = 10 },
-      { name = "nvim_lua", group_index = 2, max_item_count = 5 },
+      { name = "nvim_lsp", group_index = 2, priority = 1, max_item_count = 10 },
+      { name = "nvim_lua", group_index = 2, max_item_count = 2 },
       { name = "luasnip", group_index = 2, priority = 3 },
-      { name = "treesitter", group_index = 2, max_item_count = 10 },
-      { name = "buffer", group_index = 2, keyword_length = 5, max_item_count = 5 },
-      { name = "path", group_index = 2 },
+      { name = "treesitter", group_index = 2, max_item_count = 2 },
+      { name = "buffer", group_index = 2, keyword_length = 5, max_item_count = 2 },
+      { name = "path", group_index = 2, max_item_count = 2 },
     },
     completion = { completeopt = "menu,menuone,noinsert", keyword_length = 1 },
     experimental = {

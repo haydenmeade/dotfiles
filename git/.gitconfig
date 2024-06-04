@@ -5,6 +5,8 @@
 [alias]
   ap = add --patch
   co = checkout
+  cob = !git checkout $(git branch | fzf)
+  m = !git merge $(git branch | fzf)
 [core]
   excludesFile = ~/.gitignore
   autocrlf = input

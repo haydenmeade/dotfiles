@@ -11,26 +11,10 @@ function M.common_capabilities()
   return capabilities
 end
 
-function M.common_on_exit(_, _) end
-
-function M.common_on_init(_, _) end
-
-function M.common_on_attach(_, bufnr)
-  require("lsp_signature").on_attach({
-    bind = true,
-    handler_opts = { border = "single" },
-  })
-
-  require("config.lsp_keymap").register_lsp(bufnr)
-end
-
 function M.get_common_opts()
   return {
-    on_attach = M.common_on_attach,
-    on_init = M.common_on_init,
-    on_exit = M.common_on_exit,
     capabilities = M.common_capabilities(),
-    flags = { debounce_text_changes = 150 },
+    flags = { debounce_text_changes = 100 },
   }
 end
 
@@ -58,10 +42,13 @@ function M.setup()
     vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
   end
 
-  -- custom handlers
-  require("lsp.null-ls").setup()
-
-  require("core.autocmds").configure_format_on_save()
+  vim.api.nvim_create_autocmd("LspAttach", {
+    callback = function(args)
+      local bufnr = args.buf
+      require("lsp_signature").on_attach({}, bufnr)
+      require("config.lsp_keymap").register_lsp(bufnr)
+    end,
+  })
 
   require("mason").setup()
   local mason = require("mason-lspconfig")
@@ -73,8 +60,8 @@ function M.setup()
     log_level = vim.log.levels.INFO,
   })
 
-  lspconfig.eslint.setup(resolve_config("eslint"))
-  lspconfig.tsserver.setup(resolve_config("tsserver"))
+  -- lspconfig.eslint.setup(resolve_config("eslint"))
+  -- lspconfig.tsserver.setup(resolve_config("tsserver"))
   lspconfig.gopls.setup(resolve_config("gopls"))
   -- lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))
@@ -82,10 +69,10 @@ function M.setup()
   lspconfig.yamlls.setup(resolve_config("yamlls"))
   lspconfig.bashls.setup(resolve_config("bashls"))
   lspconfig.bufls.setup(resolve_config("bufls"))
- --  lspconfig.pyright.setup(resolve_config("pyright"))
-  lspconfig.rust_analyzer.setup(resolve_config("rust_analyzer"))
-  lspconfig.sqls.setup(resolve_config("sqls"))
-  lspconfig.terraformls.setup(resolve_config("terraformls"))
+  -- lspconfig.sqlls.setup(resolve_config("sqlls"))
+  --  lspconfig.pyright.setup(resolve_config("pyright"))
+  -- lspconfig.rust_analyzer.setup(resolve_config("rust_analyzer"))
+  -- lspconfig.terraformls.setup(resolve_config("terraformls"))
 end
 
 return M

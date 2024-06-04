@@ -80,7 +80,8 @@ function M.createmap(mode, mapping, prefix)
     if type(cmd) == "table" then
       M.createmap(mode, cmd, mapping_prefix .. keys)
     else
-      vim.api.nvim_set_keymap(mode, mapping_prefix .. keys, cmd, mapping_opts)
+      vim.keymap.set(mode, mapping_prefix .. keys, cmd, mapping_opts)
+      -- vim.api.nvim_set_keymap(mode, mapping_prefix .. keys, cmd, mapping_opts)
     end
   end
 end
