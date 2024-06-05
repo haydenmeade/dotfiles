@@ -204,7 +204,7 @@ require("lazy").setup({
 
   {
     "hrsh7th/nvim-cmp",
-    event = "InsertEnter",
+    event = { "InsertEnter", "VeryLazy" },
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-nvim-lsp" },
@@ -223,20 +223,20 @@ require("lazy").setup({
 
   {
     "nvim-treesitter/nvim-treesitter-textobjects",
-    event = "InsertEnter",
+    event = { "InsertEnter", "VeryLazy" },
   }, -- Syntax aware text-objects, select, move, swap, and peek support.
   {
     "RRethy/nvim-treesitter-endwise",
-    event = "InsertEnter",
+    event = { "InsertEnter", "VeryLazy" },
   }, -- add "end" in Ruby and other languages
   {
     "windwp/nvim-autopairs",
-    event = "InsertEnter",
+    event = { "InsertEnter", "VeryLazy" },
     config = true,
   },
   {
     "nvim-treesitter/nvim-treesitter-context",
-    event = "InsertEnter",
+    event = { "InsertEnter", "VeryLazy" },
   },
   {
     "nvim-treesitter/nvim-treesitter",
@@ -273,23 +273,21 @@ require("lazy").setup({
     end,
   },
 
+  { "nvim-telescope/telescope-symbols.nvim" },
+  { "nvim-telescope/telescope-ui-select.nvim" },
+  { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   {
-    "camspiers/snap",
-    config = function()
-      local snap = require("snap")
-      snap.maps({
-        { "<Leader>f", snap.config.file({ producer = "ripgrep.file", args = { "--hidden", "--iglob", "!.git/*" } }) },
-        { "<Leader>g", snap.config.vimgrep({}) },
-      })
-    end,
+    "nvim-telescope/telescope.nvim",
+    branch = "0.1.x",
     lazy = false,
-  },
-  {
-    "ibhagwan/fzf-lua",
-    cmd = { "FzfLua" },
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope-symbols.nvim",
+      "nvim-telescope/telescope-ui-select.nvim",
+      "nvim-telescope/telescope-fzf-native.nvim",
+    },
     config = function()
-      require("config.fzf-lua").setup()
+      require("config.telescope").setup()
     end,
   },
 
@@ -311,7 +309,7 @@ require("lazy").setup({
 
   {
     "nvim-lualine/lualine.nvim",
-    event = { "BufReadPost", "BufNewFile" },
+    event = { "VeryLazy" },
     config = function()
       require("config.lualine").setup()
     end,

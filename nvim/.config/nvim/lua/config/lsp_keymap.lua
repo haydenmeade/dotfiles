@@ -3,16 +3,16 @@ local util = require("core.util")
 local M = {}
 local lsp_leader_mappings = {
   l = {
-    u = "<Cmd>FzfLua lsp_references<CR>",
-    o = "<Cmd>FzfLua lsp_document_symbols<CR>",
-    d = "<Cmd>FzfLua lsp_definitions<CR>",
+    u = "<Cmd>Telescope lsp_references<CR>",
+    o = "<Cmd>Telescope lsp_document_symbols<CR>",
+    d = "<Cmd>Telescope lsp_definitions<CR>",
     a = "<Cmd>lua vim.lsp.buf.code_action()<CR>",
     e = "<Cmd>lua vim.diagnostic.open_float()<CR>",
     X = "<Cmd>lua vim.diagnostic.enable()<CR>",
     x = "<Cmd>lua vim.diagnostic.disable()<CR>",
     n = "<Cmd>FormatToggle<CR>",
     f = "<Cmd>lua vim.lsp.buf.formatting()<CR>",
-    w = "<cmd>FzfLua diagnostics_workspace<cr>",
+    w = "<cmd>Telescope diagnostics_workspace<cr>",
   },
 }
 

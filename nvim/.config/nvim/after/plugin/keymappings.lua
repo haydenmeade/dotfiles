@@ -8,7 +8,8 @@ local leader_mappings = {
   X = "<Cmd>wqall!<Cr>",
   o = "<Cmd>%bd|e#|bd#<Cr>",
   c = "<Cmd>bdelete<Cr>",
-  -- f = "<cmd>lua require('fzf-lua').files()<CR>",
+  f = "<cmd>lua require('config.telescope').find_project_files()<CR>",
+  F = "<cmd>lua require('telescope.builtin').find_files(require('config.telescope').no_preview())<CR>",
   e = "<cmd>lua require('oil').open(vim.fn.expand('%:p:h'))<CR>",
   h = "<cmd>nohlsearch<CR>",
 
@@ -73,12 +74,11 @@ local leader_mappings = {
 
   -- Search
   s = {
-    b = "<Cmd>FzfLua buffers<Cr>",
-    q = "<Cmd>FzfLua quickfix<Cr>",
-    s = "<Cmd>FzfLua quickfix_stack<Cr>",
-    -- t = "<Cmd>FzfLua live_grep<Cr>",
-    -- n = "<Cmd>FzfLua grep_cword<Cr>",
-    r = "<cmd>FzfLua resume<cr>",
+    b = "<Cmd>Telescope buffers<Cr>",
+    q = "<Cmd>Telescope quickfix<Cr>",
+    t = "<cmd>Telescope live_grep<CR>",
+    n = "<Cmd>Telescope grep_string<Cr>",
+    r = "<cmd>lua require('telescope.builtin').resume()<cr>",
   },
 
   -- Buffers
