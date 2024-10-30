@@ -274,19 +274,23 @@ switch {} := {}.(type) {{
     { trig = "tcs", dscr = "create test cases for testing" },
     fmta(
       [[
-        tcs := map[string]struct {
+        tcs := []struct {
+                name string
         	<>
         } {
-        	// Test cases here
+          {
+          name: "<>",
+        	<>
+              },
         }
-        for name, tc := range tcs {
+        for _, tc := range tcs {
         	tc := tc
-        	t.Run(name, func(t *testing.T) {
+        	t.Run(tc.name, func(t *testing.T) {
         		<>
         	})
         }
       ]],
-      { ls.i(1), ls.i(2) }
+      { ls.i(1), ls.i(2), ls.i(3), ls.i(4) }
     ),
     in_test_fn
   ),

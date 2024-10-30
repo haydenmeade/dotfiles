@@ -59,6 +59,7 @@ function M.setup()
           ["<C-k>"] = actions.move_selection_previous,
           ["<C-n>"] = actions.cycle_history_next,
           ["<C-p>"] = actions.cycle_history_prev,
+          ["<C-f>"] = actions.to_fuzzy_refine,
           ["<C-t>"] = openqf,
         },
         n = {

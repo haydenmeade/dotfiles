@@ -29,3 +29,5 @@
     path = me.gitconfig
 [includeIf "gitdir/i:~/dotfiles/"]
     path = me.gitconfig
+[safe]
+	directory = *

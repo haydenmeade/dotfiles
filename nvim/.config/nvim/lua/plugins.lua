@@ -29,7 +29,7 @@ require("lazy").setup({
 
   {
     "folke/trouble.nvim",
-    cmd = { "TroubleToggle", "Trouble" },
+    cmd = { "Trouble" },
     config = function()
       require("trouble").setup({ auto_open = false })
     end,
@@ -143,8 +143,9 @@ require("lazy").setup({
     opts = {
       formatters_by_ft = {
         lua = { "stylua" },
-        go = { "goimports", { "gofumpt", "gofmt" } },
-        javascript = { { "prettierd", "prettier" } },
+        go = { "gofumpt", "goimports" },
+        javascript = { "prettierd", "prettier", stop_after_first = true },
+        markdown = { "mdformat" },
         cpp = { "clangformat" },
         sh = { "shfmt" },
       },
@@ -153,7 +154,7 @@ require("lazy").setup({
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
         end
-        return { timeout_ms = 500, lsp_fallback = true }
+        return { timeout_ms = 900, lsp_fallback = true }
       end,
       notify_on_error = false,
     },
@@ -203,8 +204,9 @@ require("lazy").setup({
   { "saadparwaiz1/cmp_luasnip" },
 
   {
-    "hrsh7th/nvim-cmp",
+    "yioneko/nvim-cmp",
     event = { "InsertEnter", "VeryLazy" },
+    branch = "perf",
     dependencies = {
       { "hrsh7th/cmp-buffer" },
       { "hrsh7th/cmp-nvim-lsp" },
@@ -230,11 +232,6 @@ require("lazy").setup({
     event = { "InsertEnter", "VeryLazy" },
   }, -- add "end" in Ruby and other languages
   {
-    "windwp/nvim-autopairs",
-    event = { "InsertEnter", "VeryLazy" },
-    config = true,
-  },
-  {
     "nvim-treesitter/nvim-treesitter-context",
     event = { "InsertEnter", "VeryLazy" },
   },
@@ -245,6 +242,31 @@ require("lazy").setup({
     config = function()
       require("config.treesitter").setup()
     end,
+  },
+
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = { "InsertEnter", "VeryLazy" },
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
+
+  {
+    "CopilotC-Nvim/CopilotChat.nvim",
+    branch = "canary",
+    cmd = { "CopilotChat", "CopilotChatToggle" },
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+    },
+    build = "make tiktoken", -- Only on MacOS or Linux
+    opts = {
+      debug = true, -- Enable debugging
+      -- See Configuration section for rest
+    },
+    -- See Commands section for default commands if you want to lazy load on them
   },
 
   {
@@ -291,19 +313,89 @@ require("lazy").setup({
     end,
   },
 
-  -- Testing
   {
-    "vim-test/vim-test",
-    cmd = { "TestNearest", "TestFile" },
-    config = function()
-      require("config.test").setup()
-    end,
+    "m4xshen/hardtime.nvim",
+    event = { "BufReadPost", "BufNewFile" },
+    dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
+    opts = {
+      disabled_filetypes = { "qf", "netrw", "lazy", "oil" },
+      disabled_keys = {
+        ["<Left>"] = {},
+        ["<Right>"] = {},
+      },
+      disable_mouse = false,
+    },
   },
+
+  -- Testing
+  -- {
+  --   "vim-test/vim-test",
+  --   cmd = { "TestNearest", "TestFile" },
+  -- },
   {
     "andythigpen/nvim-coverage",
     cmd = { "Coverage" },
     config = function()
       require("config.test").coverage()
+    end,
+  },
+  {
+    "quolpr/quicktest.nvim",
+    config = function()
+      local qt = require("quicktest")
+      qt.setup({
+        adapters = {
+          require("quicktest.adapters.golang")({
+            additional_args = function()
+              return { "-race", "-count=1" }
+            end,
+          }),
+        },
+      })
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "m00qek/baleia.nvim",
+    },
+    keys = function()
+      local qt = function()
+        return require("quicktest")
+      end
+
+      local keys = {
+        {
+          "<leader>tn",
+          function()
+            qt().run_line("split")
+          end,
+          desc = "[T]est Run [Nearest]",
+        },
+        {
+          "<leader>tf",
+          function()
+            qt().run_file("split")
+          end,
+          desc = "[T]est [R]un file",
+        },
+        {
+          "<leader>ts",
+          function()
+            qt().toggle_win("split")
+          end,
+          desc = "[T]est [S]plit result",
+        },
+
+        {
+          "<leader>tp",
+          function()
+            qt().run_previous(qt().run_current("split"))
+          end,
+          desc = "[T]est [P]revious",
+        },
+      }
+
+      return keys
     end,
   },
 
@@ -326,10 +418,10 @@ require("lazy").setup({
     },
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    -- "catppuccin/nvim",
+    "rebelot/kanagawa.nvim",
     config = function()
-      vim.cmd([[colorscheme catppuccin]])
+      vim.cmd([[colorscheme kanagawa]])
     end,
     priority = 1000,
     lazy = false,

@@ -10,7 +10,6 @@ tmp/**/*
 .byebug_history
 .pryrc
 .overmind*.sock
-coverage.*
-coverage.*
+coverage.o*
 **/lazygit/state.yml
 cdk.context.json

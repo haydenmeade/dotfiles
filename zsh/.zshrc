@@ -29,14 +29,15 @@ export HOMEBREW_NO_ENV_HINTS=true
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
-DISABLE_AUTO_TITLE=true
-SAVEHIST=99999
+export DISABLE_AUTO_TITLE=true
+export SAVEHIST=999999
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+export ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=( 
   git
   zsh-autosuggestions
+  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -45,22 +46,36 @@ source $ZSH/oh-my-zsh.sh
 
 export EDITOR='nvim'
 
-export http_proxy=http://localhost:3128
-export https_proxy=http://localhost:3128
-export HTTP_PROXY=http://localhost:3128
-export HTTPS_PROXY=http://localhost:3128
-export no_proxy=*.a.run.app
-export NO_PROXY=*.a.run.app
+export {http,https,all}_proxy=http://localhost:3128
+export {HTTP,HTTPS,ALL}_PROXY=$http_proxy
+# export NO_PROXY=199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
+# export no_proxy=199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
 # export http_proxy=
 # export https_proxy=
 # export HTTP_PROXY=
 # export HTTPS_PROXY=
 
+export GO111MODULE=on
+export GOPRIVATE=github.service.anz/*,github.com/anzx/*
+export GONOPROXY=github.service.anz/*
+export GONOSUMDB=github.service.anz/*,github.com/anzx/*
+export GOPROXY=https://platform-gomodproxy.services.x.gcp.anz/,https://artifactory.gcp.anz/artifactory/api/go/go
+export APIS_DIR=$HOME/anz/apis
+export ANZX_APIS_DIR=$HOME/anz/apis
+
+unsetproxy () { 
+ export http_proxy=
+ export https_proxy=
+ export HTTP_PROXY=
+ export HTTPS_PROXY=
+}
+
+
 cdls () { 
     if [[ -z "$PS1" ]]; then
         cd "$@"
     else
-        cd "$@" && exa -la; 
+        cd "$@" && eza -la; 
     fi
 }
 
@@ -92,10 +107,51 @@ a (){
     anz_repo
 }
 
+tidy (){
+    fd go.mod -x bash -c "cd {//} && pwd && go mod tidy"
+}
+token_sit (){
+    TOKEN="$(curl --request POST \
+        --url https://joker.identity-services-sit-fr.apps.x.gcpnp.anz/ig-int/jwt \
+        --header 'Content-Type: application/json' \
+        --data '{
+          "realm": "/system",
+          "anz_token_type": "SystemJWT",
+          "scopes": [
+              "aegis-introspect"
+          ],
+          "aud": "https://fabric.anz.com",
+          "scope": [
+              "https://fabric.anz.com/scopes/appactivity:write",
+              "https://fabric.anz.com/scopes/commandcentre:dismiss",
+              "https://fabric.anz.com/scopes/commandcentre:read",
+              "https://fabric.anz.com/scopes/commandcentre:publish",
+              "https://fabric.anz.com/scopes/commandcentre:update"
+          ],
+          "rqf": {
+              "persona": {
+                  "_id": "e069158e-0e51-4916-8727-47a76fb56722",
+                  "type": "retail"
+              },
+              "sub": "e069158e-0e51-4916-8727-47a76fb56722",
+              "ocvid": "1001308754"
+          },
+          "expires_in": 600
+      }' | \
+        jq '.access_token' | \
+        tr -d '"')"
+      export TOKEN
+}
+
+dcleanup(){
+    docker rm -v $(docker ps --filter status=exited -q 2>/dev/null) 2>/dev/null
+    docker rmi $(docker images --filter dangling=true -q 2>/dev/null) 2>/dev/null
+}
+
 alias py='python3'
 alias n='nvim'
-alias l='exa -la'
-alias ls='exa -la'
+alias l='eza -la'
+alias ls='eza -la'
 alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
@@ -106,6 +162,7 @@ alias gs='git status'
 alias ga='git add .'
 alias gc='git commit'
 alias gp='git pull'
+alias gu='git pull --autostash origin master:master'
 alias gcl='git clone'
 alias ji='jira issue list -a$(jira me)'
 alias c='pbcopy'
@@ -134,16 +191,9 @@ alias -- -="cd -"
 function killv() {
     killall AppSSOAgent
     kill `ps augx | awk '/Microsoft Teams/ ''{print $2}'`  
-    kill `ps augx | awk '/Microsoft Outlook/ ''{print $2}'`  
+    kill `ps augx | awk '/Outlook/ ''{print $2}'`  
+    kill `ps augx | awk '/Outlook/ ''{print $2}'`  
     kill `ps augx | awk '/Spotify/ ''{print $2}'`  
-}
-function killvv() {
-    killv
-    kill `ps augx | awk '/Slack/ ''{print $2}'`  
-
-    osascript -e 'open application "Microsoft Outlook"'
-    osascript -e 'open application "Microsoft Teams classic"'
-    osascript -e 'open application "Slack"'
 }
 function watchcomponentlogs(){
     while true ; do
@@ -182,7 +232,7 @@ bindkey '^e' edit-command-line
 # fzf command history search
 # source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-bindkey '^R'   fzf-history-widget
+# bindkey '^R'   fzf-history-widget
 bindkey '^ '   autosuggest-accept
 
 # Quick edit

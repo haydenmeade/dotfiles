@@ -104,9 +104,9 @@ local leader_mappings = {
   -- Testing
   t = {
     -- n = "<Cmd>w<CR><cmd>lua require('neotest').run.run()<CR>",
-    n = "<Cmd>w<CR><cmd>TestNearest<CR>",
+    -- n = "<Cmd>w<CR><cmd>TestNearest<CR>",
     --f = "<Cmd>w<CR><cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>",
-    f = "<Cmd>w<CR><cmd>TestFile<CR>",
+    -- f = "<Cmd>w<CR><cmd>TestFile<CR>",
     --o = "<cmd>lua require('neotest').output.open({ open_win = function() vim.cmd('vsplit') end })<CR>",
     --t = "<cmd>lua require('neotest').summary.toggle()<CR>",
     c = "<cmd>Coverage<CR>",
@@ -115,12 +115,11 @@ local leader_mappings = {
 
   -- Trouble
   n = {
-    n = "<Cmd>TroubleToggle<CR>",
-    w = "<Cmd>TroubleToggle workspace_diagnostics<CR>",
-    d = "<Cmd>TroubleToggle document_diagnostics<CR>",
-    y = "<Cmd>TroubleToggle quickfix<CR>",
-    l = "<Cmd>TroubleToggle loclist<CR>",
-    r = "<Cmd>TroubleToggle lsp_references<CR>",
+    n = "<Cmd>Trouble<CR>",
+    d = "<Cmd>Trouble diagnostics<CR>",
+    y = "<Cmd>Trouble quickfix<CR>",
+    s = "<Cmd>Trouble symbols<CR>",
+    r = "<Cmd>Trouble lsp_references<CR>",
     j = "<Cmd>lua require('trouble').previous({skip_groups=true,jump=true})<CR>",
     k = "<Cmd>lua require('trouble').next({skip_groups=true,jump=true})<CR>",
   },

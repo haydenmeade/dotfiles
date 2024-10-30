@@ -8,6 +8,7 @@ g.mapleader = " "
 g.maplocalleader = ","
 
 opt.number = true -- line number
+opt.relativenumber = true -- relative line numbers
 opt.incsearch = true -- search as typing
 opt.hlsearch = true -- highlight matching search
 opt.ignorecase = true -- case insensitive on search..

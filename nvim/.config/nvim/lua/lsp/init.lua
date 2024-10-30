@@ -61,7 +61,7 @@ function M.setup()
   })
 
   -- lspconfig.eslint.setup(resolve_config("eslint"))
-  -- lspconfig.tsserver.setup(resolve_config("tsserver"))
+  -- lspconfig.ts_ls.setup(resolve_config("ts_ls"))
   lspconfig.gopls.setup(resolve_config("gopls"))
   -- lspconfig.golangci_lint_ls.setup(resolve_config("golangci_lint_ls"))
   lspconfig.jsonls.setup(resolve_config("jsonls"))

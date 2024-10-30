@@ -5,7 +5,10 @@ function M.config()
     settings = {
       yaml = {
         format = {
-          enable = true,
+          enable = false,
+        },
+        editor = {
+          tabSize = 2,
         },
         hover = true,
         completion = true,
