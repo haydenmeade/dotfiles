@@ -133,10 +133,20 @@ local keymappings = {
     k = "gk",
     n = "nzzzv",
     N = "Nzzzv",
-    ["C-d"] = "<C-d>zz",
-    ["C-u"] = "<C-u>zz",
+    ["CTRL-d"] = "<CTRL-d>zz",
+    ["CTRL-u"] = "<CTRL-u>zz",
     [",s"] = "<Cmd>split<Cr>",
     [",v"] = "<Cmd>vs<Cr>",
+    -- moving splits
+    ["<CTRL-S-kLeft>"] = "<CTRL-W>H",
+    ["<CTRL-S-kDown>"] = "<CTRL-W>J",
+    ["<CTRL-S-up>"] = "<CTRL-W>K",
+    ["<CTRL-S-kRight>"] = "<CTRL-W>L",
+    -- resizing splits
+    ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
+    ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",
+    ["<A-up>"] = "<Cmd>lua require('smart-splits').resize_up(5)<CR>",
+    ["<A-right>"] = "<Cmd>lua require('smart-splits').resize_right(5)<CR>",
   },
   v = {
     ["J"] = "<esc><cmd>m  '>+1<CR>gv=gv",
@@ -151,32 +161,18 @@ local keymappings = {
     ["<leader>rp"] = '<cmd>lua require("refactoring").debug.print_var({})<CR>',
   },
   t = {
-    ["<esc>"] = [[<C-\><C-n>]],
+    ["<esc>"] = [[<CTRL-\><CTRL-n>]],
     -- moving splits
-    ["<C-S-left>"] = "<C-W>H",
-    ["<C-S-down>"] = "<C-W>J",
-    ["<C-S-up>"] = "<C-W>K",
-    ["<C-S-right>"] = "<C-W>L",
+    ["<CTRL-S-left>"] = "<CTRL-W>H",
+    ["<CTRL-S-down>"] = "<CTRL-W>J",
+    ["<CTRL-S-up>"] = "<CTRL-W>K",
+    ["<CTRL-S-right>"] = "<CTRL-W>L",
   },
   x = {
     ["<leader>p"] = [["_dP]],
   },
   [""] = {
-    -- moving splits
-    ["<C-S-left>"] = "<C-W>H",
-    ["<C-S-down>"] = "<C-W>J",
-    ["<C-S-up>"] = "<C-W>K",
-    ["<C-S-right>"] = "<C-W>L",
-    -- resizing splits
-    ["<A-left>"] = "<Cmd>lua require('smart-splits').resize_left(5)<CR>",
-    ["<A-down>"] = "<Cmd>lua require('smart-splits').resize_down(5)<CR>",
-    ["<A-up>"] = "<Cmd>lua require('smart-splits').resize_up(5)<CR>",
-    ["<A-right>"] = "<Cmd>lua require('smart-splits').resize_right(5)<CR>",
-    -- moving between splits
-    ["<C-left>"] = "<cmd>KittyNavigateLeft<cr>",
-    ["<C-down>"] = "<Cmd>KittyNavigateDown<CR>",
-    ["<C-up>"] = "<Cmd>KittyNavigateUp<CR>",
-    ["<C-right>"] = "<Cmd>KittyNavigateRight<CR>",
+
   },
 }
 
@@ -190,8 +186,8 @@ vim.api.nvim_exec(
     let @s = temp
   endfunction
 
-  xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
-  xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+  xnoremap * :<CTRL-u>call g:VSetSearch('/')<CR>/<CTRL-R>=@/<CR><CR>
+  xnoremap # :<CTRL-u>call g:VSetSearch('?')<CR>?<CTRL-R>=@/<CR><CR>
 ]],
   false
 )
@@ -201,7 +197,7 @@ function M.setup()
   for mode, mapping in pairs(keymappings) do
     util.createmap(mode, mapping)
   end
-  vim.keymap.set({ "n" }, "<C-k>", function()
+  vim.keymap.set({ "n" }, "<CTRL-k>", function()
     require("lsp_signature").toggle_float_win()
   end, { silent = true, noremap = true, desc = "toggle signature" })
 end

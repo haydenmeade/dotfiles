@@ -36,6 +36,7 @@ function M.setup()
           treesitter = "[treesitter]",
           look = "[Look]",
           path = "[Path]",
+          Copilot = "[Copilot]",
         },
       }),
     },
@@ -43,6 +44,7 @@ function M.setup()
       sorting = {
         priority_weight = 2,
         comparators = {
+          require("copilot_cmp.comparators").prioritize,
 
           -- Below is the default comparitor list and order for nvim-cmp
           cmp.config.compare.offset,
@@ -66,7 +68,7 @@ function M.setup()
         behavior = cmp.ConfirmBehavior.Replace,
         select = true,
       }),
-      ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
+      ["<C-Space>"] = cmp.mapping(cmp.mapping.confirm(), { "i", "c" }),
       ["<Tab>"] = cmp.mapping(function(fallback)
         if ls.expand_or_locally_jumpable() then
           ls.expand_or_jump()
@@ -105,6 +107,8 @@ function M.setup()
       { name = "nvim_lsp", group_index = 2, priority = 1, max_item_count = 10 },
       { name = "nvim_lua", group_index = 2, max_item_count = 2 },
       { name = "luasnip", group_index = 2, priority = 3 },
+      -- Copilot Source
+      { name = "copilot", group_index = 2, priority = 4, max_item_count = 2 },
       { name = "treesitter", group_index = 2, max_item_count = 2 },
       { name = "buffer", group_index = 2, keyword_length = 5, max_item_count = 2 },
       { name = "path", group_index = 2, max_item_count = 2 },

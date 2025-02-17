@@ -76,14 +76,17 @@ require("lazy").setup({
 
   --Splits
   { "mrjones2014/smart-splits.nvim" },
-
   {
-    "knubie/vim-kitty-navigator",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-      require("config.kitty").setup()
-    end,
-    build = { "cp ./*.py ~/.config/kitty/" },
+    "MunsMan/kitty-navigator.nvim",
+    lazy = false,
+    opts = {
+        keybindings = {
+            left = "<C-left>",
+            down = "<C-down>",
+            up = "<C-up>",
+            right = "<C-right>",
+        },
+    },
   },
 
   -- Git
@@ -249,7 +252,19 @@ require("lazy").setup({
     cmd = "Copilot",
     event = { "InsertEnter", "VeryLazy" },
     config = function()
-      require("copilot").setup({})
+      require("copilot").setup({
+        suggestion = { enabled = false },
+        panel = { enabled = false },
+      })
+    end,
+  },
+  {
+    "zbirenbaum/copilot-cmp",
+    dependencies = {
+      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+    },
+    config = function()
+      require("copilot_cmp").setup()
     end,
   },
 

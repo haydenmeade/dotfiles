@@ -1,24 +1,16 @@
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-# settitle(){print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
-# print -Pn "\e]0;%(4~|.../%3~|%~)\a"
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv export zsh)"
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-(( ${+commands[direnv]} )) && emulate zsh -c "$(direnv hook zsh)"
-
-function precmd () {
-  window_title="\e]0;%(4~|.../%3~|%~)\a"
-  print -Pn "$window_title"
-}
 
 # Path changes
 export PATH=$HOME/.local/bin:$HOME/bin:/usr/local/bin:$HOME/.local/pact/bin:$PATH
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
+export PATH=/usr/local/go/bin:$PATH
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -31,6 +23,8 @@ export HOMEBREW_NO_ENV_HINTS=true
 export ZSH="$HOME/.oh-my-zsh"
 export DISABLE_AUTO_TITLE=true
 export SAVEHIST=999999
+export HISTIGNORE="&:ls:[bf]g:nvim:n:exit:pwd:clear:mount:umount:[ \t]*"
+
 
 export ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -42,24 +36,27 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
+function set_window_title() {
+  window_title="\e]0;%(4~|.../%3~|%~)\a"
+  print -Pn "$window_title"
+}
+precmd_functions+=( set_window_title )
+
 # User configuration
 
 export EDITOR='nvim'
 
 export {http,https,all}_proxy=http://localhost:3128
 export {HTTP,HTTPS,ALL}_PROXY=$http_proxy
-# export NO_PROXY=199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
-# export no_proxy=199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
+export NO_PROXY="199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com"
+export no_proxy="199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com"
 # export http_proxy=
 # export https_proxy=
 # export HTTP_PROXY=
 # export HTTPS_PROXY=
 
-export GO111MODULE=on
-export GOPRIVATE=github.service.anz/*,github.com/anzx/*
-export GONOPROXY=github.service.anz/*
-export GONOSUMDB=github.service.anz/*,github.com/anzx/*
-export GOPROXY=https://platform-gomodproxy.services.x.gcp.anz/,https://artifactory.gcp.anz/artifactory/api/go/go
+export GONOSUMDB='github.service.anz/*,github.com/anzx/*'
+export GOPROXY='https://platform-gomodproxy.services.x.gcp.anz,direct'
 export APIS_DIR=$HOME/anz/apis
 export ANZX_APIS_DIR=$HOME/anz/apis
 
@@ -70,6 +67,14 @@ unsetproxy () {
  export HTTPS_PROXY=
 }
 
+open_nvim() {
+    if jobs | grep -q "nvim"; then
+        fg %?nvim
+    else
+        nvim "$@"
+    fi
+}
+alias n='open_nvim'
 
 cdls () { 
     if [[ -z "$PS1" ]]; then
@@ -80,10 +85,10 @@ cdls () {
 }
 
 dot () {
-    cd ~/dotfiles/ && nvim
+    cd ~/dotfiles/ && open_nvim
 }
 notes () {
-    cd ~/notes/ && nvim
+    cd ~/notes/ && open_nvim
 }
 
 anz_repo (){
@@ -149,14 +154,12 @@ dcleanup(){
 }
 
 alias py='python3'
-alias n='nvim'
 alias l='eza -la'
 alias ls='eza -la'
 alias lg='lazygit'
 alias cd='cdls'
 alias cat=bat
 alias bb='brew bundle'
-alias de='direnv allow .'
 
 alias gs='git status'
 alias ga='git add .'
@@ -243,6 +246,7 @@ vzv() {
 zle -N vzv vzv
 bindkey '^v' vzv
 
+
 # export ZVM_NORMAL_MODE_CURSOR=bbl
 
 # +-------------+
@@ -259,16 +263,6 @@ bindkey '^v' vzv
 
 eval "$(zoxide init zsh)"
 
-# dir in title
-# case $TERM in
-#     xterm*)
-#         precmd () {print -Pn "\e]0;%(4~|.../%3~|%~)\a"}
-#         ;;
-# esac
-
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'; fi
 
@@ -279,3 +273,7 @@ source /Users/meadeh/.docker/init-zsh.sh || true # Added by Docker Desktop
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
