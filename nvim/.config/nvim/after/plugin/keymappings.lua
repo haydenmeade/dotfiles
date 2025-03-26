@@ -186,8 +186,8 @@ vim.api.nvim_exec(
     let @s = temp
   endfunction
 
-  xnoremap * :<CTRL-u>call g:VSetSearch('/')<CR>/<CTRL-R>=@/<CR><CR>
-  xnoremap # :<CTRL-u>call g:VSetSearch('?')<CR>?<CTRL-R>=@/<CR><CR>
+  xnoremap * :<C-u>call g:VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+  xnoremap # :<C-u>call g:VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
 ]],
   false
 )

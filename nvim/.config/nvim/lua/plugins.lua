@@ -114,9 +114,6 @@ require("lazy").setup({
     },
   },
 
-  -- Logging
-  { "Tastyep/structlog.nvim" },
-
   -- Sessions
   {
     "rmagatti/auto-session",
@@ -129,8 +126,6 @@ require("lazy").setup({
     end,
   },
 
-  { "williamboman/mason.nvim" },
-  { "williamboman/mason-lspconfig.nvim" },
   {
     "ray-x/lsp_signature.nvim",
     event = { "BufReadPost", "BufNewFile" },
@@ -167,14 +162,6 @@ require("lazy").setup({
     config = function()
       require("lspkind").init()
     end,
-  },
-  {
-    "neovim/nvim-lspconfig",
-    version = "*",
-    config = function()
-      require("lsp").setup()
-    end,
-    event = { "BufReadPost", "BufNewFile" },
   },
   {
     "linrongbin16/lsp-progress.nvim",

@@ -11,6 +11,7 @@
   excludesFile = ~/.gitignore
   autocrlf = input
   pager = delta
+  longpaths = true
 [fetch]
   prune = true
 [pull]
@@ -24,6 +25,8 @@
 [diff]
   colorMoved = default
 [includeIf "gitdir/i:~/anz/"]
+    path = anz.gitconfig
+[includeIf "gitdir/i:/var/"]
     path = anz.gitconfig
 [includeIf "gitdir/i:~/repos/"]
     path = me.gitconfig

@@ -1,15 +1,9 @@
 [user]
   email = hayden.meade@anz.com
   name = Hayden Meade
-  signingkey = 6DAD1916981CB4F7
 [core]
   excludesFile = ~/.gitignore
   autocrlf = input
   pager = delta
-[commit]
-  template = ~/.gitmessage
-  gpgsign = true
-[gpg]
-  program = gpg
 [url "git@github.com:"]
   insteadOf = https://github.com

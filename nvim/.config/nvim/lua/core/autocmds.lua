@@ -1,6 +1,5 @@
 local M = {}
 
-local Log = require("core.log")
 local autocmd = vim.api.nvim_create_autocmd
 
 -- Highlight on yank
@@ -54,10 +53,10 @@ end, { range = true })
 vim.api.nvim_create_user_command("FormatToggle", function()
   if vim.g.disable_autoformat then
     vim.g.disable_autoformat = false
-    Log:debug("Enabled format on save")
+    vim.notify("Enabled format on save", vim.log.levels.DEBUG)
   else
     vim.g.disable_autoformat = true
-    Log:debug("Disabled format on save")
+    vim.notify("Disabled format on save", vim.log.levels.DEBUG)
   end
 end, {
   desc = "toggle autoformat-on-save",

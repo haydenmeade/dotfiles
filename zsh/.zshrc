@@ -55,8 +55,9 @@ export no_proxy="199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
 # export HTTP_PROXY=
 # export HTTPS_PROXY=
 
+export GONOPROXY='github.service.anz/*,github.com/anzx/*'
 export GONOSUMDB='github.service.anz/*,github.com/anzx/*'
-export GOPROXY='https://platform-gomodproxy.services.x.gcp.anz,direct'
+export GOPROXY='https://platform-gomodproxy.services.x.gcp.anz/,https://proxy.golang.org,https://artifactory.gcp.anz/artifactory/go,direct'
 export APIS_DIR=$HOME/anz/apis
 export ANZX_APIS_DIR=$HOME/anz/apis
 
@@ -113,7 +114,10 @@ a (){
 }
 
 tidy (){
-    fd go.mod -x bash -c "cd {//} && pwd && go mod tidy"
+    fd go.mod --hidden --exclude .git -x bash -c "cd {//} && pwd && go mod tidy"
+}
+update_go (){
+    sudo rm -rf /usr/local/go  && GO_VERSION=$(curl -s 'https://go.dev/dl/?mode=json' | sed -n 's/.*"version": "go\([0-9.]*\)".*/\1/p' | head -1) && curl -L "https://go.dev/dl/go${GO_VERSION}.darwin-arm64.tar.gz" | sudo tar -C /usr/local -xzf -
 }
 token_sit (){
     TOKEN="$(curl --request POST \

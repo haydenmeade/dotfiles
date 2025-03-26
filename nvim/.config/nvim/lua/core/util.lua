@@ -1,5 +1,4 @@
 local M = {}
-local Log = require("core.log")
 
 ---Join path segments that were passed as input
 ---@return string
@@ -31,10 +30,7 @@ end
 function M.get_os_command_output(cmd, cwd)
   local Job = require("plenary.job")
   if type(cmd) ~= "table" then
-    Log:error("get_os_command_output", {
-      msg = "cmd has to be a table",
-      level = "ERROR",
-    })
+    vim.log.error("cmd has to be a table")
     return {}
   end
   local command = table.remove(cmd, 1)
