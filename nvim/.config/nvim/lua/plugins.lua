@@ -126,14 +126,6 @@ require("lazy").setup({
     end,
   },
 
-  {
-    "ray-x/lsp_signature.nvim",
-    event = { "BufReadPost", "BufNewFile" },
-    opts = {},
-    config = function(_, opts)
-      require("lsp_signature").setup(opts)
-    end,
-  },
   { "b0o/schemastore.nvim" },
   {
     "stevearc/conform.nvim",
@@ -175,42 +167,33 @@ require("lazy").setup({
   },
 
   {
-    "L3MON4D3/LuaSnip",
-    version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-    build = "make install_jsregexp",
-    dependencies = { "rafamadriz/friendly-snippets" },
-    config = function()
-      require("config.luasnip").setup()
-    end,
-  },
-
-  { "hrsh7th/cmp-buffer" },
-  { "hrsh7th/cmp-nvim-lsp" },
-  { "hrsh7th/cmp-path" },
-  { "hrsh7th/cmp-cmdline" },
-  { "hrsh7th/cmp-nvim-lsp-document-symbol" },
-  { "f3fora/cmp-spell" },
-  { "ray-x/cmp-treesitter" },
-  { "saadparwaiz1/cmp_luasnip" },
-
-  {
-    "yioneko/nvim-cmp",
+    "saghen/blink.cmp",
     event = { "InsertEnter", "VeryLazy" },
-    branch = "perf",
-    dependencies = {
-      { "hrsh7th/cmp-buffer" },
-      { "hrsh7th/cmp-nvim-lsp" },
-      { "hrsh7th/cmp-nvim-lua" },
-      { "hrsh7th/cmp-path" },
-      { "hrsh7th/cmp-cmdline" },
-      { "hrsh7th/cmp-nvim-lsp-document-symbol" },
-      { "f3fora/cmp-spell" },
-      { "ray-x/cmp-treesitter" },
-      { "saadparwaiz1/cmp_luasnip" },
+    dependencies = { "rafamadriz/friendly-snippets", "fang2hou/blink-copilot" },
+    version = "1.*",
+    opts = {
+      keymap = { preset = 'enter' },
+      signature = {
+        enabled = true,
+        show_documentation = false,
+      },
+      completion = { documentation = { auto_show = true } },
+
+      -- Default list of enabled providers defined so that you can extend it
+      -- elsewhere in your config, without redefining it, due to `opts_extend`
+      sources = {
+        default = { 'lsp', 'path', 'snippets', 'buffer', "copilot" },
+        providers = {
+          copilot = {
+            name = "copilot",
+            module = "blink-copilot",
+            score_offset = 100,
+            async = true,
+          },
+        },
+      },
     },
-    config = function()
-      require("config.cmp").setup()
-    end,
+    opts_extend = { "sources.default" }
   },
 
   {
@@ -245,15 +228,6 @@ require("lazy").setup({
       })
     end,
   },
-  {
-    "zbirenbaum/copilot-cmp",
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-    },
-    config = function()
-      require("copilot_cmp").setup()
-    end,
-  },
 
   {
     "CopilotC-Nvim/CopilotChat.nvim",
@@ -271,9 +245,6 @@ require("lazy").setup({
     -- See Commands section for default commands if you want to lazy load on them
   },
 
-  {
-    "ThePrimeagen/refactoring.nvim",
-  },
   {
     "MagicDuck/grug-far.nvim",
     cmd = { "GrugFar" },
