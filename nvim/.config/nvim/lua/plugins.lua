@@ -175,7 +175,6 @@ require("lazy").setup({
       keymap = { preset = 'enter' },
       signature = {
         enabled = true,
-        show_documentation = false,
       },
       completion = { documentation = { auto_show = true } },
 
