@@ -31,7 +31,6 @@ export ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=( 
   git
   zsh-autosuggestions
-  asdf
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -57,9 +56,26 @@ export no_proxy="199.36.153.4,*.run.app,spanner.googleapis.com,,*.googleapis.com
 
 export GONOPROXY='github.service.anz/*,github.com/anzx/*'
 export GONOSUMDB='github.service.anz/*,github.com/anzx/*'
-export GOPROXY='https://platform-gomodproxy.services.x.gcp.anz/,https://proxy.golang.org,https://artifactory.gcp.anz/artifactory/go,direct'
+
+export GOPROXY='https://platform-gomodproxy.services.x.gcp.anz,https://platform-gomodproxy.services.x.gcpnp.anz,https://proxy.golang.org,https://artifactory.gcp.anz/artifactory/go,direct'
 export APIS_DIR=$HOME/anz/apis
 export ANZX_APIS_DIR=$HOME/anz/apis
+
+# Configure various tools to use internally issued certs
+#  Python libraries
+export REQUESTS_CA_BUNDLE=/opt/homebrew/etc/openssl@3/cert.pem
+export HTTPLIB2_CA_CERTS=${REQUESTS_CA_BUNDLE}
+export GRPC_DEFAULT_SSL_ROOTS_FILE_PATH=${REQUESTS_CA_BUNDLE}  # For gRPC-based libraries
+#  Python & gsutil/boto
+export ca_certificates_file=${REQUESTS_CA_BUNDLE}
+export REQUESTS_CA_BUNDLE=${REQUESTS_CA_BUNDLE}
+#  curl
+export CURL_CA_BUNDLE=${REQUESTS_CA_BUNDLE}
+#  Golang
+export SSL_CERT_FILE=${REQUESTS_CA_BUNDLE} 
+#  gcloud
+export CLOUDSDK_AUTH_CORE_CUSTOM_CA_CERTS_FILE=${REQUESTS_CA_BUNDLE}
+export NODE_EXTRA_CA_CERTS=${REQUESTS_CA_BUNDLE}
 
 unsetproxy () { 
  export http_proxy=
@@ -178,6 +194,8 @@ alias gomodtidy_all='for f in $(find . -name go.mod)
 do (cd $(dirname $f); go mod tidy)
 done'
 
+alias claude='CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=us-east5 ANTHROPIC_VERTEX_PROJECT_ID=anz-x-claude-dev-727b GOOGLE_APPLICATION_CREDENTIALS="$(echo ~)/.config/gcloud/application_default_credentials.json" NO_PROXY=us-east5-aiplatform.googleapis.com,artifactory.gcp.anz claude'
+
 # useful defaults:
 # alias ~/cd=cd ~
 alias -- -="cd -"
@@ -281,3 +299,7 @@ export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

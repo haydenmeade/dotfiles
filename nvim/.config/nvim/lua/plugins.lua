@@ -93,7 +93,6 @@ require("lazy").setup({
   {
     "lewis6991/gitsigns.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    version = "*",
     opts = {},
   },
   {
@@ -103,7 +102,6 @@ require("lazy").setup({
   {
     "akinsho/git-conflict.nvim",
     event = { "BufReadPost", "BufNewFile" },
-    version = "*",
     opts = {
       default_mappings = true, -- disable buffer local mapping created by this plugin
       disable_diagnostics = false, -- This will disable the diagnostics in a buffer whilst it is conflicted
@@ -133,7 +131,7 @@ require("lazy").setup({
     opts = {
       formatters_by_ft = {
         lua = { "stylua" },
-        go = { "gofumpt", "goimports" },
+        go = { "gofumpt" },
         javascript = { "prettierd", "prettier", stop_after_first = true },
         markdown = { "mdformat" },
         cpp = { "clangformat" },
@@ -144,7 +142,7 @@ require("lazy").setup({
         if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
           return
         end
-        return { timeout_ms = 900, lsp_fallback = true }
+        return { timeout_ms = 1500, lsp_fallback = false }
       end,
       notify_on_error = false,
     },
@@ -169,7 +167,7 @@ require("lazy").setup({
   {
     "saghen/blink.cmp",
     event = { "InsertEnter", "VeryLazy" },
-    dependencies = { "rafamadriz/friendly-snippets", "fang2hou/blink-copilot" },
+    dependencies = { "rafamadriz/friendly-snippets"},-- "fang2hou/blink-copilot" },
     version = "1.*",
     opts = {
       keymap = { preset = 'enter' },
@@ -181,18 +179,28 @@ require("lazy").setup({
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`
       sources = {
-        default = { 'lsp', 'path', 'snippets', 'buffer', "copilot" },
-        providers = {
-          copilot = {
-            name = "copilot",
-            module = "blink-copilot",
-            score_offset = 100,
-            async = true,
-          },
-        },
+        default = { 'lsp', 'path', 'snippets', 'buffer'},-- "copilot" },
+        -- providers = {
+        --   copilot = {
+        --     name = "copilot",
+        --     module = "blink-copilot",
+        --     score_offset = 100,
+        --     async = true,
+        --   },
+        -- },
       },
     },
     opts_extend = { "sources.default" }
+  },
+
+  {
+      'Chaitanyabsprip/fastaction.nvim',
+      opts = {
+        go = {
+          { pattern = "Organize Imports", key ="o", order = 1 },
+          { pattern = "fill", key ="f", order = 2 },
+        },
+    },
   },
 
   {
@@ -217,32 +225,64 @@ require("lazy").setup({
   },
 
   {
-    "zbirenbaum/copilot.lua",
-    cmd = "Copilot",
-    event = { "InsertEnter", "VeryLazy" },
-    config = function()
-      require("copilot").setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
-    end,
-  },
-
-  {
-    "CopilotC-Nvim/CopilotChat.nvim",
-    branch = "canary",
-    cmd = { "CopilotChat", "CopilotChatToggle" },
-    dependencies = {
-      { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
-      { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
-    },
-    build = "make tiktoken", -- Only on MacOS or Linux
+    "olimorris/codecompanion.nvim",
     opts = {
-      debug = true, -- Enable debugging
-      -- See Configuration section for rest
+      strategies = {
+        chat = {
+          adapter = "copilot",
+        },
+        inline = {
+          adapter = "copilot",
+        },
+        cmd = {
+          adapter = "copilot",
+        }
+      }
     },
-    -- See Commands section for default commands if you want to lazy load on them
+    cmd = { "CodeCompanion", "CodeCompanionChat", "CodeCompanionActions" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+    },
   },
+  -- {
+  --   "OXY2DEV/markview.nvim",
+  --   lazy = false,
+  --   opts = {
+  --     preview = {
+  --       filetypes = { "markdown", "codecompanion" },
+  --       ignore_buftypes = {},
+  --     },
+  --   },
+  -- },
+
+  -- {
+  --   "zbirenbaum/copilot.lua",
+  --   cmd = "Copilot",
+  --   event = { "InsertEnter", "VeryLazy" },
+  --   config = function()
+  --     require("copilot").setup({
+  --       suggestion = { enabled = false },
+  --       panel = { enabled = false },
+  --     })
+  --   end,
+  -- },
+
+  -- {
+  --   "CopilotC-Nvim/CopilotChat.nvim",
+  --   branch = "canary",
+  --   cmd = { "CopilotChat", "CopilotChatToggle" },
+  --   dependencies = {
+  --     { "zbirenbaum/copilot.lua" }, -- or github/copilot.vim
+  --     { "nvim-lua/plenary.nvim" }, -- for curl, log wrapper
+  --   },
+  --   build = "make tiktoken", -- Only on MacOS or Linux
+  --   opts = {
+  --     debug = true, -- Enable debugging
+  --     -- See Configuration section for rest
+  --   },
+  --   -- See Commands section for default commands if you want to lazy load on them
+  -- },
 
   {
     "MagicDuck/grug-far.nvim",

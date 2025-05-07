@@ -24,9 +24,9 @@ local leader_mappings = {
 
   -- refactor
   r = {
-    r = [[<cmd>lua require('grug-far').grug_far()<CR>]],
-    c = [[<cmd>lua require('grug-far').grug_far({ prefills = { search = vim.fn.expand("<cword>") } })<CR>]],
-    f = [[<cmd>lua require('grug-far').grug_far({ prefills = { flags = vim.fn.expand("%") } })<CR>]],
+    r = [[<cmd>lua require('grug-far').open()<CR>]],
+    c = [[<cmd>lua require('grug-far').open({ prefills = { search = vim.fn.expand("<cword>") } })<CR>]],
+    f = [[<cmd>lua require('grug-far').open({ prefills = { paths = vim.fn.expand("%") } })<CR>]],
     C = '<cmd>lua require("refactoring").debug.cleanup({})<CR>',
     i = [[<Cmd>lua require('refactoring').refactor('Inline Variable')<CR>]],
     g = [[<cmd>lua require('rgflow').open_blank()<cr>]],
