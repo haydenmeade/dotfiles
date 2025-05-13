@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(make:*)",
+      "Bash(go:*)",
+      "Bash(docker:*)",
+      "Bash(git:*)",
+      "Read(~/.zshrc)",
+      "Read(~/go/**)",
+      "Read(~/.config/claude/**)",
+      "Read(~/anz/**)",
+      "Edit(~/anz/**)"
+    ],
+    "deny": []
+  },
+  "env": {},
+  "theme": "dark"
+}

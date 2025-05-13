@@ -194,7 +194,7 @@ alias gomodtidy_all='for f in $(find . -name go.mod)
 do (cd $(dirname $f); go mod tidy)
 done'
 
-alias claude='CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=us-east5 ANTHROPIC_VERTEX_PROJECT_ID=anz-x-claude-dev-727b GOOGLE_APPLICATION_CREDENTIALS="$(echo ~)/.config/gcloud/application_default_credentials.json" NO_PROXY=us-east5-aiplatform.googleapis.com,artifactory.gcp.anz claude'
+alias claude='CLAUDE_CODE_USE_VERTEX=1 CLOUD_ML_REGION=us-east5 ANTHROPIC_VERTEX_PROJECT_ID=anz-x-claude-dev-727b NO_PROXY=us-east5-aiplatform.googleapis.com,artifactory.gcp.anz claude'
 
 # useful defaults:
 # alias ~/cd=cd ~
