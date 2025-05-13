@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 brew bundle
 if [[ -z $STOW_FOLDERS ]]; then
-    STOW_FOLDERS="nvim,zsh,git,kitty,yabai"
+    STOW_FOLDERS="nvim,zsh,git,kitty,yabai,claude"
 fi
 
 if [[ -z $DOTFILES ]]; then
