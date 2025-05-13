@@ -47,3 +47,5 @@ luac.out
 *.hex
 
 packer_compiled.lua
+
+**/.claude/settings.local.json
