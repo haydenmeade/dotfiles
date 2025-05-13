@@ -19,3 +19,8 @@ switchToYabai () {
     fi
     yabai -m window --focus "${win_id}"
 }
+
+# Load API tokens and secrets (not tracked in git)
+if [[ -f $HOME/.zshsecrets ]]; then
+    source $HOME/.zshsecrets
+fi
