@@ -13,7 +13,7 @@ local lsp_leader_mappings = {
     x = "<Cmd>lua vim.diagnostic.disable()<CR>",
     n = "<Cmd>FormatToggle<CR>",
     f = "<Cmd>lua vim.lsp.buf.formatting()<CR>",
-    w = "<cmd>Telescope diagnostics<cr>",
+    w = "<cmd>Telescope diagnostics severity_limit=ERROR<cr>",
   },
 }
 

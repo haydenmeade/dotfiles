@@ -245,16 +245,16 @@ require("lazy").setup({
       "nvim-treesitter/nvim-treesitter",
     },
   },
-  -- {
-  --   "OXY2DEV/markview.nvim",
-  --   lazy = false,
-  --   opts = {
-  --     preview = {
-  --       filetypes = { "markdown", "codecompanion" },
-  --       ignore_buftypes = {},
-  --     },
-  --   },
-  -- },
+  {
+    "OXY2DEV/markview.nvim",
+    ft = "markdown",
+    opts = {
+      preview = {
+        filetypes = { "markdown", "codecompanion" },
+        ignore_buftypes = {},
+      },
+    },
+  },
 
   -- {
   --   "zbirenbaum/copilot.lua",
@@ -332,6 +332,8 @@ require("lazy").setup({
     opts = {
       disabled_filetypes = { "qf", "netrw", "lazy", "oil" },
       disabled_keys = {
+        ["<Up>"] = {},
+        ["<Down>"] = {},
         ["<Left>"] = {},
         ["<Right>"] = {},
       },
