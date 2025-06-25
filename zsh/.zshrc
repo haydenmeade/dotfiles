@@ -11,6 +11,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH=$HOME/Library/Python/3.9/bin:$PATH
 export PATH=$HOME/go/bin:$PATH
 export PATH=/usr/local/go/bin:$PATH
+export PATH="$PATH:/Applications/Docker.app/Contents/Resources/bin/"
 export CONFIG_DIR=$HOME/.config/lazygit
 
 . "$HOME/.cargo/env"
@@ -25,6 +26,7 @@ export DISABLE_AUTO_TITLE=true
 export SAVEHIST=999999
 export HISTIGNORE="&:ls:[bf]g:nvim:n:exit:pwd:clear:mount:umount:[ \t]*"
 
+export COMPOSE_BAKE=true
 
 export ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -133,7 +135,7 @@ tidy (){
     fd go.mod --hidden --exclude .git -x bash -c "cd {//} && pwd && go mod tidy"
 }
 update_go (){
-    sudo rm -rf /usr/local/go  && GO_VERSION=$(curl -s 'https://go.dev/dl/?mode=json' | sed -n 's/.*"version": "go\([0-9.]*\)".*/\1/p' | head -1) && curl -L "https://go.dev/dl/go${GO_VERSION}.darwin-arm64.tar.gz" | sudo tar -C /usr/local -xzf -
+    sudo rm -rf /usr/local/go  && GO_VERSION=$(curl -s 'https://go.dev/dl/?mode=json' | sed -n 's/.*"version": "go\([0-9.]*\)".*/\1/p' | head -1) && curl -L "https://go.dev/dl/go${GO_VERSION}.darwin-arm64.tar.gz" | sudo tar -C /usr/local -xzf - && go version
 }
 token_sit (){
     TOKEN="$(curl --request POST \
@@ -291,7 +293,6 @@ if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zs
 # The next line enables shell command completion for gcloud.
 if [ -f '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc' ]; then . '/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'; fi
 
-source /Users/meadeh/.docker/init-zsh.sh || true # Added by Docker Desktop
 export PATH="/opt/homebrew/sbin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
 export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"
