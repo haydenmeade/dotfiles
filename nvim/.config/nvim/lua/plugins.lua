@@ -326,6 +326,19 @@ require("lazy").setup({
   },
 
   {
+    'pwntester/octo.nvim',
+    requires = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope.nvim',
+      'nvim-tree/nvim-web-devicons',
+    },
+    cmd = { "Octo" },
+    opts = {
+      use_local_fs = true,
+    },
+  },
+
+  {
     "m4xshen/hardtime.nvim",
     event = { "BufReadPost", "BufNewFile" },
     dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
