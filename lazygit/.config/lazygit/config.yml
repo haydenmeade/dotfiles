@@ -3,6 +3,6 @@ gui:
   theme:
     lightTheme: false # For terminals with a light background
 git:
-  paging:
-    colorArg: always
-    pager: delta  --paging=never
+  pagers:
+    - colorArg: always
+      pager: delta  --paging=never
